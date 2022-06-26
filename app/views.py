@@ -3,14 +3,51 @@ from app import app
 from .forms import ContactForm
 from .models import User
 
+#home page
 @app.route('/')
 def hello_world():
     # example without a template
     return 'Hello, World!'
 
+
+""" 
+#about page 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html') 
+"""
+
+#sign up page
+"""
+The user enters their email and password
+"""
+
+#login page
+"""
+This should accept: full name, email, password, profile_photo
+
+The role (e.g. an admin user or regular user) , created_at an userid will be automatically generated
+Users can be appointed as an admin by the Main Admin.
+Send a request to be an admin. If approve then the user status must be chnaged to admin, otherwise they remain as a regular user
+"""
+
+
+#normal user page
+"""
+  Perform the CRUD operations on the user page
+  if we feel good we can add a calendar 
+"""
+
+
+#admin user page
+"""
+  Perform the RUD operations on the user page (Read, update event status and delete events)
+ They should have a masterlist of all events
+ They can filter by status 
+ Add admin username beside the even they approved. 
+    On the events_table there should be a column called approved by [String] and approved at [date]
+"""
+
 
 @app.route('/profile/<username>')
 def profile(username=None):
