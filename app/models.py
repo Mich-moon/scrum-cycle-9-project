@@ -24,3 +24,29 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.full_name
+    
+ class Event(db.Model):
+    __tablename__ = 'events'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title= db.Column(db.String(128), nullable=False)
+    start_date = db.Column(db.DateTime())
+    end_date = db.Column(db.DateTime())
+    description = db.Column(db.String(1028), nullable=False)
+    venue= db.Column(db.String(128), nullable=False)
+    flyer = db.Column(db.String(225))
+    wesbite =  db.Column(db.String(225))
+    status= db.Column(db.String(15), nullable=False)
+    uid = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+
+    def __init__(self,title, start_date, end_date, description, venue, flyer,website, status, date):
+        self.title = title
+        self.star_date = start_date
+        self.end_date = end_date
+        self.description = description
+        self.venue= venue
+        self.flyer = flyer
+        self.website = website 
+        self.status = status
+        self.created_at = date
