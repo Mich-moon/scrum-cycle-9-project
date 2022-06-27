@@ -6,8 +6,7 @@ from .models import User
 #home page
 @app.route('/')
 def home():
-    # example without a template
-    return 'Hello, World!'
+    return 
 
 
 """ 
@@ -17,7 +16,7 @@ def about():
     return render_template('about.html') 
 """
 
-#sign up page
+#sign up page - mw
 """
 The user enters their email and password
 """
@@ -25,7 +24,7 @@ The user enters their email and password
 def signup ():
   return 
 
-#login page
+#login page - ds
 """
 This should accept: full name, email, password, profile_photo
 
@@ -37,7 +36,7 @@ Send a request to be an admin. If approve then the user status must be chnaged t
 def login ():
   return 
 
-#normal user page
+#normal user page - ag&mm
 """
   Perform the CRUD operations on the user page
   if we feel good we can add a calendar 
@@ -47,7 +46,7 @@ def user_page ():
   return 
 
 
-#admin user page
+#admin user page - sr
 """
 Perform the RUD operations on the user page (Read, update event status and delete events)
 They should have a masterlist of all events
