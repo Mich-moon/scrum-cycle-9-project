@@ -40,7 +40,7 @@ class Event(db.Model):
     status= db.Column(db.String(15), nullable=False)
     uid = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    update_at = db.Column(db.DateTime())
+    updated_at = db.Column(db.DateTime())
 
     def __init__(self,title, start_date, end_date, description, venue, flyer,website, status, date):
         self.title = title
