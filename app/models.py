@@ -1,3 +1,4 @@
+from turtle import update
 from app import db
 from werkzeug.security import generate_password_hash
 from datetime import datetime
@@ -25,7 +26,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.full_name
     
- class Event(db.Model):
+class Event(db.Model):
     __tablename__ = 'events'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -39,6 +40,7 @@ class User(db.Model):
     status= db.Column(db.String(15), nullable=False)
     uid = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    update_at = db.Column(db.DateTime())
 
     def __init__(self,title, start_date, end_date, description, venue, flyer,website, status, date):
         self.title = title
