@@ -2,6 +2,7 @@ from app import db
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 
+
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -13,14 +14,13 @@ class User(db.Model):
     role = db.Column(db.String(15), nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    def __init__(self, name, email, password, photo, role, date):
+    def __init__(self, name, email, password, photo, role):
         self.full_name = name
         self.email = email
         self.password = generate_password_hash(
             password, method='pbkdf2:sha256')
         self.profile_photo = photo
         self.role = role
-        self.created_at = date
 
     def __repr__(self):
         return '<User %r>' % self.full_name
