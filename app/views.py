@@ -73,7 +73,7 @@ Send a request to be an admin. If approve then the user status must be chnaged t
 """
 @app.route('/login')
 def login():
-    return
+    return render_template('login.html')
 
 
 # admin user page - sr

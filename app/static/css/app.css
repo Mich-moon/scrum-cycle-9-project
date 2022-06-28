@@ -26,7 +26,7 @@ nav a:link, a:visited {
   margin-right: 30px;
 }
 
-a:active {  
+nav a:active {  
   color: #CC922F;
 }
 
@@ -42,4 +42,9 @@ input[type=text], input[type=password], input[type=email] {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   padding: 5px;
   width: 220px;
+}
+
+#login-div a:visited, a:active, a:link {  
+  color: #CC922F;  
+  padding-left: 7px;
 }
