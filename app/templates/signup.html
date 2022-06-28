@@ -8,7 +8,7 @@
   enctype="multipart/form-data"
 >
   {{ form.csrf_token }}
-  <div class="form-group mb-3">
+  <div class="form-group">
     {{ form.full_name.label(class="form-label") }} {{
     form.full_name(class="form-control") }} {% if form.full_name.errors %}
     <ul class="errors">
@@ -18,7 +18,7 @@
     </ul>
     {% endif %}
   </div>
-  <div class="form-group mb-3">
+  <div class="form-group">
     {{ form.email.label(class="form-label") }} {{
     form.email(class="form-control") }} {% if form.email.errors %}
     <ul class="errors">
@@ -28,7 +28,7 @@
     </ul>
     {% endif %}
   </div>
-  <div class="form-group mb-3">
+  <div class="form-group">
     {{ form.password.label(class="form-label") }} {{
     form.password(class="form-control") }} {% if form.password.errors %}
     <ul class="errors">
@@ -38,7 +38,7 @@
     </ul>
     {% endif %}
   </div>
-  <div class="form-group mb-3">
+  <div class="form-group">
     {{ form.photo.label(class="form-label") }} {{
     form.photo(class="form-control") }} {% if form.photo.errors %}
     <ul class="errors">

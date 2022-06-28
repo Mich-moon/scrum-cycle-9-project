@@ -6,43 +6,43 @@
 <form method="POST" action="{{ url_for('events') }}" novalidate  enctype="multipart/form-data">
     {{ form.csrf_token }}
     <!-- Title-->
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.title.label(class="form-label") }} 
         {{ form.title(class="form-control") }}
     </div>
     <!-- dropdown date for start and end date -->
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.start_date.label(class="form-label") }} 
         {{ form.start_date(class="form-control") }}
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.end_date.label(class="form-label") }} 
         {{ form.end_date(class="form-control") }}
     </div>
     <!--Venue-->
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.venue.label(class="form-label") }} 
         {{ form.venue(class="form-control") }}
     </div>
     <!-- Description-->
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.description.label(class="form-label") }} 
         {{ form.description(class="form-control", rows=5, cols=20) }}
     </div>
     <!-- image -->
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.flyer.label(class="form-label") }} 
         {{form.flyer(class="form-control")}}
       
     </div>
 
     <!-- website-->
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.website.label(class="form-label") }} 
         {{ form.website(class="form-control") }}
     </div>
     <!-- Dropdown for status-->
-    <div class="form-group mb-3">
+    <div class="form-group">
         {{ form.status.label(class="form-label") }} 
         {{ form.status(class="form-control") }}
     </div>
