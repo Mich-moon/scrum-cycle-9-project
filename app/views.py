@@ -11,7 +11,7 @@ from .models import User
 
 @app.route('/')
 def home():
-    return "Home"
+    return render_template('home.html')
 
 
 # about page
@@ -86,7 +86,7 @@ def login():
 
 @app.route('/profile/<userid>')
 def user_page():
-    return
+    return render_template('user.html')
 
 
 # admin user page - sr
