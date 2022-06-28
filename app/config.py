@@ -9,9 +9,5 @@ class Config(object):
     DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY', 'Som3$ec5etK*y')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '')
-<<<<<<< HEAD
     # This is just here to suppress a warning from SQLAlchemy as it will soon be removed
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-=======
-    SQLALCHEMY_TRACK_MODIFICATIONS = False # This is just here to suppress a warning from SQLAlchemy as it will soon be removed
->>>>>>> 5ba1711fc57245e0e3628e6ac5b102956714e7e1
