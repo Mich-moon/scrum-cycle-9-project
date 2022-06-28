@@ -71,23 +71,9 @@ The role (e.g. an admin user or regular user) , created_at an userid will be aut
 Users can be appointed as an admin by the Main Admin.
 Send a request to be an admin. If approve then the user status must be chnaged to admin, otherwise they remain as a regular user
 """
-
-
 @app.route('/login')
 def login():
     return
-
-
-# normal user page - ag&mm
-"""
-  Perform the CRUD operations on the user page
-  if we feel good we can add a calendar 
-"""
-
-
-@app.route('/profile/<userid>')
-def user_page():
-    return render_template('user.html')
 
 
 # admin user page - sr
@@ -100,17 +86,17 @@ Add admin username beside the even they approved.
 """
 
 
-@app.route('/admin/<userid>')
+@app.route('/admin')
 def admin_page():
     return
 
 
-@app.route('/profile/<username>')
-def profile(username=None):
-    return render_template('profile.html', username=username)
-
-
-@app.route('/event', methods=["GET", "POST","DELETE","PUT"])
+# normal user page - ag&mm
+"""
+  Perform the CRUD operations on the user page
+  if we feel good we can add a calendar 
+"""
+@app.route('/profile', methods=["GET", "POST","DELETE","PUT"])
 def events():
     form = EventsForm()
 
