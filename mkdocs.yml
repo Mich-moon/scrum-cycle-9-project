@@ -1,0 +1,8 @@
+site_name: Events Management System Docs
+
+theme:
+  name: "material"
+
+nav:
+  - index.md
+  - about.md
