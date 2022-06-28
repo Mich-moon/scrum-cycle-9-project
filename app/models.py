@@ -42,7 +42,7 @@ class Event(db.Model):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime())
 
-    def __init__(self,title, start_date, end_date, description, venue, flyer,website, status, date_created, date_updated):
+    def __init__(self,title, start_date, end_date, description, venue, flyer,website, status, uid, date_created, date_updated):
         self.title = title
         self.star_date = start_date
         self.end_date = end_date
@@ -51,5 +51,6 @@ class Event(db.Model):
         self.flyer = flyer
         self.website = website 
         self.status = status
+        self.uid = uid
         self.created_at = date_created
         self.updated_at = date_updated

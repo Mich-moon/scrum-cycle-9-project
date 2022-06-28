@@ -1,10 +1,11 @@
 import os
-from flask import Flask, render_template, jsonify, flash
-from flask import request, redirect, url_for, session, send_from_directory
+import datetime
+from flask import Flask, render_template, jsonify, flash, request
+from flask import request, redirect, url_for, session, send_from_directory,sessions
 from werkzeug.utils import secure_filename
 from app import app, db
-from .forms import ContactForm, SignupForm
-from .models import User
+from .forms import EventsForm, SignupForm
+from .models import User,Event
 
 # home page
 
@@ -109,22 +110,50 @@ def profile(username=None):
     return render_template('profile.html', username=username)
 
 
-@app.route('/contact', methods=["GET", "POST"])
-def contact():
-    form = ContactForm()
+@app.route('/event', methods=["GET", "POST","DELETE","PUT"])
+def events():
+    form = EventsForm()
 
     if form.validate_on_submit():
-        full_name = form.full_name.data  # or request.form['full_name']
-        email = form.email.data  # or request.form['email']
-        message = form.message.data  # or request.form['message']
+        title = form.title.data 
+        start_date = form.start_date.data 
+        end_date = form.end_date.data 
+        description = form.description.data
+        venue = form.venue.data 
+        flyer = form.flyer.data
+        website = form.website.data 
+        status = form.status.data  
+        flyer_filename = secure_filename(flyer.filename)
+        flyer.save(os.path.join(
+            os.environ.get('UPLOAD_FOLDER'), flyer_filename
+        ))
+        
+        
+        event = Event(
+        title = title, 
+        start_date = start_date,
+        end_date = end_date, 
+        description = description,
+        venue = venue, 
+        flyer = flyer_filename, 
+        website = website, 
+        status = status,
+        uid= 1, # need to work on this
+        date_created=datetime.datetime.utcnow(),
+        date_updated = datetime.datetime.utcnow() # need to work on this
+        )
 
-        app.logger.debug(full_name)
+        db.session.add(event)
+        db.session.commit()
+        #app.logger.debug(full_name)
+        flash("Event Successfully Created")
+        return redirect(url_for('home'))
 
-    for error in form.email.errors:
+    for error in form.errors:
         app.logger.error(error)
         flash(error)
 
-    return render_template('contact_form.html', form=form)
+    return render_template('create_event_form.html', form=form)
 
 
 @app.route('/api/tasks')
