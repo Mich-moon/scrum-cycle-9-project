@@ -2,4 +2,44 @@
 
 {% block content %}
 <h1>Login</h1>
+
+<form
+  method="POST"
+  action="login"
+  enctype="multipart/form-data"
+>
+  {{ form.csrf_token }}
+  <div class="form-group mb-3">
+    {{ form.email.label(class="form-label") }} {{
+    form.email(class="form-control") }} {% if form.email.errors %}
+    <ul class="errors">
+      {% for error in form.email.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  <div class="form-group mb-3">
+    {{ form.password.label(class="form-label") }} {{
+    form.password(class="form-control") }} {% if form.password.errors %}
+    <ul class="errors">
+      {% for error in form.password.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  <p><button type="submit" class="btn btn-primary">Login</button></p>
+</form>
+
+<script>
+  function login() {
+    const response = await fetch('/login', {method: 'post'});
+    const result = await response.json();
+    localStorage.setItem('jwt', result.access_token);
+    console.log(localStorage.getItem('jwt'));
+  }
+  
+</script>
+
 {% endblock %}

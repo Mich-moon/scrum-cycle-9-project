@@ -11,3 +11,4 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', '')
     # This is just here to suppress a warning from SQLAlchemy as it will soon be removed
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JWT_TOKEN_LOCATION=["headers"]

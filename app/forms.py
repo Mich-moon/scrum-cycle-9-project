@@ -35,3 +35,8 @@ class EventsForm(FlaskForm):
         ])
         
     website = StringField('Website URL', validators=[InputRequired()])
+    
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[Email(), InputRequired(), Length(1, 64)])
+    password = PasswordField('Password', validators=[
+        InputRequired()])

@@ -4,8 +4,12 @@ from flask import Flask, render_template, jsonify, flash, request
 from flask import request, redirect, url_for, session, send_from_directory,sessions
 from werkzeug.utils import secure_filename
 from app import app, db
-from .forms import EventsForm, SignupForm
+from .forms import EventsForm, SignupForm, LoginForm
 from .models import User,Event
+from werkzeug.security import check_password_hash
+from app import jwt
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required
 
 # home page
 
@@ -71,9 +75,25 @@ The role (e.g. an admin user or regular user) , created_at an userid will be aut
 Users can be appointed as an admin by the Main Admin.
 Send a request to be an admin. If approve then the user status must be chnaged to admin, otherwise they remain as a regular user
 """
-@app.route('/login')
+@app.route('/login',methods=["GET","POST"])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        email=form.email.data
+        password=form.password.data
+        user = User.query.filter_by(email=email).first()
+
+        if user is not None and check_password_hash(user.password,password):
+            access_token = create_access_token(identity=user.id)
+            return jsonify(message="Login Successful", access_token=access_token)
+            #flash('Login successful', 'success')
+            #next_page = request.args.get('next')
+            #return redirect(url_for('home'))#needs to be changed
+        else:
+            flash('Invalid email or password', 'error')
+
+    return render_template('login.html', form=form)
 
 
 # admin user page - sr
@@ -140,7 +160,6 @@ def events():
         flash(error)
 
     return render_template('create_event_form.html', form=form)
-
 
 @app.route('/api/tasks')
 def tasks():
