@@ -1,12 +1,12 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <h1>Login</h1>
 
 <form
   method="POST"
-  action="login"
+  action=""
+  onsubmit="event.preventDefault(); login();"
   enctype="multipart/form-data"
+  id="loginForm"
 >
   {{ form.csrf_token }}
   <div class="form-group mb-3">
@@ -33,13 +33,24 @@
 </form>
 
 <script>
-  function login() {
-    const response = await fetch('/login', {method: 'post'});
+  async function login() {
+    let loginForm = document.getElementById("loginForm");
+    let form_data = new FormData(loginForm);
+
+    const response = await fetch("/api/login", {
+      method: "post",
+      body: form_data,
+    });
     const result = await response.json();
-    localStorage.setItem('jwt', result.access_token);
-    console.log(localStorage.getItem('jwt'));
+    localStorage.setItem("jwt", result.access_token);
+    if (result.access_token) {
+      localStorage.setItem("jwt", result.access_token);
+      window.location.href = "/"; // redirect page
+      console.log(result);
+    } else {
+      console.log(result);
+    }
   }
-  
 </script>
 
 {% endblock %}

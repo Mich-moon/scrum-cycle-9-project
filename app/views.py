@@ -1,11 +1,11 @@
 import os
 import datetime
 from flask import Flask, render_template, jsonify, flash, request
-from flask import request, redirect, url_for, session, send_from_directory,sessions
+from flask import request, redirect, url_for, session, send_from_directory, sessions
 from werkzeug.utils import secure_filename
 from app import app, db
 from .forms import EventsForm, SignupForm, LoginForm
-from .models import User,Event
+from .models import User, Event
 from werkzeug.security import check_password_hash
 from app import jwt
 from flask_jwt_extended import create_access_token
@@ -75,30 +75,39 @@ The role (e.g. an admin user or regular user) , created_at an userid will be aut
 Users can be appointed as an admin by the Main Admin.
 Send a request to be an admin. If approve then the user status must be chnaged to admin, otherwise they remain as a regular user
 """
-@app.route('/login',methods=["GET","POST"])
-def login():
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login_page():
     form = LoginForm()
+    return render_template('login.html', form=form)
+
+
+@app.route('/api/login', methods=["POST"])
+def login():
+    form = LoginForm(obj=request.form)
 
     if form.validate_on_submit():
-        email=form.email.data
-        password=form.password.data
+        email = form.email.data
+        password = form.password.data
         user = User.query.filter_by(email=email).first()
 
-        if user is not None and check_password_hash(user.password,password):
+        if user is not None and check_password_hash(user.password, password):
             role = False
             if user.role == "admin":
                 role = True
             sub = user.id
-            more_claims={"name":user.full_name,"admin":role}
-            access_token = create_access_token(sub,additional_claims=more_claims)
+            more_claims = {"name": user.full_name, "admin": role}
+            access_token = create_access_token(
+                sub, additional_claims=more_claims)
             return jsonify(message="Login Successful", access_token=access_token)
             #flash('Login successful', 'success')
             #next_page = request.args.get('next')
-            #return redirect(url_for('home'))#needs to be changed
+            # return redirect(url_for('home'))#needs to be changed
         else:
             flash('Invalid email or password', 'error')
 
-    return render_template('login.html', form=form)
+    return jsonify(message="Login Failed")
 
 
 # admin user page - sr
@@ -121,39 +130,40 @@ def admin_page():
   Perform the CRUD operations on the user page
   if we feel good we can add a calendar 
 """
-@app.route('/events', methods=["GET", "POST","DELETE","PUT"])
+
+
+@app.route('/events', methods=["GET", "POST", "DELETE", "PUT"])
 def events():
     form = EventsForm()
 
     if form.validate_on_submit():
-        title = form.title.data 
-        start_date = form.start_date.data 
-        end_date = form.end_date.data 
+        title = form.title.data
+        start_date = form.start_date.data
+        end_date = form.end_date.data
         description = form.description.data
-        venue = form.venue.data 
+        venue = form.venue.data
         flyer = form.flyer.data
-        website = form.website.data 
+        website = form.website.data
         flyer_filename = secure_filename(flyer.filename)
         flyer.save(os.path.join(
             os.environ.get('UPLOAD_FOLDER'), flyer_filename
         ))
-        
-        
+
         event = Event(
-        title = title, 
-        start_date = start_date,
-        end_date = end_date, 
-        description = description,
-        venue = venue, 
-        flyer = flyer_filename, 
-        website = website, 
-        uid= 1, # need to work on this
-        date_updated = datetime.datetime.utcnow() # need to work on this
+            title=title,
+            start_date=start_date,
+            end_date=end_date,
+            description=description,
+            venue=venue,
+            flyer=flyer_filename,
+            website=website,
+            uid=1,  # need to work on this
+            date_updated=datetime.datetime.utcnow()  # need to work on this
         )
 
         db.session.add(event)
         db.session.commit()
-        #app.logger.debug(full_name)
+        # app.logger.debug(full_name)
         flash("Event Successfully Created")
         return redirect(url_for('home'))
 
@@ -163,6 +173,7 @@ def events():
 
     return render_template('create_event_form.html', form=form)
 
+
 @app.route('/profile')
-def userprofile():  
+def userprofile():
     return render_template('user.html')
