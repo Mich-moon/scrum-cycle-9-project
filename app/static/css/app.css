@@ -9,7 +9,7 @@ body {
 }
 
 header {
-  text-align: right;
+  text-align: center;
   background-color: #0B284A;
   padding: 20px;
   margin: -10px;
@@ -47,4 +47,29 @@ input[type=text], input[type=password], input[type=email] {
 #login-div a:visited, a:active, a:link {  
   color: #CC922F;  
   padding-left: 7px;
+}
+
+#nav2 {  
+  text-align: center;
+  background-color: #b8e3ff;
+  padding: 20px;
+  border-radius: 25px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+#btn1:visited, #btn2:visited, #btn3:visited {  
+  color: #0B284A;
+  text-decoration: none;
+}
+
+#btn1, #btn2, #btn3 {
+  text-decoration: none;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+
+#btn1:hover, #btn2:hover, #btn3:hover {
+  text-decoration: underline;
 }

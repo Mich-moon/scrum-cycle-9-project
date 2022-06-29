@@ -121,7 +121,7 @@ def admin_page():
   Perform the CRUD operations on the user page
   if we feel good we can add a calendar 
 """
-@app.route('/profile', methods=["GET", "POST","DELETE","PUT"])
+@app.route('/events', methods=["GET", "POST","DELETE","PUT"])
 def events():
     form = EventsForm()
 
@@ -163,8 +163,6 @@ def events():
 
     return render_template('create_event_form.html', form=form)
 
-@app.route('/api/tasks')
-def tasks():
-    tasks = [{'id': 1, 'title': 'Teach Class'},
-             {'id': 2, 'title': 'Go have lunch'}]
-    return jsonify(tasks=tasks)
+@app.route('/profile')
+def userprofile():  
+    return render_template('user.html')

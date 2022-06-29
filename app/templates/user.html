@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
+{% block header %}
+<div id="nav2">
+  <a id="btn1" href="{{ url_for('events') }}">Create Event</a>
+  <a id="btn2" href="{{ url_for('events') }}">Event Search</a>
+  <a id="btn3" href="{{ url_for('events') }}">Update Event</a>
+</div>
+{% endblock %}
+
 {% block content %}
-
-<h1>User</h1>
-
-{% extends 'create_event_form.html' %}
-
 {% endblock %}
