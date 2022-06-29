@@ -85,7 +85,12 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if user is not None and check_password_hash(user.password,password):
-            access_token = create_access_token(identity=user.id)
+            role = False
+            if user.role == "admin":
+                role = True
+            sub = user.id
+            more_claims={"name":user.full_name,"admin":role}
+            access_token = create_access_token(sub,additional_claims=more_claims)
             return jsonify(message="Login Successful", access_token=access_token)
             #flash('Login successful', 'success')
             #next_page = request.args.get('next')
