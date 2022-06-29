@@ -25,17 +25,17 @@ def about():
     return render_template('about.html')
 
 
-# sign up page - mw
-"""
-The user enters their email and password
-"""
+@app.route('/signup', methods=["GET", "POST"])
+def signup_page():
+    form = SignupForm()
+    return render_template('signup.html', form=form)
 
 
-@app.route('/api/v1/signup', methods=["GET", "POST"])
+@app.route('/api/v1/signup', methods=["POST"])
 def signup():
     """Route for signup."""
 
-    form = SignupForm()
+    form = SignupForm(obj=request.form)
 
     if form.validate_on_submit():
         photo = form.photo.data
@@ -55,10 +55,9 @@ def signup():
         db.session.commit()
 
         flash('Signup successful', 'success')
-        next_page = request.args.get('next')
-        return redirect(url_for('home'))
+        return jsonify(message="Signup Successful"), 201
 
-    return render_template('signup.html', form=form)
+    return jsonify(message="Signup Failed", errors=form_errors(form)), 400
 
 
 @app.route('/uploads/<string:filename>')
@@ -177,3 +176,20 @@ def events():
 @app.route('/profile')
 def userprofile():
     return render_template('user.html')
+
+# Here we define a function to collect form errors from Flask-WTF
+# which we can later use
+
+
+def form_errors(form):
+    error_messages = []
+    """Collects form errors"""
+    for field, errors in form.errors.items():
+        for error in errors:
+            message = u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            )
+            error_messages.append(message)
+
+    return error_messages
