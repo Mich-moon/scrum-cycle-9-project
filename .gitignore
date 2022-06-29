@@ -3,6 +3,3 @@
 __pycache__
 venv
 .env
-migrations/versions
-.env.sample
-.env.sample
