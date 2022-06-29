@@ -23,7 +23,8 @@
 
     <main>
       <div class="container">
-        {% block header %} {% endblock %} {% block content %} {% endblock %}
+        {% block header %} {% endblock %} {% include 'flash_messages.html' %} {%
+        block content %} {% endblock %}
       </div>
     </main>
   </body>
