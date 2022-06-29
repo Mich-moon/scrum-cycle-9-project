@@ -23,13 +23,6 @@ class EventsForm(FlaskForm):
     venue = StringField('Venue', validators=[InputRequired()])
     start_date = DateField('Start Date', validators=[InputRequired()])
     end_date = DateField('End Date',validators=[InputRequired()]) # Validate the end_date
-    
-    status= SelectField('Status',
-                            validators=[InputRequired()],
-                            choices=[
-                                (1, 'Pending'),
-                                (2, 'Published'),
-                            ])
     flyer = FileField('Flyer',validators=[
         FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')
         ])

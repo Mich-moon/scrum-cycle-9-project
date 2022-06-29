@@ -133,7 +133,6 @@ def events():
         venue = form.venue.data 
         flyer = form.flyer.data
         website = form.website.data 
-        status = form.status.data  
         flyer_filename = secure_filename(flyer.filename)
         flyer.save(os.path.join(
             os.environ.get('UPLOAD_FOLDER'), flyer_filename
@@ -148,9 +147,7 @@ def events():
         venue = venue, 
         flyer = flyer_filename, 
         website = website, 
-        status = status,
         uid= 1, # need to work on this
-        date_created=datetime.datetime.utcnow(),
         date_updated = datetime.datetime.utcnow() # need to work on this
         )
 

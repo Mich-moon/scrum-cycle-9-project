@@ -36,15 +36,15 @@ class Event(db.Model):
     description = db.Column(db.String(1028), nullable=False)
     venue= db.Column(db.String(128), nullable=False)
     flyer = db.Column(db.String(225))
-    wesbite =  db.Column(db.String(225), default="Pending")
-    status= db.Column(db.String(15), nullable=False)
+    website =  db.Column(db.String(225),nullable=False)
+    status= db.Column(db.String(15), default="Pending")
     uid = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime())
 
     def __init__(self,title, start_date, end_date, description, venue, flyer,website, uid, date_updated):
         self.title = title
-        self.star_date = start_date
+        self.start_date = start_date
         self.end_date = end_date
         self.description = description
         self.venue= venue
