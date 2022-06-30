@@ -99,14 +99,122 @@ def login():
             more_claims = {"name": user.full_name, "admin": role}
             access_token = create_access_token(
                 sub, additional_claims=more_claims)
+
+            flash('Login successful', 'success')
+
             return jsonify(message="Login Successful", access_token=access_token)
-            #flash('Login successful', 'success')
+
             #next_page = request.args.get('next')
             # return redirect(url_for('home'))#needs to be changed
         else:
             flash('Invalid email or password', 'error')
 
     return jsonify(message="Login Failed")
+
+
+@app.route('/api/users/<user_id>', methods=["GET"])
+def get_user(user_id):
+    """Get Details of a user"""
+    user = db.session.query(User).get(int(user_id))
+
+    if request.method == 'GET':
+
+        if user is not None:
+
+            user_json = {
+                "id": user.id,
+                "full_name": user.full_name,
+                "email": user.email,
+                "photo": user.photo,
+                "role": user.role,
+                "created_at": user.created_at
+            }
+
+            return jsonify(user=user_json), 200
+
+        return jsonify(message="Item not found"), 404
+
+
+@app.route('/api/users/<user_id>/events', methods=["GET"])
+def get_user_events(user_id):
+    """Get Details of an event for a user"""
+    user_events = db.session.query(Event).filter_by(uid=user_id).all()
+
+    if request.method == 'GET':
+
+        if user_events is not None:
+
+            events = [{
+                "id": e.id,
+                "title": e.title,
+                "start_date": e.start_date,
+                "end_date": e.end_date,
+                "description": e.description,
+                "venue": e.venue,
+                "flyer": e.flyer,
+                "website": e.website,
+                "status": e.status,
+                "uid": e.uid,
+                "created_at": e.created_at,
+                "updated_at": e.updated_at
+            } for e in user_events]
+
+            return jsonify(events=events), 200
+
+        return jsonify(message="Item not found"), 404
+
+
+@app.route('/api/users/<user_id>/events/<event_id>', methods=["PUT", "DELETE"])
+def edit_user_events(user_id):
+    """Update and Delete event for user"""
+    user_event = db.session.query(Event).get(int(event_id))
+
+    if request.method == 'PUT':
+        if user_event is not None:
+
+            form = EventsForm(obj=request.form)
+
+            if form.validate_on_submit():
+                title = form.title.data
+                start_date = form.start_date.data
+                end_date = form.end_date.data
+                description = form.description.data
+                venue = form.venue.data
+                flyer = form.flyer.data
+                website = form.website.data
+                flyer_filename = secure_filename(flyer.filename)
+                flyer.save(os.path.join(
+                    os.environ.get('UPLOAD_FOLDER'), flyer_filename
+                ))
+
+                event = Event(
+                    title=title,
+                    start_date=start_date,
+                    end_date=end_date,
+                    description=description,
+                    venue=venue,
+                    flyer=flyer_filename,
+                    website=website,
+                    uid=user_id,
+                    date_updated=datetime.datetime.utcnow()  # need to work on this
+                )
+
+                db.session.update(event)
+                db.session.commit()
+
+            return jsonify(message="Event updated"), 200
+
+        return jsonify(message="Item not found"), 404
+
+    elif request.method == 'DELETE':
+
+        if user_event is not None:
+            db.session.delete(user_event)
+            db.session.commit()
+
+            return jsonify(message="Item deleted"), 200
+
+        return jsonify(message="Item not found"), 404
 
 
 # admin user page - sr
