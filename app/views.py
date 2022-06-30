@@ -156,8 +156,8 @@ def remove_event(id):
 """
 
 
-@app.route('/events', methods=["GET", "POST", "DELETE", "PUT"])
-def events():
+@app.route('/profile/<user_id>', methods=["GET", "POST","DELETE","PUT"])
+def events(user_id):
     form = EventsForm()
 
     if form.validate_on_submit():
@@ -172,29 +172,30 @@ def events():
         flyer.save(os.path.join(
             os.environ.get('UPLOAD_FOLDER'), flyer_filename
         ))
+        if (start_date > end_date):                
+                flash("Invaild End date")
+        else:
+                event = Event(
+                    title=title,
+                    start_date=start_date,
+                    end_date=end_date,
+                    description=description,
+                    venue=venue,
+                    flyer=flyer_filename,
+                    website=website,
+                    uid= user_id,  # need to work on this 
+                    date_updated=datetime.datetime.utcnow()  # need to work on this
+                )
 
-        event = Event(
-            title=title,
-            start_date=start_date,
-            end_date=end_date,
-            description=description,
-            venue=venue,
-            flyer=flyer_filename,
-            website=website,
-            uid=1,  # need to work on this
-            date_updated=datetime.datetime.utcnow()  # need to work on this
-        )
-
-        db.session.add(event)
-        db.session.commit()
-        # app.logger.debug(full_name)
-        flash("Event Successfully Created")
-        return redirect(url_for('home'))
+                db.session.add(event)
+                db.session.commit()
+                # app.logger.debug(full_name)
+                flash("Event Successfully Created")
+                return redirect(url_for('home'))
 
     for error in form.errors:
         app.logger.error(error)
         flash(error)
-
     return render_template('create_event_form.html', form=form)
 
 
