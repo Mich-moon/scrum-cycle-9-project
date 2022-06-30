@@ -125,6 +125,7 @@ def login():
 
 
 @app.route('/api/users/<user_id>', methods=["GET"])
+@jwt_required()
 def get_user(user_id):
     """Get Details of a user"""
     user = db.session.query(User).get(int(user_id))
@@ -154,6 +155,7 @@ def event_page():
 
 
 @app.route('/api/users/<user_id>/events', methods=["GET", "POST"])
+@jwt_required()
 def get_user_events(user_id):
     """Get Details of an event for a user ane create event"""
 
@@ -240,6 +242,7 @@ def get_user_events(user_id):
 
 
 @app.route('/api/events/<event_id>', methods=["GET"])
+@jwt_required()
 def get_event(event_id):
     """Get Details of an event"""
     event = db.session.query(Event).get(int(event_id))
@@ -277,6 +280,7 @@ def search_event_page():
 
 
 @app.route('/api/users/<user_id>/events/<event_id>', methods=["PUT", "DELETE"])
+@jwt_required()
 def edit_user_events(user_id, event_id):
     """Update and Delete event for user"""
     user_event = db.session.query(Event).get(int(event_id))
@@ -352,12 +356,14 @@ def add_event():
 
 
 @app.route('/admin/<int:id>', methods=['GET'])
+@jwt_required()
 def get_event_by_id(id):
     return_value = Event.get_event(id)
     return jsonify(return_value)
 
 
 @app.route('/admin/<int:id>', methods=['PUT'])
+@jwt_required()
 def update_event(id):
     request_data = request.get_json()
     Event.update_event(id, request_data["title"], request_data["start_date"], request_data["end_date"], request_data["description"],
@@ -368,6 +374,7 @@ def update_event(id):
 
 
 @app.route('/admin/<int:id>', methods=['DELETE'])
+@jwt_required()
 def remove_event(id):
     Event.delete_movie(id)
     response = Response("Event Deleted", status=200,
