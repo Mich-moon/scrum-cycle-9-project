@@ -4,7 +4,7 @@ from flask import Flask, render_template, jsonify, flash, Response
 from flask import request, redirect, url_for, session, send_from_directory, sessions
 from werkzeug.utils import secure_filename
 from app import app, db
-from .forms import EventsForm, SignupForm, LoginForm
+from .forms import EventsForm, SignupForm, LoginForm, UpdateEventsForm, SearchEventsForm
 from .models import User, Event
 from werkzeug.security import check_password_hash
 from app import jwt
@@ -239,8 +239,45 @@ def get_user_events(user_id):
         return jsonify(message="Event creation Failed", errors=form_errors(form)), 400
 
 
+@app.route('/api/events/<event_id>', methods=["GET"])
+def get_event(event_id):
+    """Get Details of an event"""
+    event = db.session.query(Event).get(int(event_id))
+
+    if event is not None:
+        event_json = {
+            "id": event.id,
+            "title": event.title,
+            "start_date": event.start_date,
+            "end_date": event.end_date,
+            "description": event.description,
+            "venue": event.venue,
+            "flyer": event.flyer,
+            "website": event.website,
+            "status": event.status,
+            "uid": event.uid,
+            "created_at": event.created_at,
+            "updated_at": event.updated_at
+        }
+        return jsonify(event=event_json), 201
+
+    return jsonify(message="Item not found"), 404
+
+
+@app.route('/updateevents', methods=["GET", "POST"])
+def event_update_page():
+    form = UpdateEventsForm()
+    return render_template('update_event.html', form=form)
+
+
+@app.route('/searchevents', methods=["GET", "POST"])
+def search_event_page():
+    form = SearchEventsForm()
+    return render_template('event_search.html', form=form)
+
+
 @app.route('/api/users/<user_id>/events/<event_id>', methods=["PUT", "DELETE"])
-def edit_user_events(user_id):
+def edit_user_events(user_id, event_id):
     """Update and Delete event for user"""
     user_event = db.session.query(Event).get(int(event_id))
 
@@ -248,7 +285,7 @@ def edit_user_events(user_id):
         if user_event is not None:
             request_data = request.get_json()
             Event.update_event(
-                id,
+                event_id,
                 request_data["title"],
                 request_data["start_date"],
                 request_data["end_date"],
@@ -256,7 +293,7 @@ def edit_user_events(user_id):
                 request_data["venue"],
                 request_data["flyer"],
                 request_data["website"],
-                request_data["updated_at"]
+                datetime.datetime.utcnow()
             )
             event = db.session.query(Event).get(int(event_id))
 
@@ -288,8 +325,6 @@ def edit_user_events(user_id):
             return jsonify(message="Item deleted"), 200
 
         return jsonify(message="Item not found"), 404
-
-    return jsonify(message=""), 400
 
 
 # admin user page - sr
