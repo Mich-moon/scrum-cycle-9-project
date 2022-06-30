@@ -1,15 +1,15 @@
 import os
 import datetime
-from flask import Flask, render_template, jsonify, flash, request
+from flask import Flask, render_template, jsonify, flash, Response
 from flask import request, redirect, url_for, session, send_from_directory, sessions
 from werkzeug.utils import secure_filename
 from app import app, db
 from .forms import EventsForm, SignupForm, LoginForm
 from .models import User, Event
 from werkzeug.security import check_password_hash
-from app import jwt
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import jwt_required
+#from app import jwt
+#from flask_jwt_extended import create_access_token
+#from flask_jwt_extended import jwt_required
 
 # home page
 
@@ -119,10 +119,35 @@ Add admin username beside the even they approved.
 """
 
 
-@app.route('/admin')
+#@app.route('/admin/<userid>')
+@app.route('/admin', methods = ['GET'])
 def admin_page():
-    return
+    return jsonify({'Events': Event.get_all_events()})
 
+'''@app.route('/admin', methods=['POST'])
+def add_event():
+    request_data = request.get_json()
+    Event.add_event(request_data["title"], request_data["start_date"],request_data["end_date"],request_data["description"],request_data["venue"],request_data["flyer"],request_data["website"],request_data["updated_at"])
+    response = Response("Event added", status=201, mimetype='application/json')
+    return response'''
+
+@app.route('/admin/<int:id>', methods=['GET'])
+def get_event_by_id(id):
+    return_value = Event.get_event(id)
+    return jsonify(return_value)
+
+@app.route('/admin/<int:id>', methods=['PUT'])
+def update_event(id):
+    request_data = request.get_json()
+    Event.update_event(id,request_data["title"], request_data["start_date"],request_data["end_date"],request_data["description"],request_data["venue"],request_data["flyer"],request_data["website"],request_data["updated_at"])
+    response = Response("Event Updated", status=200, mimetype='application/json')
+    return response
+
+@app.route('/admin/<int:id>', methods=['DELETE'])
+def remove_event(id):
+    Event.delete_movie(id)
+    response = Response("Event Deleted", status=200, mimetype='application/json')
+    return response
 
 # normal user page - ag&mm
 """
