@@ -33,3 +33,18 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[Email(), InputRequired(), Length(1, 64)])
     password = PasswordField('Password', validators=[
         InputRequired()])
+
+class UpdateEventsForm(FlaskForm):
+    title = StringField('Title', validators=[], id="title")
+    description = TextAreaField('Description', validators=[], id="description")
+    venue = StringField('Venue', validators=[], id="venue")
+    start_date = DateField('Start Date', validators=[], id="start_date")
+    end_date = DateField('End Date',validators=[], id="end_date") 
+    flyer = FileField('Flyer',validators=[
+        FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')
+        ], id="flyer")
+        
+    website = StringField('Website URL', validators=[], id="website")
+
+class SearchEventsForm(FlaskForm):
+    status = StringField('Status', validators=[], id="status")
