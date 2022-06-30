@@ -42,10 +42,9 @@
       body: form_data,
     });
     const result = await response.json();
-    localStorage.setItem("jwt", result.access_token);
     if (result.access_token) {
       localStorage.setItem("jwt", result.access_token);
-      window.location.href = "/"; // redirect page
+      window.location.href = "/events"; // redirect page
       console.log(result);
     } else {
       console.log(result);
