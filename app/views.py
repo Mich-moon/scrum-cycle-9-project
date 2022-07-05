@@ -301,22 +301,22 @@ def edit_user_events(user_id, event_id):
             )
             event = db.session.query(Event).get(int(event_id))
 
-            event_json = {
-                "id": e.id,
-                "title": e.title,
-                "start_date": e.start_date,
-                "end_date": e.end_date,
-                "description": e.description,
-                "venue": e.venue,
-                "flyer": e.flyer,
-                "website": e.website,
-                "status": e.status,
-                "uid": e.uid,
-                "created_at": e.created_at,
-                "updated_at": e.updated_at
-            }
+            # event_json = {
+            #     "id": e.id,
+            #     "title": e.title,
+            #     "start_date": e.start_date,
+            #     "end_date": e.end_date,
+            #     "description": e.description,
+            #     "venue": e.venue,
+            #     "flyer": e.flyer,
+            #     "website": e.website,
+            #     "status": e.status,
+            #     "uid": e.uid,
+            #     "created_at": e.created_at,
+            #     "updated_at": e.updated_at
+            # }
 
-            return jsonify(message="Event updated", event=event_json), 200
+            #return jsonify(message="Event updated", event=event_json), 200
 
         return jsonify(message="Item not found"), 404
 
