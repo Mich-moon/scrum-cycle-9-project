@@ -16,22 +16,10 @@ from flask_jwt_extended import jwt_required
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return jsonify(message="API version 2")
 
 
-# about page
-@app.route('/about')
-def about():
-    return render_template('about.html')
-
-
-@app.route('/signup', methods=["GET", "POST"])
-def signup_page():
-    form = SignupForm()
-    return render_template('signup.html', form=form)
-
-
-@app.route('/api/v1/signup', methods=["POST"])
+@app.route('/api/v2/signup', methods=["POST"])
 def signup():
     """Route for signup."""
 
@@ -72,30 +60,10 @@ def signup():
     return jsonify(message="Signup Failed", errors=form_errors(form)), 400
 
 
-@app.route('/uploads/<string:filename>')
-def get_image(filename):
-    """Return image from uploads folder."""
-    return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'][0:]), filename)
-
-
-# login page - ds
-"""
-This should accept: full name, email, password, profile_photo
-
-The role (e.g. an admin user or regular user) , created_at an userid will be automatically generated
-Users can be appointed as an admin by the Main Admin.
-Send a request to be an admin. If approve then the user status must be chnaged to admin, otherwise they remain as a regular user
-"""
-
-
-@app.route('/login', methods=["GET", "POST"])
-def login_page():
-    form = LoginForm()
-    return render_template('login.html', form=form)
-
-
-@app.route('/api/login', methods=["POST"])
+@app.route('/api/v2/login', methods=["GET"])
 def login():
+    """Route for login."""
+
     form = LoginForm(obj=request.form)
 
     if form.validate_on_submit():
@@ -115,19 +83,22 @@ def login():
             flash('Login successful', 'success')
 
             return jsonify(message="Login Successful", access_token=access_token)
-
-            #next_page = request.args.get('next')
-            # return redirect(url_for('home'))#needs to be changed
         else:
             flash('Invalid email or password', 'error')
 
     return jsonify(message="Login Failed", errors=form_errors(form)), 400
 
 
-@app.route('/api/users/<user_id>', methods=["GET"])
+@app.route('/api/v2/logout', methods=["GET"])
+def logout():
+    """Route for logout."""
+    return jsonify(message="Logged out")
+
+
+@app.route('/api/v2/users/<user_id>', methods=["GET"])
 @jwt_required()
-def get_user(user_id):
-    """Get Details of a user"""
+def users(user_id):
+    """Route for user details"""
     user = db.session.query(User).get(int(user_id))
 
     if request.method == 'GET':
@@ -148,16 +119,10 @@ def get_user(user_id):
         return jsonify(message="Item not found"), 404
 
 
-@app.route('/events', methods=["GET", "POST"])
-def event_page():
-    form = EventsForm()
-    return render_template('create_event_form.html', form=form)
-
-
-@app.route('/api/users/<user_id>/events', methods=["GET", "POST"])
+@app.route('/api/v2/events/<user_id>', methods=["GET", "POST"])
 @jwt_required()
-def get_user_events(user_id):
-    """Get Details of an event for a user ane create event"""
+def user_events(user_id):
+    """Route for user events"""
 
     if request.method == 'GET':
         user_events = db.session.query(Event).filter_by(uid=int(user_id)).all()
@@ -214,9 +179,7 @@ def get_user_events(user_id):
 
             db.session.add(event)
             db.session.commit()
-            # app.logger.debug(full_name)
             flash("Event Successfully Created")
-            # return redirect(url_for('home'))
 
             new_id = event.id
             event = db.session.query(Event).get(new_id)
@@ -241,89 +204,113 @@ def get_user_events(user_id):
         return jsonify(message="Event creation Failed", errors=form_errors(form)), 400
 
 
-@app.route('/api/events/<event_id>', methods=["GET"])
+@app.route('/api/v2/events', methods=["GET"])
 @jwt_required()
-def get_event(event_id):
-    """Get Details of an event"""
-    event = db.session.query(Event).get(int(event_id))
+def events_all():
+    """Route for events"""
+    events = db.session.query(Event).all()
 
-    if event is not None:
-        event_json = {
-            "id": event.id,
-            "title": event.title,
-            "start_date": event.start_date,
-            "end_date": event.end_date,
-            "description": event.description,
-            "venue": event.venue,
-            "flyer": event.flyer,
-            "website": event.website,
-            "status": event.status,
-            "uid": event.uid,
-            "created_at": event.created_at,
-            "updated_at": event.updated_at
-        }
-        return jsonify(event=event_json), 201
+    if events is not None:
+
+        events_json = [{
+            "id": e.id,
+            "title": e.title,
+            "start_date": e.start_date,
+            "end_date": e.end_date,
+            "description": e.description,
+            "venue": e.venue,
+            "flyer": e.flyer,
+            "website": e.website,
+            "status": e.status,
+            "uid": e.uid,
+            "created_at": e.created_at,
+            "updated_at": e.updated_at
+        } for e in events]
+
+        return jsonify(events=events_json), 200
 
     return jsonify(message="Item not found"), 404
 
 
-@app.route('/updateevents', methods=["GET", "POST"])
-def event_update_page():
-    form = UpdateEventsForm()
-    return render_template('update_event.html', form=form)
-
-
-@app.route('/searchevents', methods=["GET", "POST"])
-def search_event_page():
-    form = SearchEventsForm()
-    return render_template('event_search.html', form=form)
-
-
-@app.route('/api/users/<user_id>/events/<event_id>', methods=["PUT", "DELETE"])
+@app.route('/api/v2/events/search', methods=["GET"])
 @jwt_required()
-def edit_user_events(user_id, event_id):
-    """Update and Delete event for user"""
-    user_event = db.session.query(Event).get(int(event_id))
+def events_search():
+    """Route for events search"""
 
-    if request.method == 'PUT':
-        if user_event is not None:
-            request_data = request.get_json()
-            Event.update_event(
-                event_id,
-                request_data["title"],
-                request_data["start_date"],
-                request_data["end_date"],
-                request_data["description"],
-                request_data["venue"],
-                request_data["flyer"],
-                request_data["website"],
-                datetime.datetime.utcnow()
-            )
-            event = db.session.query(Event).get(int(event_id))
 
-            # event_json = {
-            #     "id": e.id,
-            #     "title": e.title,
-            #     "start_date": e.start_date,
-            #     "end_date": e.end_date,
-            #     "description": e.description,
-            #     "venue": e.venue,
-            #     "flyer": e.flyer,
-            #     "website": e.website,
-            #     "status": e.status,
-            #     "uid": e.uid,
-            #     "created_at": e.created_at,
-            #     "updated_at": e.updated_at
-            # }
+@app.route('/api/v2/events/<event_id>', methods=["GET", "PATCH", "DELETE"])
+@jwt_required()
+def events(event_id):
+    """Route for specific events"""
+    event = db.session.query(Event).get(int(event_id))
 
-            #return jsonify(message="Event updated", event=event_json), 200
+    if request.method == 'GET':
+
+        if event is not None:
+            event_json = {
+                "id": event.id,
+                "title": event.title,
+                "start_date": event.start_date,
+                "end_date": event.end_date,
+                "description": event.description,
+                "venue": event.venue,
+                "flyer": event.flyer,
+                "website": event.website,
+                "status": event.status,
+                "uid": event.uid,
+                "created_at": event.created_at,
+                "updated_at": event.updated_at
+            }
+            return jsonify(event=event_json), 201
+
+        return jsonify(message="Item not found"), 404
+
+    elif request.method == 'PATCH':
+        if event is not None:
+            
+            if request.args.get("title"):
+                user_event.title = request.args.get("title")
+            if request.args.get("start_date"):
+                user_event.start_date = request.args.get("start_date")
+            if request.args.get("end_date"):
+                user_event.end_date = request.args.get("end_date")
+            if request.args.get("description"):
+                user_event.description = request.args.get("description")
+            if request.args.get("venue"):
+                user_event.venue = request.args.get("venue")
+            if request.args.get("flyer"):
+                user_event.flyer = request.args.get("flyer")
+            if request.args.get("website"):
+                user_event.website = request.args.get("website")
+
+            user_event.updated_at = datetime.datetime.utcnow()
+            db.session.commit()
+
+            e = db.session.query(Event).get(int(event_id))
+
+            event_json = {
+                "id": e.id,
+                "title": e.title,
+                "start_date": e.start_date,
+                "end_date": e.end_date,
+                "description": e.description,
+                "venue": e.venue,
+                "flyer": e.flyer,
+                "website": e.website,
+                "status": e.status,
+                "uid": e.uid,
+                "created_at": e.created_at,
+                "updated_at": e.updated_at
+            }
+
+            return jsonify(message="Event updated", event=event_json), 200
 
         return jsonify(message="Item not found"), 404
 
     elif request.method == 'DELETE':
 
-        if user_event is not None:
-            db.session.delete(user_event)
+        if event is not None:
+            db.session.delete(event)
             db.session.commit()
 
             return jsonify(message="Item deleted"), 200
@@ -331,71 +318,14 @@ def edit_user_events(user_id, event_id):
         return jsonify(message="Item not found"), 404
 
 
-# admin user page - sr
-"""
-Perform the RUD operations on the user page (Read, update event status and delete events)
-They should have a masterlist of all events
-They can filter by status 
-Add admin username beside the even they approved. 
-  On the events_table there should be a column called approved by [String] and approved at [date]
-"""
+@app.route('/uploads/<string:filename>')
+def get_image(filename):
+    """Return image from uploads folder."""
+    return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'][0:]), filename)
 
-
-# @app.route('/admin/<userid>')
-@app.route('/admin', methods=['GET'])
-def admin_page():
-    return jsonify({'Events': Event.get_all_events()})
-
-
-'''@app.route('/admin', methods=['POST'])
-def add_event():
-    request_data = request.get_json()
-    Event.add_event(request_data["title"], request_data["start_date"],request_data["end_date"],request_data["description"],request_data["venue"],request_data["flyer"],request_data["website"],request_data["updated_at"])
-    response = Response("Event added", status=201, mimetype='application/json')
-    return response'''
-
-
-@app.route('/admin/<int:id>', methods=['GET'])
-@jwt_required()
-def get_event_by_id(id):
-    return_value = Event.get_event(id)
-    return jsonify(return_value)
-
-
-@app.route('/admin/<int:id>', methods=['PUT'])
-@jwt_required()
-def update_event(id):
-    request_data = request.get_json()
-    Event.update_event(id, request_data["title"], request_data["start_date"], request_data["end_date"], request_data["description"],
-                       request_data["venue"], request_data["flyer"], request_data["website"], request_data["updated_at"])
-    response = Response("Event Updated", status=200,
-                        mimetype='application/json')
-    return response
-
-
-@app.route('/admin/<int:id>', methods=['DELETE'])
-@jwt_required()
-def remove_event(id):
-    Event.delete_movie(id)
-    response = Response("Event Deleted", status=200,
-                        mimetype='application/json')
-    return response
-
-
-# normal user page - ag&mm
-"""
-  Perform the CRUD operations on the user page
-  if we feel good we can add a calendar 
-"""
-
-
-@app.route('/profile')
-def userprofile():
-    return render_template('user.html')
 
 # Here we define a function to collect form errors from Flask-WTF
 # which we can later use
-
 
 def form_errors(form):
     error_messages = []
