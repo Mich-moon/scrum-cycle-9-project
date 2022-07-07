@@ -60,7 +60,7 @@ def signup():
     return jsonify(message="Signup Failed", errors=form_errors(form)), 400
 
 
-@app.route('/api/v2/login', methods=["GET"])
+@app.route('/api/v2/login', methods=["POST"])
 def login():
     """Route for login."""
 
