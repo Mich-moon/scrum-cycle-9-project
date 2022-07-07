@@ -7,9 +7,11 @@ from app import app, db
 from .forms import EventsForm, SignupForm, LoginForm, UpdateEventsForm, SearchEventsForm
 from .models import User, Event
 from werkzeug.security import check_password_hash
-from app import jwt
+
+import jwt
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
+from flask_wtf.csrf import generate_csrf
 
 # home page
 
@@ -60,7 +62,7 @@ def signup():
     return jsonify(message="Signup Failed", errors=form_errors(form)), 400
 
 
-@app.route('/api/v2/login', methods=["GET"])
+@app.route('/api/v2/login', methods=["POST"])
 def login():
     """Route for login."""
 
@@ -90,6 +92,7 @@ def login():
 
 
 @app.route('/api/v2/logout', methods=["GET"])
+@jwt_required()
 def logout():
     """Route for logout."""
     return jsonify(message="Logged out")
@@ -119,7 +122,7 @@ def users(user_id):
         return jsonify(message="Item not found"), 404
 
 
-@app.route('/api/v2/events/<user_id>', methods=["GET", "POST"])
+@app.route('/api/v2/events/users/<user_id>', methods=["GET", "POST"])
 @jwt_required()
 def user_events(user_id):
     """Route for user events"""
@@ -174,7 +177,7 @@ def user_events(user_id):
                 flyer=flyer_filename,
                 website=website,
                 uid=int(user_id),
-                updated_at=datetime.datetime.utcnow()  # need to work on this
+                updated_at=datetime.datetime.utcnow()
             )
 
             db.session.add(event)
@@ -238,7 +241,7 @@ def events_search():
     """Route for events search"""
 
 
-@app.route('/api/v2/events/<event_id>', methods=["GET", "PATCH", "DELETE"])
+@app.route('/api/v2/events/<event_id>', methods=["GET", "PUT", "DELETE"])
 @jwt_required()
 def events(event_id):
     """Route for specific events"""
@@ -261,29 +264,41 @@ def events(event_id):
                 "created_at": event.created_at,
                 "updated_at": event.updated_at
             }
-            return jsonify(event=event_json), 201
+            return jsonify(event=event_json), 200
 
         return jsonify(message="Item not found"), 404
 
-    elif request.method == 'PATCH':
+    elif request.method == 'PUT':
         if event is not None:
-            
-            if request.args.get("title"):
-                user_event.title = request.args.get("title")
-            if request.args.get("start_date"):
-                user_event.start_date = request.args.get("start_date")
-            if request.args.get("end_date"):
-                user_event.end_date = request.args.get("end_date")
-            if request.args.get("description"):
-                user_event.description = request.args.get("description")
-            if request.args.get("venue"):
-                user_event.venue = request.args.get("venue")
-            if request.args.get("flyer"):
-                user_event.flyer = request.args.get("flyer")
-            if request.args.get("website"):
-                user_event.website = request.args.get("website")
 
-            user_event.updated_at = datetime.datetime.utcnow()
+            if request.args.get("title"):
+                event.title = request.args.get("title")
+            if request.args.get("start_date"):
+                event.start_date = request.args.get("start_date")
+            if request.args.get("end_date"):
+                event.end_date = request.args.get("end_date")
+            if request.args.get("description"):
+                event.description = request.args.get("description")
+            if request.args.get("venue"):
+                event.venue = request.args.get("venue")
+            if request.args.get("flyer"):
+                event.flyer = request.args.get("flyer")
+            if request.args.get("website"):
+                event.website = request.args.get("website")
+
+            # check for admin
+            if request.args.get("status"):
+                auth = request.headers.get('Authorization', None)
+                token = auth.split()[1]
+                payload = jwt.decode(
+                    token, app.config['SECRET_KEY'], algorithms=["HS256"])
+
+                if payload["admin"] == True:
+                    event.status = request.args.get("status")
+                else:
+                    return jsonify(message="Status update only for admins"), 401
+
+            event.updated_at = datetime.datetime.utcnow()
             db.session.commit()
 
             e = db.session.query(Event).get(int(event_id))
@@ -316,6 +331,11 @@ def events(event_id):
             return jsonify(message="Item deleted"), 200
 
         return jsonify(message="Item not found"), 404
+
+
+@app.route('/api/csrf-token', methods=['GET'])
+def get_csrf():
+    return jsonify({'csrf_token': generate_csrf()})
 
 
 @app.route('/uploads/<string:filename>')
