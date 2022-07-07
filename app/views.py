@@ -333,7 +333,7 @@ def events(event_id):
         return jsonify(message="Item not found"), 404
 
 
-@app.route('/api/csrf-token', methods=['GET'])
+@app.route('/api/v2/csrf-token', methods=['GET'])
 def get_csrf():
     return jsonify({'csrf_token': generate_csrf()})
 
