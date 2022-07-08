@@ -3,6 +3,7 @@ import datetime
 from flask import Flask, render_template, jsonify, flash, Response
 from flask import request, redirect, url_for, session, send_from_directory, sessions
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash
 from app import app, db
 from .forms import EventsForm, SignupForm, LoginForm, UpdateEventsForm, SearchEventsForm
 from .models import User, Event
@@ -98,14 +99,13 @@ def logout():
     return jsonify(message="Logged out")
 
 
-@app.route('/api/v2/users/<user_id>', methods=["GET"])
+@app.route('/api/v2/users/<user_id>', methods=["GET", "PUT", "PATCH"])
 @jwt_required()
 def users(user_id):
     """Route for user details"""
     user = db.session.query(User).get(int(user_id))
 
     if request.method == 'GET':
-
         if user is not None:
 
             user_json = {
@@ -118,6 +118,84 @@ def users(user_id):
             }
 
             return jsonify(user=user_json), 200
+
+        return jsonify(message="Item not found"), 404
+
+    elif request.method == 'PUT':
+        form = SignupForm(obj=request.form)
+        if user is not None:
+
+            # check for user's id
+            auth = request.headers.get('Authorization', None)
+            token = auth.split()[1]
+            payload = jwt.decode(
+                token, app.config['SECRET_KEY'], algorithms=["HS256"])
+
+            if user.id == int(payload["sub"]):
+
+                if form.validate_on_submit():
+                    photo = form.photo.data
+                    photo_filename = secure_filename(photo.filename)
+                    photo.save(os.path.join(
+                        os.environ.get('UPLOAD_FOLDER'), photo_filename
+                    ))
+
+                    user.name = form.full_name.data
+                    user.email = form.email.data
+                    user.password = generate_password_hash(
+                        form.password.data, method='pbkdf2:sha256')
+                    user.photo = photo_filename
+
+                    db.session.commit()
+
+                    u = db.session.query(User).get(int(user_id))
+
+                    user_json = {
+                        "id": u.id,
+                        "full_name": u.full_name,
+                        "email": u.email,
+                        "photo": u.profile_photo,
+                        "role": u.role,
+                        "created_at": u.created_at
+                    }
+
+                    return jsonify(user=user_json), 200
+
+                return jsonify(message="Update Failed", errors=form_errors(form)), 400
+
+            else:
+                return jsonify(message="Unauthorized"), 401
+
+        return jsonify(message="Item not found"), 404
+
+    elif request.method == 'PATCH':
+        if user is not None:
+
+            # check for admin
+            if request.args.get("role"):
+                auth = request.headers.get('Authorization', None)
+                token = auth.split()[1]
+                payload = jwt.decode(
+                    token, app.config['SECRET_KEY'], algorithms=["HS256"])
+
+                if payload["admin"] == True:
+                    user.role = request.args.get("role")
+                    db.session.commit()
+                    u = db.session.query(User).get(int(user_id))
+
+                    user_json = {
+                        "id": u.id,
+                        "full_name": u.full_name,
+                        "email": u.email,
+                        "photo": u.profile_photo,
+                        "role": u.role,
+                        "created_at": u.created_at
+                    }
+
+                    return jsonify(user=user_json), 200
+
+                else:
+                    return jsonify(message="Role update only for admins"), 401
 
         return jsonify(message="Item not found"), 404
 
