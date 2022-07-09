@@ -99,11 +99,17 @@ def logout():
     return jsonify(message="Logged out")
 
 
-@app.route('/api/v2/users/<user_id>', methods=["GET", "PUT", "PATCH"])
+@app.route('/api/v2/users/<user_id>', methods=["GET", "PUT", "DELETE"])
 @jwt_required()
 def users(user_id):
     """Route for user details"""
     user = db.session.query(User).get(int(user_id))
+
+    # get data from jwt payload
+    auth = request.headers.get('Authorization', None)
+    token = auth.split()[1]
+    payload = jwt.decode(
+        token, app.config['SECRET_KEY'], algorithms=["HS256"])
 
     if request.method == 'GET':
         if user is not None:
@@ -122,62 +128,52 @@ def users(user_id):
         return jsonify(message="Item not found"), 404
 
     elif request.method == 'PUT':
-        form = SignupForm(obj=request.form)
-        if user is not None:
 
-            # check for user's id
-            auth = request.headers.get('Authorization', None)
-            token = auth.split()[1]
-            payload = jwt.decode(
-                token, app.config['SECRET_KEY'], algorithms=["HS256"])
+        if request.form:
+            form = SignupForm(obj=request.form)
+            if user is not None:
 
-            if user.id == int(payload["sub"]):
+                # check for user's id
+                if user.id == int(payload["sub"]):
 
-                if form.validate_on_submit():
-                    photo = form.photo.data
-                    photo_filename = secure_filename(photo.filename)
-                    photo.save(os.path.join(
-                        os.environ.get('UPLOAD_FOLDER'), photo_filename
-                    ))
+                    if form.validate_on_submit():
+                        photo = form.photo.data
+                        photo_filename = secure_filename(photo.filename)
+                        photo.save(os.path.join(
+                            os.environ.get('UPLOAD_FOLDER'), photo_filename
+                        ))
 
-                    user.name = form.full_name.data
-                    user.email = form.email.data
-                    user.password = generate_password_hash(
-                        form.password.data, method='pbkdf2:sha256')
-                    user.photo = photo_filename
+                        user.full_name = form.full_name.data
+                        user.email = form.email.data
+                        user.password = generate_password_hash(
+                            form.password.data, method='pbkdf2:sha256')
+                        user.profile_photo = photo_filename
 
-                    db.session.commit()
+                        db.session.commit()
 
-                    u = db.session.query(User).get(int(user_id))
+                        u = db.session.query(User).get(int(user_id))
 
-                    user_json = {
-                        "id": u.id,
-                        "full_name": u.full_name,
-                        "email": u.email,
-                        "photo": u.profile_photo,
-                        "role": u.role,
-                        "created_at": u.created_at
-                    }
+                        user_json = {
+                            "id": u.id,
+                            "full_name": u.full_name,
+                            "email": u.email,
+                            "photo": u.profile_photo,
+                            "role": u.role,
+                            "created_at": u.created_at
+                        }
 
-                    return jsonify(user=user_json), 200
+                        return jsonify(message="User updated", user=user_json), 200
 
-                return jsonify(message="Update Failed", errors=form_errors(form)), 400
+                    return jsonify(message="Update Failed", errors=form_errors(form)), 400
 
-            else:
                 return jsonify(message="Unauthorized"), 401
 
-        return jsonify(message="Item not found"), 404
+            return jsonify(message="Item not found"), 404
 
-    elif request.method == 'PATCH':
-        if user is not None:
+        if request.args.get("role"):
+            if user is not None:
 
-            # check for admin
-            if request.args.get("role"):
-                auth = request.headers.get('Authorization', None)
-                token = auth.split()[1]
-                payload = jwt.decode(
-                    token, app.config['SECRET_KEY'], algorithms=["HS256"])
-
+                # check for admin
                 if payload["admin"] == True:
                     user.role = request.args.get("role")
                     db.session.commit()
@@ -192,15 +188,49 @@ def users(user_id):
                         "created_at": u.created_at
                     }
 
-                    return jsonify(user=user_json), 200
+                    return jsonify(message="User updated", user=user_json), 200
 
-                else:
-                    return jsonify(message="Role update only for admins"), 401
+                return jsonify(message="Unauthorized"), 401
+
+        return jsonify(message="Item not found"), 404
+
+    elif request.method == 'DELETE':
+
+        if user is not None:
+            if user.id == int(payload["sub"]) or payload["admin"] == True:
+                db.session.delete(user)
+                db.session.commit()
+
+                return jsonify(message="Item deleted"), 200
+
+            return jsonify(message="Unauthorized"), 401
 
         return jsonify(message="Item not found"), 404
 
 
-@app.route('/api/v2/events/users/<user_id>', methods=["GET", "POST"])
+@app.route('/api/v2/users', methods=["GET"])
+@jwt_required()
+def users_all():
+    """Route for users"""
+    users = db.session.query(User).all()
+
+    if users is not None:
+
+        users_json = [{
+            "id": u.id,
+            "full_name": u.full_name,
+            "email": u.email,
+            "photo": u.profile_photo,
+            "role": u.role,
+            "created_at": u.created_at
+        } for u in users]
+
+        return jsonify(users=users_json), 200
+
+    return jsonify(message="Item not found"), 404
+
+
+@app.route('/api/v2/events/users/<user_id>', methods=["GET"])
 @jwt_required()
 def user_events(user_id):
     """Route for user events"""
@@ -229,6 +259,41 @@ def user_events(user_id):
 
         return jsonify(message="Item not found"), 404
 
+
+@app.route('/api/v2/events', methods=["GET", "POST"])
+@jwt_required()
+def events_all():
+    """Route for events"""
+    events = db.session.query(Event).all()
+
+    auth = request.headers.get('Authorization', None)
+    token = auth.split()[1]
+    payload = jwt.decode(
+        token, app.config['SECRET_KEY'], algorithms=["HS256"])
+
+    if request.method == 'GET':
+
+        if events is not None:
+
+            events_json = [{
+                "id": e.id,
+                "title": e.title,
+                "start_date": e.start_date,
+                "end_date": e.end_date,
+                "description": e.description,
+                "venue": e.venue,
+                "flyer": e.flyer,
+                "website": e.website,
+                "status": e.status,
+                "uid": e.uid,
+                "created_at": e.created_at,
+                "updated_at": e.updated_at
+            } for e in events]
+
+            return jsonify(events=events_json), 200
+
+        return jsonify(message="Item not found"), 404
+
     elif request.method == 'POST':
 
         form = EventsForm(obj=request.form)
@@ -254,7 +319,7 @@ def user_events(user_id):
                 venue=venue,
                 flyer=flyer_filename,
                 website=website,
-                uid=int(user_id),
+                uid=int(payload["sub"]),
                 updated_at=datetime.datetime.utcnow()
             )
 
@@ -285,34 +350,6 @@ def user_events(user_id):
         return jsonify(message="Event creation Failed", errors=form_errors(form)), 400
 
 
-@app.route('/api/v2/events', methods=["GET"])
-@jwt_required()
-def events_all():
-    """Route for events"""
-    events = db.session.query(Event).all()
-
-    if events is not None:
-
-        events_json = [{
-            "id": e.id,
-            "title": e.title,
-            "start_date": e.start_date,
-            "end_date": e.end_date,
-            "description": e.description,
-            "venue": e.venue,
-            "flyer": e.flyer,
-            "website": e.website,
-            "status": e.status,
-            "uid": e.uid,
-            "created_at": e.created_at,
-            "updated_at": e.updated_at
-        } for e in events]
-
-        return jsonify(events=events_json), 200
-
-    return jsonify(message="Item not found"), 404
-
-
 @app.route('/api/v2/events/search', methods=["GET"])
 @jwt_required()
 def events_search():
@@ -324,6 +361,11 @@ def events_search():
 def events(event_id):
     """Route for specific events"""
     event = db.session.query(Event).get(int(event_id))
+
+    auth = request.headers.get('Authorization', None)
+    token = auth.split()[1]
+    payload = jwt.decode(
+        token, app.config['SECRET_KEY'], algorithms=["HS256"])
 
     if request.method == 'GET':
 
@@ -347,66 +389,99 @@ def events(event_id):
         return jsonify(message="Item not found"), 404
 
     elif request.method == 'PUT':
-        if event is not None:
 
-            if request.args.get("title"):
-                event.title = request.args.get("title")
-            if request.args.get("start_date"):
-                event.start_date = request.args.get("start_date")
-            if request.args.get("end_date"):
-                event.end_date = request.args.get("end_date")
-            if request.args.get("description"):
-                event.description = request.args.get("description")
-            if request.args.get("venue"):
-                event.venue = request.args.get("venue")
-            if request.args.get("flyer"):
-                event.flyer = request.args.get("flyer")
-            if request.args.get("website"):
-                event.website = request.args.get("website")
+        if request.form:
+            form = EventsForm(obj=request.form)
+            if event is not None:
 
-            # check for admin
-            if request.args.get("status"):
-                auth = request.headers.get('Authorization', None)
-                token = auth.split()[1]
-                payload = jwt.decode(
-                    token, app.config['SECRET_KEY'], algorithms=["HS256"])
+                # check for user's id
+                if event.uid == int(payload["sub"]):
+                    if form.validate_on_submit():
+                        event.title = form.title.data
+                        event.start_date = form.start_date.data
+                        event.end_date = form.end_date.data
+                        event.description = form.description.data
+                        event.venue = form.venue.data
+                        event.website = form.website.data
+                        event.updated_at = datetime.datetime.utcnow()
 
+                        flyer_filename = secure_filename(
+                            form.flyer.data.filename)
+                        form.flyer.data.save(os.path.join(
+                            os.environ.get('UPLOAD_FOLDER'), flyer_filename
+                        ))
+                        event.flyer = flyer_filename
+
+                        db.session.commit()
+
+                        new_id = event.id
+                        event = db.session.query(Event).get(new_id)
+
+                        event_json = {
+                            "id": event.id,
+                            "title": event.title,
+                            "start_date": event.start_date,
+                            "end_date": event.end_date,
+                            "description": event.description,
+                            "venue": event.venue,
+                            "flyer": event.flyer,
+                            "website": event.website,
+                            "status": event.status,
+                            "uid": event.uid,
+                            "created_at": event.created_at,
+                            "updated_at": event.updated_at
+                        }
+
+                        return jsonify(message="Event updated", event=event_json), 200
+
+                    return jsonify(message="Update Failed", errors=form_errors(form)), 400
+
+                return jsonify(message="Unauthorized"), 401
+
+            return jsonify(message="Item not found"), 404
+
+        if request.args.get("status"):
+            if event is not None:
+
+                # check for admin
                 if payload["admin"] == True:
                     event.status = request.args.get("status")
-                else:
-                    return jsonify(message="Status update only for admins"), 401
+                    event.updated_at = datetime.datetime.utcnow()
+                    db.session.commit()
 
-            event.updated_at = datetime.datetime.utcnow()
-            db.session.commit()
+                    e = db.session.query(Event).get(int(event_id))
 
-            e = db.session.query(Event).get(int(event_id))
+                    event_json = {
+                        "id": e.id,
+                        "title": e.title,
+                        "start_date": e.start_date,
+                        "end_date": e.end_date,
+                        "description": e.description,
+                        "venue": e.venue,
+                        "flyer": e.flyer,
+                        "website": e.website,
+                        "status": e.status,
+                        "uid": e.uid,
+                        "created_at": e.created_at,
+                        "updated_at": e.updated_at
+                    }
 
-            event_json = {
-                "id": e.id,
-                "title": e.title,
-                "start_date": e.start_date,
-                "end_date": e.end_date,
-                "description": e.description,
-                "venue": e.venue,
-                "flyer": e.flyer,
-                "website": e.website,
-                "status": e.status,
-                "uid": e.uid,
-                "created_at": e.created_at,
-                "updated_at": e.updated_at
-            }
+                    return jsonify(message="Event updated", event=event_json), 200
 
-            return jsonify(message="Event updated", event=event_json), 200
+                return jsonify(message="Unauthorized"), 401
 
-        return jsonify(message="Item not found"), 404
+            return jsonify(message="Item not found"), 404
 
     elif request.method == 'DELETE':
 
         if event is not None:
-            db.session.delete(event)
-            db.session.commit()
+            if event.uid == int(payload["sub"]) or payload["admin"] == True:
+                db.session.delete(event)
+                db.session.commit()
 
-            return jsonify(message="Item deleted"), 200
+                return jsonify(message="Item deleted"), 200
+
+            return jsonify(message="Unauthorized"), 401
 
         return jsonify(message="Item not found"), 404
 
