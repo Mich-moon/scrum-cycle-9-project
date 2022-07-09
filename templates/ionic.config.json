@@ -1,0 +1,7 @@
+{
+  "name": "templates",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
