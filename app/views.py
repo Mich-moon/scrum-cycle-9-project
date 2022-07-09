@@ -14,8 +14,6 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from flask_wtf.csrf import generate_csrf
 
-# home page
-
 
 @app.route('/')
 def home():
@@ -57,8 +55,7 @@ def signup():
             "created_at": user.created_at
         }
 
-        flash('Signup successful', 'success')
-        return jsonify(user=user_json), 201
+        return jsonify(message="Signup Successful", user=user_json), 201
 
     return jsonify(message="Signup Failed", errors=form_errors(form)), 400
 
@@ -86,8 +83,8 @@ def login():
             flash('Login successful', 'success')
 
             return jsonify(message="Login Successful", access_token=access_token)
-        else:
-            flash('Invalid email or password', 'error')
+
+        return jsonify(message="Invalid email or password"), 400
 
     return jsonify(message="Login Failed", errors=form_errors(form)), 400
 
@@ -325,7 +322,6 @@ def events_all():
 
             db.session.add(event)
             db.session.commit()
-            flash("Event Successfully Created")
 
             new_id = event.id
             event = db.session.query(Event).get(new_id)
@@ -491,7 +487,7 @@ def get_csrf():
     return jsonify({'csrf_token': generate_csrf()})
 
 
-@app.route('/uploads/<string:filename>')
+@app.route('/api/v2/uploads/<string:filename>')
 def get_image(filename):
     """Return image from uploads folder."""
     return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'][0:]), filename)
