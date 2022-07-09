@@ -1,0 +1,32 @@
+ion-text {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
+}
+
+#home-grid {
+    padding-top: 40px;
+}
+
+#home-txt1 {
+    font-size: xxx-large;
+    font-weight: bold;
+    color: #0f4e9e;
+}
+
+#home-txt2 {
+    font-size: small;
+    color: #2671d1;
+    font-style: italic;
+}
+
+#home-col1 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#home-col2 {
+    padding-left: 30px;
+}
+
+#home-col2 ion-img {
+    max-height: fit-content;
+}
