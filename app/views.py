@@ -155,8 +155,8 @@ def users(user_id):
 
                         user_json = {
                             "id": u.id,
-                            "first_name": user.first_name,
-                            "last_name": user.last_name,
+                            "first_name": u.first_name,
+                            "last_name": u.last_name,
                             "email": u.email,
                             "photo": u.profile_photo,
                             "role": u.role,
@@ -182,8 +182,8 @@ def users(user_id):
 
                     user_json = {
                         "id": u.id,
-                        "first_name": user.first_name,
-                        "last_name": user.last_name,
+                        "first_name": u.first_name,
+                        "last_name": u.last_name,
                         "email": u.email,
                         "photo": u.profile_photo,
                         "role": u.role,
@@ -220,8 +220,8 @@ def users_all():
 
         users_json = [{
             "id": u.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
+            "first_name": u.first_name,
+            "last_name": u.last_name,
             "email": u.email,
             "photo": u.profile_photo,
             "role": u.role,

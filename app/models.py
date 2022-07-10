@@ -16,14 +16,13 @@ class User(db.Model):
     role = db.Column(db.String(15), default="user")
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    def __init__(self, firstname, lastname, email, password, photo, role):
+    def __init__(self, firstname, lastname, email, password, photo):
         self.first_name = firstname
         self.last_name = lastname
         self.email = email
         self.password = generate_password_hash(
             password, method='pbkdf2:sha256')
         self.profile_photo = photo
-        self.role = role
 
     def __repr__(self):
         return '<User %r>' % self.email
