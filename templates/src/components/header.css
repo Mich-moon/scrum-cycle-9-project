@@ -9,13 +9,9 @@ ion-button {
 }
 
 #home-btn3 {
-    padding-left: 30px;
-    padding-right: 30px;
     font-size: medium;
 }
 
 #home-btn1:hover, #home-btn2:hover, #home-btn3:hover {
     font-weight: bolder;
 }
-
-
