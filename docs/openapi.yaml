@@ -1,0 +1,796 @@
+openapi: 3.0.1
+info:
+  title: Synergy Events Management System
+  version: 2.0.0
+  description: This is the API for Synergy Events Management System
+servers:
+  - url: 'https://localhost:8080'
+paths:
+  /api/v2/signup:
+    summary: User signup
+    post:
+      summary: Sign up a new user
+      description: ''
+      operationId: signup
+      requestBody:
+        content:
+          "multipart/form-data":
+            schema:
+              $ref: '#/components/schemas/UserSignup'
+            examples:
+               user-signup:
+                 $ref: '#/components/examples/user-signup'
+      responses:
+        '201':
+          description: User Successfully signed up
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                user:
+                  $ref: '#/components/examples/user'
+        '400':
+          description: Signup failed
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/signup-form-error'
+  /api/v2/login:
+    summary: User login
+    post:
+      summary: Log in a user
+      description: Login a user and return a JWT token for them to use on subsequent requests
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User Successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Login Successful"
+                  acces_token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjE4MDI5MjE4LCJleHAiOjE2MTgwMjkyMTh9.PiLE3syBXnEYfKqTiSmEPz1HN0D7jkAI9BjmrfjyGAI"
+        '400':
+          description: Login failed
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/login-form-error'
+        '401':
+          description: Invalid
+          content:
+            application/json:
+              examples:
+                invalid:
+                  $ref: '#/components/examples/invalid'
+      tags:
+       - auth
+  /api/v2/logout:
+    summary: User logout
+    description: Logout an authenticated user
+    post:
+      summary: Logout a user
+      description: ''
+      operationId: authLogout
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User Successfully logs out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Logged out"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      tags:
+       - auth
+  /api/v2/csrf-token:
+    summary: CSRF token
+    description: Generate CSRF token
+    post:
+      summary: Generate CSRF token
+      description: ''
+      operationId: csrf
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: CSRFToken geneated Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  csrf_token:
+                    type: string
+                    example: "IjlhMTY4MDA4NTliOTYxZDFmYzI5YWU5ODlhYmExYjRiNGQ4YTEyNWYi.YsqMVA.oA_JuqnFiSNflrjpKCdMyiehc4c"
+      tags:
+       - auth
+  /api/v2/users/{user_id}:
+    summary: Retrieve, Update and delete user details
+    get:
+      summary: Get details for a specific user
+      description: ''
+      operationId: getUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: user_id
+          description: The unique id of the user
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Individual User details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              example:
+                user:
+                  id: 1
+                  first_name: 'John'
+                  last_name: 'Doe'
+                  email: 'jdoe@example.com'
+                  photo: 'http://localhost/images/photo.jpg'
+                  role: 'user'
+                  created_at: '2022-03-07 17:53:00'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      tags:
+       - users
+    put:
+      summary: Update a user
+      description: ''
+      operationId: updateUser
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          "multipart/form-data":
+            schema:
+              $ref: '#/components/schemas/UserSignup'
+            examples:
+               user-signup:
+                 $ref: '#/components/examples/user-signup'
+      parameters:
+        - in: path
+          name: user_id
+          description: The unique id of the user
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: role
+          description: The access level of the user
+          schema:
+            type: string
+          required: false
+      responses:
+        '200':
+          description: User details updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                user:
+                  $ref: '#/components/examples/user'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+        '400':
+          description: Update failed
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/update-form-error'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      tags:
+       - users
+    delete:
+      summary: Delete a user
+      description: ''
+      operationId: deleteUser
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: user_id
+          description: The unique id of the user
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: User deleted
+          content:
+            application/json:
+              examples:
+                deleted:
+                  $ref: '#/components/examples/deleted'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      tags:
+       - users
+  /api/v2/users:
+    summary: Get details for all users
+    get:
+      summary: Get all users
+      description: ''
+      operationId: allUsers
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Individual User details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              example:
+                -
+                  id: 1
+                  first_name: 'John'
+                  last_name: 'Doe'
+                  email: 'jdoe@example.com'
+                  photo: 'http://localhost/images/photo.jpg'
+                  role: 'user'
+                  created_at: '2022-03-07 17:53:00'
+                -
+                  id: 2
+                  first_name: 'Mary'
+                  last_name: 'Sue'
+                  email: 'mary@example.com'
+                  photo: 'http://localhost/images/photo.jpg'
+                  role: 'user'
+                  created_at: '2022-08-01 17:53:00'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+      tags:
+       - users
+  /api/v2/events/users/{user_id}:
+    summary: Get events for user
+    get:
+      summary: Get a user's events
+      description: ''
+      operationId: userEvents
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: user_id
+          description: The unique id of the user
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Individual Event details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+              example:
+                -
+                  id: 3
+                  title: 'Town hall'
+                  start_date: 2022-04-05 17:53:00
+                  end_date: 2022-04-09 10:53:00
+                  description: 'community meeting'
+                  venue: 'hall'
+                  flyer: 'http://localhost/uploads/flyer.jpg'
+                  website: 'https://www.site.com'
+                  status: 'pending'
+                  uid: 1
+                  created_at: 2022-04-05 17:53:00
+                  updated_at: 2022-04-05 17:53:00
+                -
+                  id: 7
+                  title: 'Special event'
+                  start_date: 2022-04-05 17:53:00
+                  end_date: 2022-04-09 10:53:00
+                  description: 'special event'
+                  venue: 'square'
+                  flyer: 'http://localhost/uploads/flyer.jpg'
+                  website: 'https://www.site.com'
+                  status: 'pending'
+                  uid: 2
+                  created_at: 2022-04-05 17:53:00
+                  updated_at: 2022-04-05 17:53:00
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+      tags:
+       - events
+  /api/v2/events:
+    summary: Retrieve and add events
+    get:
+      summary: Get a list of all events
+      description: ''
+      operationId: getEvents
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: All Event details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+              example:
+                -
+                  id: 3
+                  title: 'Town hall'
+                  start_date: 2022-04-05 17:53:00
+                  end_date: 2022-04-09 10:53:00
+                  description: 'community meeting'
+                  venue: 'hall'
+                  flyer: 'http://localhost/uploads/flyer.jpg'
+                  website: 'https://www.site.com'
+                  status: 'pending'
+                  uid: 1
+                  created_at: 2022-04-05 17:53:00
+                  updated_at: 2022-04-05 17:53:00
+                -
+                  id: 7
+                  title: 'Special event'
+                  start_date: 2022-04-05 17:53:00
+                  end_date: 2022-04-09 10:53:00
+                  description: 'special event'
+                  venue: 'square'
+                  flyer: 'http://localhost/uploads/flyer.jpg'
+                  website: 'https://www.site.com'
+                  status: 'pending'
+                  uid: 2
+                  created_at: 2022-04-05 17:53:00
+                  updated_at: 2022-04-05 17:53:00
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+      tags:
+       - events
+    post:
+      summary: Adds a new event
+      description: ''
+      operationId: addEvent
+      requestBody:
+        content:
+          "multipart/form-data":
+            schema:
+              $ref: '#/components/schemas/NewEvent'
+            examples:
+               event-creation:
+                 $ref: '#/components/examples/new-event'
+      responses:
+        '201':
+          description: Event Successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewEvent'
+              examples:
+                event:
+                  $ref: '#/components/examples/new-event'
+        '400':
+          description: Event creation failed
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/event-form-error'
+      tags:
+       - events
+  /api/v2/events/{event_id}:
+    summary: Retrieve, update and delete event details
+    get:
+      summary: Get event details
+      description: ''
+      operationId: getEvent
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: event_id
+          description: The unique id of the event
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Individual Event details
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+              example:
+                event:
+                  id: 7
+                  title: 'Special event'
+                  start_date: 2022-04-05 17:53:00
+                  end_date: 2022-04-09 10:53:00
+                  description: 'special event'
+                  venue: 'square'
+                  flyer: 'http://localhost/uploads/flyer.jpg'
+                  website: 'https://www.site.com'
+                  status: 'pending'
+                  uid: 2
+                  created_at: 2022-04-05 17:53:00
+                  updated_at: 2022-04-05 17:53:00
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+      tags:
+       - events
+    put:
+      summary: Update event details
+      description: ''
+      operationId: updateEvent
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: event_id
+          description: The unique id of the event
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: User details updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+              examples:
+                user:
+                  $ref: '#/components/examples/event'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+      tags:
+       - events
+    delete:
+      summary: Delete event details
+      description: ''
+      operationId: deleteEvent
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: event_id
+          description: The unique id of the event
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Event deleted
+          content:
+            application/json:
+              examples:
+                deleted:
+                  $ref: '#/components/examples/deleted'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              examples:
+                error:
+                  $ref: '#/components/examples/notfound'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      tags:
+       - events
+  /api/v2/events/search:
+    summary: Search for events
+    get:
+      summary: Search for events based on date, title, status
+      description: ''
+      operationId: searchEvents
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: date
+          description: The date of the event
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: title
+          description: The title of the event
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: status
+          description: The status of the event
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Events returned by the search
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+              example:
+                -
+                  id: 3
+                  title: 'Town hall'
+                  start_date: 2022-04-05 17:53:00
+                  end_date: 2022-04-09 10:53:00
+                  description: 'community meeting'
+                  venue: 'hall'
+                  flyer: 'http://localhost/uploads/flyer.jpg'
+                  website: 'https://www.site.com'
+                  status: 'pending'
+                  uid: 1
+                  created_at: 2022-04-05 17:53:00
+                  updated_at: 2022-04-05 17:53:00
+                -
+                  id: 7
+                  title: 'Special event'
+                  start_date: 2022-04-05 17:53:00
+                  end_date: 2022-04-09 10:53:00
+                  description: 'special event'
+                  venue: 'square'
+                  flyer: 'http://localhost/uploads/flyer.jpg'
+                  website: 'https://www.site.com'
+                  status: 'pending'
+                  uid: 2
+                  created_at: 2022-04-05 17:53:00
+                  updated_at: 2022-04-05 17:53:00
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+      tags:
+       - events
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        photo:
+          type: string
+        role:
+          type: string
+        created_at:
+          type: string
+    UserSignup:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        photo:
+          type: string
+    Event:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        description:
+          type: string
+        venue:
+          type: string
+        flyer:
+          type: string
+        website:
+          type: string
+        status:
+          type: string
+        uid:
+          type: integer
+        created_at:
+          type: string
+        updated_at:
+          type: string
+    NewEvent:
+      type: object
+      properties:
+        title:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        description:
+          type: string
+        venue:
+          type: string
+        flyer:
+          type: string
+        website:
+          type: string
+  examples:
+    user:
+      value:
+        id: 1
+        first_name: 'John'
+        last_name: 'Doe'
+        email: 'jdoe@example.com'
+        photo: 'http://localhost/uploads/photo.jpg'
+        role: 'user'
+        created_at: '2022-04-05 17:53:00'
+    user-signup:
+      value:
+        first_name: John
+        last_name: Doe
+        password: password123
+        email: 'jdoe@example.com'
+        start_date: 2022-04-05 17:53:00
+        end_date: 2022-04-09 10:53:00
+        photo: 'http://localhost/uploads/photo.jpg'
+    login-form-error:
+      value:
+        message: 'Login failed'
+        errors: 
+          Field: 'Error in field'
+    signup-form-error:
+      value:
+        message: 'Signup failed'
+        errors: 
+          Field: 'Error in field'
+    update-form-error:
+      value:
+        message: 'Update failed'
+        errors: 
+          Field: 'Error in field'
+    event-form-error:
+      value:
+        message: 'Event Creation failed'
+        errors: 
+          Field: 'Error in field'
+    invalid:
+      value:
+        message: 'Invalid email or password'
+    notfound:
+      value:
+        message: 'Item not found'
+    deleted:
+      value:
+        message: 'Item deleted'
+    event:
+      value:
+        id: 3
+        title: 'Town hall'
+        start_date: 2022-04-05 17:53:00
+        end_date: 2022-04-09 10:53:00
+        description: 'community meeting'
+        venue: 'square'
+        flyer: 'http://localhost/uploads/flyer.jpg'
+        website: 'https://www.site.com'
+        status: 'pending'
+        uid: 1
+        created_at: 2022-04-05 17:53:00
+        updated_at: 2022-04-05 17:53:00
+    new-event:
+      value:
+        title: 'Town Hall'
+        start_date: 2022-04-05 17:53:00
+        end_date: 2022-04-09 10:53:00
+        description: 'community meeting'
+        venue: 'square'
+        flyer: 'http://localhost/uploads/flyer.jpg'
+        website: 'https://www.site.com'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Add your JWT Bearer Token to api endpoints that require authentication using the Authorization header
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid  
+    NotFoundError:
+      description: Item not found
+  headers:
+    Authorization:
+      description: Authorization header with JWT using Bearer Schema
+      schema:
+        type: string
+      example: "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjE3NjU1MjAxLCJleHAiOjE2MTc2NjUyMDF9.VDmMnIJzust0ykwP3d7p924VbwPyv0Db3gGiEW7fY7g"
+       
