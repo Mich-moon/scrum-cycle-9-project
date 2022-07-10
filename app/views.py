@@ -5,7 +5,7 @@ from flask import request, redirect, url_for, session, send_from_directory, sess
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
 from app import app, db
-from .forms import EventsForm, SignupForm, LoginForm, UpdateEventsForm, SearchEventsForm
+from .forms import EventsForm, SignupForm, LoginForm
 from .models import User, Event
 from werkzeug.security import check_password_hash
 
@@ -34,11 +34,11 @@ def signup():
         ))
 
         user = User(
-            name=form.full_name.data,
+            firstname=form.first_name.data,
+            lastname=form.last_name.data,
             email=form.email.data,
             password=form.password.data,
-            photo=photo_filename,
-            role="user"
+            photo=photo_filename
         )
         db.session.add(user)
         db.session.commit()
@@ -48,7 +48,8 @@ def signup():
 
         user_json = {
             "id": user.id,
-            "full_name": user.full_name,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
             "email": user.email,
             "photo": user.profile_photo,
             "role": user.role,
@@ -76,15 +77,13 @@ def login():
             if user.role == "admin":
                 role = True
             sub = user.id
-            more_claims = {"name": user.full_name, "admin": role}
+            more_claims = {"first_name": user.first_name, "last_name": user.last_name, "admin": role}
             access_token = create_access_token(
                 sub, additional_claims=more_claims)
 
-            flash('Login successful', 'success')
+            return jsonify(message="Login Successful", access_token=access_token), 200
 
-            return jsonify(message="Login Successful", access_token=access_token)
-
-        return jsonify(message="Invalid email or password"), 400
+        return jsonify(message="Invalid email or password"), 401
 
     return jsonify(message="Login Failed", errors=form_errors(form)), 400
 
@@ -113,7 +112,8 @@ def users(user_id):
 
             user_json = {
                 "id": user.id,
-                "full_name": user.full_name,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
                 "email": user.email,
                 "photo": user.profile_photo,
                 "role": user.role,
@@ -140,7 +140,8 @@ def users(user_id):
                             os.environ.get('UPLOAD_FOLDER'), photo_filename
                         ))
 
-                        user.full_name = form.full_name.data
+                        user.first_name = form.first_name.data
+                        user.last_name = form.last_name.data
                         user.email = form.email.data
                         user.password = generate_password_hash(
                             form.password.data, method='pbkdf2:sha256')
@@ -152,7 +153,8 @@ def users(user_id):
 
                         user_json = {
                             "id": u.id,
-                            "full_name": u.full_name,
+                            "first_name": u.first_name,
+                            "last_name": u.last_name,
                             "email": u.email,
                             "photo": u.profile_photo,
                             "role": u.role,
@@ -178,7 +180,8 @@ def users(user_id):
 
                     user_json = {
                         "id": u.id,
-                        "full_name": u.full_name,
+                        "first_name": u.first_name,
+                        "last_name": u.last_name,
                         "email": u.email,
                         "photo": u.profile_photo,
                         "role": u.role,
@@ -215,7 +218,8 @@ def users_all():
 
         users_json = [{
             "id": u.id,
-            "full_name": u.full_name,
+            "first_name": u.first_name,
+            "last_name": u.last_name,
             "email": u.email,
             "photo": u.profile_photo,
             "role": u.role,
@@ -484,7 +488,7 @@ def events(event_id):
 
 @app.route('/api/v2/csrf-token', methods=['GET'])
 def get_csrf():
-    return jsonify({'csrf_token': generate_csrf()})
+    return jsonify({'csrf_token': generate_csrf()}), 200
 
 
 @app.route('/api/v2/uploads/<string:filename>')
