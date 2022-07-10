@@ -22,7 +22,7 @@ const ViewEvent: React.FC = () => {
                 <IonRow>
                     <IonCol></IonCol>
                     <IonCol id='signup-col2'>
-                        <IonTitle className='ion-padding-bottom' id='signup-title'>CREATE EVENT <i>to be updated</i></IonTitle>
+                        <IonTitle className='ion-padding-bottom' id='signup-title'>VIEWS EVENT <i>to be updated</i></IonTitle>
                         <IonInput placeholder='Firstname' clearInput></IonInput>
                         <IonInput placeholder='Lastname' clearInput></IonInput>
                         <IonInput type='email' placeholder='Email Address' clearInput></IonInput>
