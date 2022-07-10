@@ -81,11 +81,9 @@ def login():
             access_token = create_access_token(
                 sub, additional_claims=more_claims)
 
-            flash('Login successful', 'success')
+            return jsonify(message="Login Successful", access_token=access_token), 200
 
-            return jsonify(message="Login Successful", access_token=access_token)
-
-        return jsonify(message="Invalid email or password"), 400
+        return jsonify(message="Invalid email or password"), 401
 
     return jsonify(message="Login Failed", errors=form_errors(form)), 400
 
@@ -490,7 +488,7 @@ def events(event_id):
 
 @app.route('/api/v2/csrf-token', methods=['GET'])
 def get_csrf():
-    return jsonify({'csrf_token': generate_csrf()})
+    return jsonify({'csrf_token': generate_csrf()}), 200
 
 
 @app.route('/api/v2/uploads/<string:filename>')
