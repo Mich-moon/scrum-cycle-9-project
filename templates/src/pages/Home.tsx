@@ -5,19 +5,19 @@ import './Home.css';
 const Home: React.FC = () => {
   return (
     <IonPage>
-        <IonHeader class='ion-no-border'>
+        <IonHeader className='ion-no-border'>
             <IonToolbar>
                 <Header />
             </IonToolbar>
         </IonHeader>
-        <IonContent fullscreen class='ion-justify-content-center'>
+        <IonContent fullscreen className='ion-justify-content-center'>
         {/*   <IonHeader collapse='condense'>
                 <IonToolbar>
                     <IonTitle size='large'>Blank2</IonTitle>
                 </IonToolbar>
             </IonHeader> */}
 
-            <IonGrid class='ion-margin' id='home-grid'>
+            <IonGrid className='ion-margin' id='home-grid'>
                 <IonRow></IonRow>
                 <IonRow>
                     <IonCol id='home-col1'>
@@ -35,7 +35,8 @@ const Home: React.FC = () => {
                                 obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
                                 nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
                                 tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-                                quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos 
+                                quia. Quo neque error re
+                                pudiandae fuga? Ipsa laudantium molestias eos 
                                 sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
                                 recusandae alias error harum maxime adipisci amet laborum. 
                         </IonText>                                           
