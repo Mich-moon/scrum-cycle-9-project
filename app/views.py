@@ -34,11 +34,11 @@ def signup():
         ))
 
         user = User(
-            name=form.full_name.data,
+            firstname=form.first_name.data,
+            lastname=form.last_name.data,
             email=form.email.data,
             password=form.password.data,
-            photo=photo_filename,
-            role="user"
+            photo=photo_filename
         )
         db.session.add(user)
         db.session.commit()
@@ -48,7 +48,8 @@ def signup():
 
         user_json = {
             "id": user.id,
-            "full_name": user.full_name,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
             "email": user.email,
             "photo": user.profile_photo,
             "role": user.role,
@@ -76,7 +77,7 @@ def login():
             if user.role == "admin":
                 role = True
             sub = user.id
-            more_claims = {"name": user.full_name, "admin": role}
+            more_claims = {"first_name": user.first_name, "last_name": user.last_name, "admin": role}
             access_token = create_access_token(
                 sub, additional_claims=more_claims)
 
@@ -113,7 +114,8 @@ def users(user_id):
 
             user_json = {
                 "id": user.id,
-                "full_name": user.full_name,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
                 "email": user.email,
                 "photo": user.profile_photo,
                 "role": user.role,
@@ -140,7 +142,8 @@ def users(user_id):
                             os.environ.get('UPLOAD_FOLDER'), photo_filename
                         ))
 
-                        user.full_name = form.full_name.data
+                        user.first_name = form.first_name.data
+                        user.last_name = form.last_name.data
                         user.email = form.email.data
                         user.password = generate_password_hash(
                             form.password.data, method='pbkdf2:sha256')
@@ -152,7 +155,8 @@ def users(user_id):
 
                         user_json = {
                             "id": u.id,
-                            "full_name": u.full_name,
+                            "first_name": user.first_name,
+                            "last_name": user.last_name,
                             "email": u.email,
                             "photo": u.profile_photo,
                             "role": u.role,
@@ -178,7 +182,8 @@ def users(user_id):
 
                     user_json = {
                         "id": u.id,
-                        "full_name": u.full_name,
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
                         "email": u.email,
                         "photo": u.profile_photo,
                         "role": u.role,
@@ -215,7 +220,8 @@ def users_all():
 
         users_json = [{
             "id": u.id,
-            "full_name": u.full_name,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
             "email": u.email,
             "photo": u.profile_photo,
             "role": u.role,

@@ -8,15 +8,17 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String(50), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False, index=True)
     password = db.Column(db.String(255), nullable=False)
     profile_photo = db.Column(db.String(255))
-    role = db.Column(db.String(15), nullable=False)
+    role = db.Column(db.String(15), default="user")
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    def __init__(self, name, email, password, photo, role):
-        self.full_name = name
+    def __init__(self, firstname, lastname, email, password, photo, role):
+        self.first_name = firstname
+        self.last_name = lastname
         self.email = email
         self.password = generate_password_hash(
             password, method='pbkdf2:sha256')
