@@ -5,7 +5,7 @@ from flask import request, redirect, url_for, session, send_from_directory, sess
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
 from app import app, db
-from .forms import EventsForm, SignupForm, LoginForm, UpdateEventsForm, SearchEventsForm
+from .forms import EventsForm, SignupForm, LoginForm
 from .models import User, Event
 from werkzeug.security import check_password_hash
 

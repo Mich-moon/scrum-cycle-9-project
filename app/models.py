@@ -26,8 +26,9 @@ class User(db.Model):
         self.role = role
 
     def __repr__(self):
-        return '<User %r>' % self.full_name
-    
+        return '<User %r>' % self.email
+
+
 class Event(db.Model):
     __tablename__ = 'events'
 
@@ -54,6 +55,10 @@ class Event(db.Model):
         self.website = website 
         self.uid = uid
         self.updated_at = updated_at
+
+    def __repr__(self):
+        return '<Event %r>' % self.title
+
 
     def json(self):
             return {'id': self.id, 'title': self.title, 'start_date': self.start_date, 'end_date': self.end_date, "description" :self.description, 
@@ -86,7 +91,7 @@ class Event(db.Model):
         event_to_update.updated_at = _updated_at
         db.session.commit()
 
-    def delete_movie(_id):
+    def delete_event(_id):
         '''function to delete a event from our database using
         the id of the event'''
         Event.query.filter_by(id=_id).delete()

@@ -35,6 +35,3 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[Email(), InputRequired(), Length(1, 64)])
     password = PasswordField('Password', validators=[
         InputRequired()])
-
-class SearchEventsForm(FlaskForm):
-    status = StringField('Status', validators=[], id="status")
