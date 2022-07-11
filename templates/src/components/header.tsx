@@ -4,16 +4,16 @@ import { IonToolbar, IonButtons, IonButton } from '@ionic/react';
 interface ContainerProps { }
 
 const header: React.FC<ContainerProps> = () => {
-  return (    
+  return (
         <IonToolbar>
-            <IonButtons id='home-btns' class='ion-justify-content-end'>
-                <IonButton id='home-btn1' color='primary' href='/home' target='_self'>
+            <IonButtons id='home-btns' className='ion-justify-content-end'>
+                <IonButton id='home-btn1' color='primary' href='./home' target='_self'>
                     Home
                 </IonButton>
-                <IonButton id='home-btn2' fill='outline' color='primary' href='./Signup' target='_self'>
+                <IonButton id='home-btn2' fill='outline' color='primary' href='./signup' target='_self'>
                     Signup
                 </IonButton>
-                <IonButton id='home-btn3' fill='solid' color='primary' href='./Login' target='_self'>
+                <IonButton id='home-btn3' fill='solid' color='primary' href='./login' target='_self'>
                     Login
                 </IonButton>
             </IonButtons>
