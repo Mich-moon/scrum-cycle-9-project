@@ -6,40 +6,70 @@ ion-text, ion-input, ion-title, ion-button {
     padding-top: 40px;
 }
 
-#login-col2 ion-item-divider {
-    background-color: white;
+#login-row2 {    
     border-radius: 15px;
     border: #0f4e9e 2px solid;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+#login-col1 {
     padding: 20px;
 }
 
 #login-col2 {
-    background-color: white;
-    border-radius: 15px;
-    border: white 2px solid;
-    padding: 20px;
+    border: #0f4e9e solid 2px;
+    background-color: #0f4e9e;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-top:15%;
+    padding-bottom:15%;
+    padding-left:5%;
+    padding-right:5%;
 }
 
-#login-title {
+#login-title-left {
     color: #0f4e9e;
     font-weight: bold;
     font-size: x-large;
     margin-left: -20px;
 }
 
+#login-title-right {
+    color: white;
+    font-weight: bold;
+    font-size: x-large;
+    margin-left: -20px;
+}
+
 #login-col2 ion-input {
-    border: #D3D3D3 solid 2px;
-    color: black;
+    border: white solid 1.5px;
+    color: white;
     border-radius: 5px;
     margin-bottom: 15px;
     font-size: small;
 }
 
 #login-btn:hover {
-    color: red;
+    font-weight: bolder;
+    --background: #84b6f3;
+    color: white;
 }
 
-#login-photo-upload {
-    border-bottom: white 2px solid;
-    padding-bottom: 10px;
+#login-btn {
+    color: #0f4e9e;
+    font-size: medium;
+    --background: white;
+    margin: auto;
+}
+
+#login-img {
+    max-width: 100%;
+    padding-top: 20px;
+}
+
+#login-btn-div {
+    --background: #0f4e9e;
+    border: 0px;
+    padding-top: 20px;
 }

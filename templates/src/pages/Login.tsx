@@ -17,21 +17,20 @@ const Login: React.FC = () => {
                 </IonToolbar>
             </IonHeader> */}
 
-            <IonGrid className='ion-margin' id='signup-grid'>
+            <IonGrid className='ion-margin' id='login-grid'>
                 <IonRow></IonRow>
-                <IonRow>
-                    <IonCol>
-                        <IonTitle>Welcome Back</IonTitle>
-                        <IonImg src={process.env.PUBLIC_URL + '/assets/images/login_image.png'} alt='login image'/>
+                <IonRow id='login-row2'>
+                    <IonCol id='login-col1'>
+                        <IonTitle id='login-title-left'>Welcome Back!</IonTitle>
+                        <IonImg id='login-img' src={process.env.PUBLIC_URL + '/assets/images/login_image.png'} alt='login image'/>
                     </IonCol>
                     <IonCol id='login-col2'>
-                        <IonItemDivider>
-                        <IonTitle className='ion-padding-bottom' id='login-title'>LOGIN</IonTitle>
+                        <IonTitle className='ion-padding-bottom' id='login-title-right'>Login</IonTitle>
                         <IonInput type='email' placeholder='Email Address' clearInput></IonInput>
                         <IonInput type='password' placeholder='Password' clearInput></IonInput>
-                        <IonButton id='login-btn' fill='solid' color='primary'>Login</IonButton>     
-                        </IonItemDivider>
-                              
+                        <IonItemDivider id='login-btn-div'>
+                        <IonButton id='login-btn'>Login</IonButton>     
+                        </IonItemDivider>                              
                     </IonCol>
                 </IonRow>
                 <IonRow></IonRow>
