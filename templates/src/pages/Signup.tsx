@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonImg, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import Header from '../components/header';
 import './Signup.css';
 
@@ -20,7 +20,9 @@ const Signup: React.FC = () => {
             <IonGrid className='ion-margin' id='signup-grid'>
                 <IonRow></IonRow>
                 <IonRow>
-                    <IonCol></IonCol>
+                    <IonCol>
+                        <IonTitle>Signup Today!</IonTitle>
+                        <IonImg src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='signup image'/></IonCol>
                     <IonCol id='signup-col2'>
                         <IonTitle className='ion-padding-bottom' id='signup-title'>SIGNUP</IonTitle>
                         <IonInput placeholder='Firstname' clearInput></IonInput>
@@ -34,7 +36,6 @@ const Signup: React.FC = () => {
                         </IonItemDivider>                        
                         <IonButton id='signup-btn' fill='solid' color='primary'>Create Account</IonButton>           
                     </IonCol>
-                    <IonCol></IonCol>
                 </IonRow>
                 <IonRow></IonRow>
             </IonGrid>
