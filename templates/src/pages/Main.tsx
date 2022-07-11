@@ -1,8 +1,10 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonSearchbar, IonGrid, IonHeader, IonDatetime, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar, IonSlides, IonSlide, IonSelect, IonSelectOption, IonText } from '@ionic/react';
+import { useState } from 'react';
 import UserHeader from '../components/userHeader';
 import './Main.css';
 
 const Main: React.FC = () => {
+    const [searchText, setSearchText] = useState('');
   return (
     <IonPage>
         <IonHeader className='ion-no-border'>
@@ -18,47 +20,80 @@ const Main: React.FC = () => {
             </IonHeader> */}
 
             <IonGrid className='ion-margin' id='signup-grid'>
-                <IonRow>
-                    <IonCol id='main-row1'>
-                        <IonTitle>YOUR UPCOMING EVENTS</IonTitle>
-                        <IonCard>
-                            <IonCardHeader>
-                                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                                <IonCardTitle>Card Title</IonCardTitle>
-                            </IonCardHeader>
-                            <IonCardContent>
-                                Keep close to Nature's heart... and break clear away, once in awhile,
-                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
-                            </IonCardContent>
-                        </IonCard>
-                        <IonCard>
-                            <IonCardHeader>
-                                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                                <IonCardTitle>Card Title</IonCardTitle>
-                            </IonCardHeader>
-                            <IonCardContent>
-                                Keep close to Nature's heart... and break clear away, once in awhile,
-                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
-                            </IonCardContent>
-                        </IonCard>
-                    </IonCol>
+                <IonRow id='main-row1'>
+                        <IonCol>
+                            <IonItemDivider id='main-title-div' className='ion-justify-content-end'>
+                                <IonTitle id='main-title'>YOUR UPCOMING EVENTS</IonTitle>
+                            </IonItemDivider>
+                        
+                            <IonSlides pager={true}>
+                                <IonSlide>
+                                    <IonCard>
+                                        <IonCardHeader>
+                                            <IonCardTitle>Card Title1</IonCardTitle>
+                                        </IonCardHeader>
+                                        <IonCardContent>
+                                            Keep close to Nature's heart... and break clear away, once in awhile,
+                                            and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                                        </IonCardContent>
+                                    </IonCard>
+                                    <IonCard>
+                                        <IonCardHeader>
+                                            <IonCardTitle>Card Title2</IonCardTitle>
+                                        </IonCardHeader>
+                                        <IonCardContent>
+                                            Keep close to Nature's heart... and break clear away, once in awhile,
+                                            and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                                        </IonCardContent>
+                                    </IonCard>                                    
+                                    <IonCard>
+                                        <IonCardHeader>
+                                            <IonCardTitle>Card Title3</IonCardTitle>
+                                        </IonCardHeader>
+                                        <IonCardContent>
+                                            Keep close to Nature's heart... and break clear away, once in awhile,
+                                            and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                                        </IonCardContent>
+                                    </IonCard>
+                                </IonSlide>
+                                <IonSlide>
+                                    <IonCard>
+                                        <IonCardHeader>
+                                            <IonCardTitle>Card Title</IonCardTitle>
+                                        </IonCardHeader>
+                                        <IonCardContent>
+                                            Keep close to Nature's heart... and break clear away, once in awhile,
+                                            and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                                        </IonCardContent>
+                                    </IonCard>
+                                </IonSlide>
+                            </IonSlides>
+                        </IonCol>                     
                 </IonRow>
-                <IonRow>
-                    <IonCol id='main-row2'>
-                        <IonTitle className='ion-padding-bottom' id='signup-title'>VIEWS EVENT <i>to be updated</i></IonTitle>
-                        <IonInput placeholder='Firstname' clearInput></IonInput>
-                        <IonInput placeholder='Lastname' clearInput></IonInput>
-                        <IonInput type='email' placeholder='Email Address' clearInput></IonInput>
-                        <IonInput type='password' placeholder='Password' clearInput></IonInput>
-                        <IonInput type='password' placeholder='Confirm Password' clearInput></IonInput>
-                        <IonItemDivider id='signup-photo-upload'>
-                            <IonLabel color='primary'>Add a Profile Photo</IonLabel>
-                            <input type='file' id='imginput' accept='image/*'/>
+                <IonRow id='main-row2'>
+                    <IonCol>
+                        <IonItemDivider id='search-div'>
+                            <IonSearchbar placeholder='Search for Event' value={searchText} id='searchBar' onIonChange={e => setSearchText(e.detail.value!)} animated={true}></IonSearchbar>
+                            {console.log(searchText)}
                         </IonItemDivider>
-                        <IonButton id='signup-btn' fill='solid' color='primary'>Create Account</IonButton>           
+                        <IonItemDivider id='main-row2-div2'>
+                            <IonItemDivider id='date-filter-options'>
+                            <IonInput type='datetime-local' id='start-date-time'></IonInput>
+                            <IonInput type='datetime-local' id='end-date-time'></IonInput>
+                            <IonSelect placeholder='Event Type' ok-text='Ok' cancel-text='Cancel' id='search-filter'>
+                                <IonSelectOption>Your Events</IonSelectOption> 
+                                <IonSelectOption>All Published Events</IonSelectOption> 
+                            </IonSelect>  
+                        </IonItemDivider>
+                        </IonItemDivider>
+                        
                     </IonCol>
                 </IonRow>
-                <IonRow></IonRow>
+                <IonRow id='main-row2'>
+                    <IonCol>
+                        <IonText> Results Area</IonText>  
+                    </IonCol>                    
+                </IonRow>
             </IonGrid>
         </IonContent>
     </IonPage>
