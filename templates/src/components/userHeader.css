@@ -2,16 +2,12 @@ ion-button {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
 }
 
-#home-btn1, #home-btn2, #home-btn3 {
+#user-btn1, #user-btn2, #user-btn3, #user-btn4 {
     padding-left: 30px;
     padding-right: 30px;
     font-size: medium;
 }
 
-#home-btn3 {
-    font-size: medium;
-}
-
-#home-btn1:hover, #home-btn2:hover, #home-btn3:hover {
+#user-btn1:hover, #user-btn2:hover, #user-btn3:hover, #user-btn4:hover {
     font-weight: bolder;
 }

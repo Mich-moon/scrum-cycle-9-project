@@ -5,16 +5,20 @@ interface ContainerProps { }
 
 const userHeader: React.FC<ContainerProps> = () => {
   return (    
-        <IonToolbar>
-            <IonButtons id='home-btns' class='ion-justify-content-end'>
-                <IonButton id='home-btn1' color='primary' href='/home' target='_self'>
-                    Home
+        <IonToolbar color='primary'>
+            <IonButtons id='user-btns' class='ion-justify-content-end'>
+                <IonButton id='user-btn1' href='./main' target='_self'>
+                    Main
                 </IonButton>
-                <IonButton id='home-btn2' fill='outline' color='primary' href='./Signup' target='_self'>
-                    Signup
+                <IonButton id='user-btn2' href='./createEvent' target='_self'>
+                    Create Event
                 </IonButton>
-                <IonButton id='home-btn3' fill='solid' color='primary' href='./Login' target='_self'>
-                    Login
+                <IonButton id='user-btn3' href='./home' target='_self'>
+                    Profile
+                </IonButton>
+                {/* hover over profile button and it gives the name of the user*/}
+                <IonButton id='user-btn4' fill='outline' href='./home' target='_self'>
+                    Logout
                 </IonButton>
             </IonButtons>
         </IonToolbar>
