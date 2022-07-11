@@ -1,4 +1,5 @@
-ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title, ion-card-content, ion-searchbar {
+ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title, 
+    ion-card-content, ion-searchbar, ion-select, ion-item {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
 }
 
@@ -43,11 +44,22 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title, ion
     --color: #030d22;
     width: 50%;
     margin: auto;
-    border: #0f4e9e 1.5px solid;
+    border: #0f4e9e 2px solid;
     border-radius: 10px;
     padding: 0%;
-    font-size: medium;
-    
+    font-size: medium; 
+}
+
+#searchBar:hover {
+    --border-radius: 10px;
+    --icon-color: #CBA45E;
+    --color: #030d22;
+    width: 50%;
+    margin: auto;
+    border: #cc922f 2px solid;
+    border-radius: 10px;
+    padding: 0%;
+    font-size: medium; 
 }
 
 #search-filter {
@@ -56,43 +68,111 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title, ion
 
 #date-filter-options ::-webkit-calendar-picker-indicator {    
   cursor: pointer;
-  border: #70a5eb 2px solid;
-  background-color: #70a5eb;
+  border: #84b6f3 2px solid;
+  background-color: #84b6f3;
   border-radius: 4px;
-  margin-right: 2px;
+  margin-right: 7px;
+  opacity: 1;
+  /* filter: invert(0.8); */
+}
+
+#date-filter-options ::-webkit-calendar-picker-indicator:hover {    
+  cursor: pointer;
+  border: #cc922f 2px solid;
+  background-color: #cc922f;
+  border-radius: 4px;
+  margin-right: 7px;
   opacity: 1;
   /* filter: invert(0.8); */
 }
 
 #search-div {
     border: none;
-    margin-top: 3%;
+    margin-top: 5%;
 }
-
 
 #date-filter-options ion-input {
     --background: white;
     border-radius: 10px;
-    border: #0f4e9e 1.5px solid;
+    border: #0f4e9e 2px solid;
     color: #030d22;
-    margin-left: 30px;
-    margin-right: 30px;
-    max-width: min-content;    
+    max-width: min-content;
     font-size: medium;
+    margin: auto;
+    height: 41px;
+    right: 10px;
+}
+
+#date-filter-options ion-input:hover {
+    --background: white;
+    border-radius: 10px;
+    border: #cc922f 2px solid;
+    color: #030d22;
+    max-width: min-content;
+    font-size: medium;
+    margin: auto;
+    height: 41px;
+    right: 10px;
 }
 
 #date-filter-options ion-select {
     --background: white;
     border-radius: 10px;
-    border: #0f4e9e 1.5px solid;
+    border: #0f4e9e 2px solid;
     color: #030d22;
-    margin-left: 30px;
-    margin-right: 30px;
-    max-width: min-content;    
+    width: 20%;
     font-size: medium;
+    margin: auto;
+    padding-left: 10px;
+}
+
+#date-filter-options ion-select:hover {
+    --background: white;
+    border-radius: 10px;
+    border: #cc922f 2px solid;
+    color: #030d22;
+    width: 20%;
+    font-size: medium;
+    margin: auto;
+    padding-left: 10px;
+}
+
+#main-row2 {
+    margin-top: 4%;
 }
 
 #main-row2 ion-item-divider {
     border: none;
     margin-top: 1%;
+}
+
+#main-row2-div2 ion-text{
+    color: #030d22;
+}
+
+#main-row2-div2 {
+    padding-right: 15%;
+    padding-left: 15%;
+}
+
+#main-row3 {
+    margin-top: 5%;
+}
+
+#main-row3 ion-item {
+    color: #030d22;
+    border: 2px solid #0f4e9e;
+    border-radius: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 2%;
+}
+
+#main-row3 ion-item:hover {
+    border: 2px solid #cc922f;
+    border-radius: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 2%;
+    cursor: pointer;
 }

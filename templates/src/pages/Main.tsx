@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonSearchbar, IonGrid, IonHeader, IonDatetime, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar, IonSlides, IonSlide, IonSelect, IonSelectOption, IonText } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonSearchbar, IonGrid, IonHeader, IonDatetime, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar, IonSlides, IonSlide, IonSelect, IonSelectOption, IonText, IonList, IonItem } from '@ionic/react';
 import { useState } from 'react';
 import UserHeader from '../components/userHeader';
 import './Main.css';
@@ -22,10 +22,9 @@ const Main: React.FC = () => {
             <IonGrid className='ion-margin' id='signup-grid'>
                 <IonRow id='main-row1'>
                         <IonCol>
-                            <IonItemDivider id='main-title-div' className='ion-justify-content-end'>
+                            <IonItemDivider id='main-title-div'>
                                 <IonTitle id='main-title'>YOUR UPCOMING EVENTS</IonTitle>
-                            </IonItemDivider>
-                        
+                            </IonItemDivider>                        
                             <IonSlides pager={true}>
                                 <IonSlide>
                                     <IonCard>
@@ -77,21 +76,29 @@ const Main: React.FC = () => {
                             {console.log(searchText)}
                         </IonItemDivider>
                         <IonItemDivider id='main-row2-div2'>
-                            <IonItemDivider id='date-filter-options'>
-                            <IonInput type='datetime-local' id='start-date-time'></IonInput>
-                            <IonInput type='datetime-local' id='end-date-time'></IonInput>
-                            <IonSelect placeholder='Event Type' ok-text='Ok' cancel-text='Cancel' id='search-filter'>
-                                <IonSelectOption>Your Events</IonSelectOption> 
-                                <IonSelectOption>All Published Events</IonSelectOption> 
-                            </IonSelect>  
-                        </IonItemDivider>
-                        </IonItemDivider>
-                        
+                            <IonItemDivider id='date-filter-options'>                                
+                                <IonText>Start Date:</IonText>
+                                <IonInput type='datetime-local' id='start-date-time'></IonInput>                            
+                                <IonText>End Date:</IonText>
+                                <IonInput type='datetime-local' id='end-date-time'></IonInput>
+                                <IonSelect placeholder='Select Events' ok-text='Ok' cancel-text='Cancel' id='search-filter'>
+                                    <IonSelectOption>Your Events</IonSelectOption> 
+                                    <IonSelectOption>All Events</IonSelectOption> 
+                                </IonSelect>  
+                            </IonItemDivider>
+                        </IonItemDivider>                        
                     </IonCol>
                 </IonRow>
-                <IonRow id='main-row2'>
+                <IonRow id='main-row3'>
                     <IonCol>
-                        <IonText> Results Area</IonText>  
+                        <IonList>
+                            <IonItem>
+                                1
+                            </IonItem>
+                            <IonItem>
+                                2
+                            </IonItem>
+                        </IonList>
                     </IonCol>                    
                 </IonRow>
             </IonGrid>
