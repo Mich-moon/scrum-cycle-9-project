@@ -39,8 +39,8 @@ const UpdateEvent: React.FC = () => {
                         <IonItemDivider id='flyer-photo-upload'>
                             <IonLabel color='primary'>Add a Flyer</IonLabel>
                             <input type='file' id='imginput' accept='image/*'/>
-                        </IonItemDivider>  
-                        <IonButtons class='ion-justify-content-center'>                      
+                        </IonItemDivider> 
+                        <IonButtons class='ion-justify-content-center'>
                             <IonButton id='update-btn' fill='solid' color='primary'>Update</IonButton>    
                             <IonButton id='update-btn' fill='solid' color='primary'>Delete</IonButton>     
                         </IonButtons>       
