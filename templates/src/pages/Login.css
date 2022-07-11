@@ -44,22 +44,24 @@ ion-text, ion-input, ion-title, ion-button {
 
 #login-col2 ion-input {
     border: white solid 1.5px;
-    color: white;
-    border-radius: 5px;
+    color: #030d22;
+    border-radius: 10px;
     margin-bottom: 15px;
     font-size: small;
+    background-color: white;
 }
 
 #login-btn:hover {
+    --background: #cc922f;
     font-weight: bolder;
-    --background: #84b6f3;
     color: white;
 }
 
 #login-btn {
+    --background: white;
+    --border-radius: 25px;
     color: #0f4e9e;
     font-size: medium;
-    --background: white;
     margin: auto;
 }
 
