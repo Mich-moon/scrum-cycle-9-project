@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import Header from '../components/header';
 import './Login.css';
 
@@ -20,21 +20,19 @@ const Login: React.FC = () => {
             <IonGrid className='ion-margin' id='signup-grid'>
                 <IonRow></IonRow>
                 <IonRow>
-                    <IonCol></IonCol>
-                    <IonCol id='signup-col2'>
-                        <IonTitle className='ion-padding-bottom' id='signup-title'>LOGIN <i>to be updated</i></IonTitle>
-                        <IonInput placeholder='Firstname' clearInput></IonInput>
-                        <IonInput placeholder='Lastname' clearInput></IonInput>
+                    <IonCol>
+                        <IonTitle>Welcome Back</IonTitle>
+                        <IonImg src={process.env.PUBLIC_URL + '/assets/images/login_image.png'} alt='login image'/>
+                    </IonCol>
+                    <IonCol id='login-col2'>
+                        <IonItemDivider>
+                        <IonTitle className='ion-padding-bottom' id='login-title'>LOGIN</IonTitle>
                         <IonInput type='email' placeholder='Email Address' clearInput></IonInput>
                         <IonInput type='password' placeholder='Password' clearInput></IonInput>
-                        <IonInput type='password' placeholder='Confirm Password' clearInput></IonInput>
-                        <IonItemDivider id='signup-photo-upload'>
-                            <IonLabel color='primary'>Add a Profile Photo</IonLabel>
-                            <input type='file' id='imginput' accept='image/*'/>
-                        </IonItemDivider>                        
-                        <IonButton id='signup-btn' fill='solid' color='primary'>Create Account</IonButton>           
+                        <IonButton id='login-btn' fill='solid' color='primary'>Login</IonButton>     
+                        </IonItemDivider>
+                              
                     </IonCol>
-                    <IonCol></IonCol>
                 </IonRow>
                 <IonRow></IonRow>
             </IonGrid>
