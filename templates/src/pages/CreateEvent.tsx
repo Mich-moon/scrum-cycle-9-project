@@ -1,5 +1,5 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import Header from '../components/header';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import UserHeader from '../components/userHeader';
 import './CreateEvent.css';
 
 const CreateEvent: React.FC = () => {
@@ -7,7 +7,7 @@ const CreateEvent: React.FC = () => {
     <IonPage>
         <IonHeader className='ion-no-border'>
             <IonToolbar>
-                <Header />
+                <UserHeader />
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
