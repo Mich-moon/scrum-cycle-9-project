@@ -19,22 +19,25 @@ const Signup: React.FC = () => {
 
             <IonGrid className='ion-margin' id='signup-grid'>
                 <IonRow></IonRow>
-                <IonRow>
-                    <IonCol>
-                        <IonTitle>Signup Today!</IonTitle>
-                        <IonImg src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='signup image'/></IonCol>
+                <IonRow id='signup-row2'>
+                    <IonCol id='signup-col1'>
+                        <IonTitle id='signup-title-left'>Create an Account Today!</IonTitle>
+                        <IonImg id='signup-img' src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='signup image'/>
+                    </IonCol>
                     <IonCol id='signup-col2'>
-                        <IonTitle className='ion-padding-bottom' id='signup-title'>SIGNUP</IonTitle>
+                        <IonTitle className='ion-padding-bottom' id='signup-title-right'>Signup</IonTitle>
                         <IonInput placeholder='Firstname' clearInput></IonInput>
                         <IonInput placeholder='Lastname' clearInput></IonInput>
                         <IonInput type='email' placeholder='Email Address' clearInput></IonInput>
                         <IonInput type='password' placeholder='Password' clearInput></IonInput>
                         <IonInput type='password' placeholder='Confirm Password' clearInput></IonInput>
                         <IonItemDivider id='signup-photo-upload'>
-                            <IonLabel color='primary'>Add a Profile Photo</IonLabel>
+                            <IonLabel color='light'>Upload Your Profile Photo:</IonLabel>
                             <input type='file' id='imginput' accept='image/*'/>
-                        </IonItemDivider>                        
-                        <IonButton id='signup-btn' fill='solid' color='primary'>Create Account</IonButton>           
+                        </IonItemDivider>    
+                        <IonItemDivider id='signup-btn-div'>                            
+                            <IonButton id='signup-btn' fill='solid'>Create Account</IonButton>         
+                        </IonItemDivider>                      
                     </IonCol>
                 </IonRow>
                 <IonRow></IonRow>
