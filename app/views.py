@@ -354,6 +354,56 @@ def events_all():
 @jwt_required()
 def events_search():
     """Route for events search"""
+    if request.method == 'GET':
+        
+        title = request.args.get('title')
+        date = request.args.get('date')
+        status = request.args.get('status')
+
+        query = db.session.query(Event)
+
+        if request.args.get('date'):
+            today = datetime.datetime.utcnow()
+
+            if date == "today":
+                #query = query.filter(Event.start_date.date == today)
+                query = query.filter(str(Event.start_date).split(' ')[0] == str(today).split(' ')[0])
+
+            elif date == "upcoming":
+                query = query.filter(Event.start_date > today)
+
+            elif date == "past":
+                query = query.filter(Event.start_date < today)
+            
+        if request.args.get('title'):
+            query = query.filter(Event.title.like("%" + title + "%"))
+        
+        if request.args.get('status'):
+            query = query.filter(Event.status == status)
+
+        events = query.all()
+
+        if events is not None:
+
+            events = [{
+                "id": e.id,
+                "title": e.title,
+                "start_date": e.start_date,
+                "end_date": e.end_date,
+                "description": e.description,
+                "venue": e.venue,
+                "flyer": e.flyer,
+                "website": e.website,
+                "status": e.status,
+                "uid": e.uid,
+                "created_at": e.created_at,
+                "updated_at": e.updated_at
+            } for e in events]
+
+            return jsonify(events=events), 200
+
+        return jsonify(message="Item not found"), 404
+
 
 
 @app.route('/api/v2/events/<event_id>', methods=["GET", "PUT", "DELETE"])
