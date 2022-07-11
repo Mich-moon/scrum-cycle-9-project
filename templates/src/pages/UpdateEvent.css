@@ -32,11 +32,7 @@ ion-text, ion-input, ion-title, ion-button {
     color: red;
 }
 
-<<<<<<< Updated upstream
-#update-photo-upload {
-=======
 #flyer-photo-upload, #start, #end {
->>>>>>> Stashed changes
     border-bottom: white 2px solid;
     padding-bottom: 10px;
 }
