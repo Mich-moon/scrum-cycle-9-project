@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import CreateEvent from './pages/CreateEvent';
 import UpdateEvent from './pages/UpdateEvent';
 import Main from './pages/Main';
+import Profile from './pages/Profile';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
