@@ -1,5 +1,5 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import Header from '../components/header';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar } from '@ionic/react';
+import UserHeader from '../components/userHeader';
 import './Main.css';
 
 const Main: React.FC = () => {
@@ -7,7 +7,7 @@ const Main: React.FC = () => {
     <IonPage>
         <IonHeader className='ion-no-border'>
             <IonToolbar>
-                <Header />
+                <UserHeader />
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
@@ -18,10 +18,33 @@ const Main: React.FC = () => {
             </IonHeader> */}
 
             <IonGrid className='ion-margin' id='signup-grid'>
-                <IonRow></IonRow>
                 <IonRow>
-                    <IonCol></IonCol>
-                    <IonCol id='signup-col2'>
+                    <IonCol id='main-row1'>
+                        <IonTitle>YOUR UPCOMING EVENTS</IonTitle>
+                        <IonCard>
+                            <IonCardHeader>
+                                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+                                <IonCardTitle>Card Title</IonCardTitle>
+                            </IonCardHeader>
+                            <IonCardContent>
+                                Keep close to Nature's heart... and break clear away, once in awhile,
+                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                            </IonCardContent>
+                        </IonCard>
+                        <IonCard>
+                            <IonCardHeader>
+                                <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+                                <IonCardTitle>Card Title</IonCardTitle>
+                            </IonCardHeader>
+                            <IonCardContent>
+                                Keep close to Nature's heart... and break clear away, once in awhile,
+                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                            </IonCardContent>
+                        </IonCard>
+                    </IonCol>
+                </IonRow>
+                <IonRow>
+                    <IonCol id='main-row2'>
                         <IonTitle className='ion-padding-bottom' id='signup-title'>VIEWS EVENT <i>to be updated</i></IonTitle>
                         <IonInput placeholder='Firstname' clearInput></IonInput>
                         <IonInput placeholder='Lastname' clearInput></IonInput>
@@ -31,10 +54,9 @@ const Main: React.FC = () => {
                         <IonItemDivider id='signup-photo-upload'>
                             <IonLabel color='primary'>Add a Profile Photo</IonLabel>
                             <input type='file' id='imginput' accept='image/*'/>
-                        </IonItemDivider>                        
+                        </IonItemDivider>
                         <IonButton id='signup-btn' fill='solid' color='primary'>Create Account</IonButton>           
                     </IonCol>
-                    <IonCol></IonCol>
                 </IonRow>
                 <IonRow></IonRow>
             </IonGrid>
