@@ -32,7 +32,6 @@ const Signup: React.FC = () => {
                         <IonInput type='password' placeholder='Password' clearInput></IonInput>
                         <IonInput type='password' placeholder='Confirm Password' clearInput></IonInput>
                         <IonItemDivider id='signup-photo-upload'>
-                            <IonLabel color='light'>Upload Your Profile Photo:</IonLabel>
                             <input type='file' id='imginput' accept='image/*'/>
                         </IonItemDivider>    
                         <IonItemDivider id='signup-btn-div'>                            

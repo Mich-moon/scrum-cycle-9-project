@@ -44,6 +44,15 @@
     background-color: white;
 }
 
+#signup-col2 ion-input:hover {
+    border: #cc922f solid 1.5px;
+    color: #030d22;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: medium;
+    background-color: white;
+}
+
 #signup-btn:hover {
     --background: #cc922f;
     font-weight: bolder;
@@ -64,12 +73,6 @@
     padding-bottom: 20px;
 }
 
-#signup-photo-upload ion-label {
-    background-color: #0f4e9e;
-    border-bottom: 0px;
-    padding-right: 20px;
-}
-
 #imginput {
     color: white;
 }
@@ -82,4 +85,25 @@
 #signup-btn-div {
     --background: #0f4e9e;
     border: 0px;
+}
+
+#signup-photo-upload input {
+    font-size: medium;
+    border: white solid 2px;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 95%;
+}
+
+#signup-photo-upload input:hover {
+    font-size: medium;
+    border: #cc922f solid 2px;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 95%;
+    cursor: pointer;
 }
