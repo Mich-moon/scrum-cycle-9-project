@@ -72,7 +72,7 @@ const Login: React.FC = () => {
                 })
                 .join("")
             );
-            console.log(jsonPayload);
+            //console.log(jsonPayload);
 
             let jwt_payload = JSON.parse(jsonPayload);
 
@@ -81,11 +81,15 @@ const Login: React.FC = () => {
             let last_name = jwt_payload["last_name"];
             let user_is_admin = jwt_payload["admin"];
 
-            Storage.set({ key: 'jwt', value: jwt_token });
-            Storage.set({ key: 'user_id', value: user_id });
-            Storage.set({ key: 'first_name', value: first_name });
-            Storage.set({ key: 'last_name', value: last_name });
-            Storage.set({ key: 'user_is_admin', value: user_is_admin });
+            Storage.set({ key: 'jwt', value: JSON.stringify( jwt_token ) });
+            Storage.set({ key: 'user_id', value: JSON.stringify( user_id ) });
+            Storage.set({ key: 'first_name', value: JSON.stringify( first_name ) });
+            Storage.set({ key: 'last_name', value: JSON.stringify( last_name ) });
+            Storage.set({ key: 'user_is_admin', value: JSON.stringify( user_is_admin ) });
+
+            localStorage.setItem("jwt", jwt_token);
+            localStorage.setItem("user_is_admin", user_is_admin);
+
             router.push("/main", "forward", "push");
         }
     }

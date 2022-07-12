@@ -5,6 +5,7 @@ import UserHeader from '../components/userHeader';
 import AdminHeader from '../components/adminHeader';
 import './Main.css';
 import { getRoles } from '@testing-library/react';
+import { contractOutline } from 'ionicons/icons';
 
 interface Event {
     id: number,
@@ -25,7 +26,9 @@ const Main: React.FC = () => {
 
     const [searchText, setSearchText] = useState('');
     const [events, setEvents] = useState([]);
-    const [user_is_admin, setRole] = useState([false]);
+    const [isAdmin, setRole] = useState<String | null>('False');
+
+    let user_is_admin = "False";
 
     useIonViewWillEnter(() => {
         getEvents();
@@ -33,8 +36,12 @@ const Main: React.FC = () => {
 
         async function getEvents() {
             // get token from capacitor storage
-            const jwt_value  = await Storage.get({ key: 'jwt' });
-            const token = jwt_value;
+            //const jwt_value  = await Storage.get({ key: 'jwt' });
+            //const token = jwt_value;
+            //console.log(jwt_value);
+
+            let token = localStorage.getItem("jwt");
+            console.log(token);
 
             const result = await fetch("http://localhost:8080/api/v2/events", {
                 method: "get",
@@ -55,9 +62,14 @@ const Main: React.FC = () => {
         }
 
         async function getRole() {
-            const user_is_admin_value = await Storage.get({ key: 'user_is_admin' });
-            const user_is_admin = user_is_admin_value;
-            //setRole(user_is_admin);
+            // get role from capacitor storage
+            //const user_is_admin_value = await Storage.get({ key: 'user_is_admin' });
+            //const user_is_admin = user_is_admin_value;
+            //console.log( user_is_admin );
+
+            //let user_is_admin = localStorage.getItem("user_is_admin");
+            setRole(user_is_admin);
+            console.log(user_is_admin);
         }
 
     }, [])
