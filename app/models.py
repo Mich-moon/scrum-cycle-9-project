@@ -1,4 +1,3 @@
-from turtle import update
 from app import db
 from werkzeug.security import generate_password_hash
 from datetime import datetime
