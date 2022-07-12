@@ -1,5 +1,5 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonButtons, IonTitle, IonToolbar } from '@ionic/react';
-import Header from '../components/userHeader';
+import UserHeader from '../components/userHeader';
 import './UpdateEvent.css';
 
 const UpdateEvent: React.FC = () => {
@@ -7,7 +7,7 @@ const UpdateEvent: React.FC = () => {
     <IonPage>
         <IonHeader className='ion-no-border'>
             <IonToolbar>
-                <Header />
+                <UserHeader />
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
@@ -21,29 +21,26 @@ const UpdateEvent: React.FC = () => {
                 <IonRow></IonRow>
                 <IonRow>
                     <IonCol></IonCol>
-                    <IonCol id='update-col2'>
-                        <IonTitle className='ion-padding-bottom' id='update-title'>Update Event</IonTitle>
+                    <IonCol id='updateEvent-col2'>
+                        <IonTitle className='ion-padding-bottom' id='updateEvent-title'>Update Event</IonTitle>
                         <IonInput value='Title' clearInput></IonInput>
                         <IonInput value='Description' clearInput></IonInput>
-                        <IonInput value='Email Address' clearInput></IonInput>
                         <IonInput value='Venue' clearInput></IonInput>
                         <IonInput  value='Website Url' clearInput></IonInput>
-                        <IonItemDivider id= 'start'>
-                            <IonLabel color='primary'>Start Date</IonLabel>
-                            <input type="datetime-local" id="startdate" name="startdate"/>
+                        <IonItemDivider className='date-filter-options'>
+                            <IonLabel color='primary'>Start Date:</IonLabel>
+                            <IonInput type="datetime-local" id="start-date-time" name="startdate"/>
                         </IonItemDivider>
-                        <IonItemDivider id='end'>
-                            <IonLabel color='primary'>End Date</IonLabel>
-                            <input type="datetime-local" id="enddate" name="enddate"/>
+                        <IonItemDivider className='date-filter-options'>
+                            <IonLabel color='primary'>End Date:</IonLabel>
+                            <IonInput type="datetime-local" id="end-date-time" name="enddate"/>
                         </IonItemDivider>
                         <IonItemDivider id='flyer-photo-upload'>
-                            <IonLabel color='primary'>Add a Flyer</IonLabel>
                             <input type='file' id='imginput' accept='image/*'/>
-                        </IonItemDivider> 
-                        <IonButtons class='ion-justify-content-center'>
-                            <IonButton id='update-btn' fill='solid' color='primary'>Update Event</IonButton>    
-                            <IonButton id='update-btn' fill='solid' color='primary' href='/viewEvent'>Back</IonButton>     
-                        </IonButtons>       
+                        </IonItemDivider>
+                        <IonItemDivider id='updateEvent-btn-div'>
+                            <IonButton id='updateEvent-btn' fill='solid'>Update</IonButton>
+                        </IonItemDivider>
                     </IonCol>
                     <IonCol></IonCol>
                 </IonRow>

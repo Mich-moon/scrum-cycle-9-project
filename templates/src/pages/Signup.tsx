@@ -76,68 +76,38 @@ const Signup: React.FC = () => {
             </IonHeader>
             <IonContent fullscreen>
             {/*   <IonHeader collapse='condense'>
-                    <IonToolbar>
-                        <IonTitle size='large'>Blank2</IonTitle>
-                    </IonToolbar>
-                </IonHeader> */}
-                <form id="signUpForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-                    <IonGrid className='ion-margin' id='signup-grid'>
-                        <IonRow></IonRow>
-                        <IonRow id='signup-row2'>
-                            <IonCol id='signup-col1'>
-                                <IonTitle id='signup-title-left'>Create an Account Today!</IonTitle>
-                                <IonImg id='signup-img' src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='signup image'/>
-                            </IonCol>
-                            <IonCol id='signup-col2'>
-                                <IonTitle className='ion-padding-bottom' id='signup-title-right'>Signup</IonTitle>
+                <IonToolbar>
+                    <IonTitle size='large'>Blank2</IonTitle>
+                </IonToolbar>
+            </IonHeader> */}
 
-                                <IonInput {...register("firstName", { required: true })} placeholder='Firstname' clearInput></IonInput>
-                                {errors.firstName && <span>Firstname is required</span>}
-
-                                <IonInput {...register("lastName", { required: true })} placeholder='Lastname' clearInput></IonInput>
-                                {errors.lastName && <span>Lastname is required</span>}
-
-                                <IonInput {...register("email", { required: true })} type='email' placeholder='Email Address' clearInput></IonInput>
-                                {errors.email && <span>email is required</span>}
-
-                                <IonInput {...register("password", { required: true })} type='password' placeholder='Password' clearInput></IonInput>
-                                {errors.password && <span>password is required</span>}
-
-                                <IonInput {...register("passwordConfirm", { required: true })} type='password' placeholder='Confirm Password' clearInput></IonInput>
-                                {errors.passwordConfirm && <span>confirmation is required</span>}
-
-                                <IonItemDivider id='signup-photo-upload'>
-                                    <IonLabel color='light'>Upload Your Profile Photo:</IonLabel>
-                                    <input {...register("photo")} type='file' id='imginput' accept='image/*'/>
-                                    {errors.photo && <span>Photo is required</span>}
-                                </IonItemDivider>    
-                                <IonItemDivider id='signup-btn-div'>                            
-                                    <IonButton type="submit" id='signup-btn' fill='solid'>Create Account</IonButton>         
-                                </IonItemDivider>                      
-                            </IonCol>
-                        </IonRow>
-                        <IonRow></IonRow>
-                    </IonGrid>
-                </form>
-
-                <IonToast
-                    isOpen={showToast}
-                    onDidDismiss={() => setShowToast(false)}
-                    message= {message}
-                    duration={5000}
-                    buttons={[
-                        {
-                          side: 'start',
-                          icon: close,
-                          handler: () => {
-                            setShowToast(false);
-                          }
-                        }
-                      ]}
-                />
-            </IonContent>
-        </IonPage>
-    );
+            <IonGrid className='ion-margin' id='signup-grid'>
+                <IonRow></IonRow>
+                <IonRow id='signup-row2'>
+                    <IonCol id='signup-col1'>
+                        <IonTitle id='signup-title-left'>Create an Account Today!</IonTitle>
+                        <IonImg id='signup-img' src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='signup image'/>
+                    </IonCol>
+                    <IonCol id='signup-col2'>
+                        <IonTitle className='ion-padding-bottom' id='signup-title-right'>Signup</IonTitle>
+                        <IonInput placeholder='Firstname' clearInput></IonInput>
+                        <IonInput placeholder='Lastname' clearInput></IonInput>
+                        <IonInput type='email' placeholder='Email Address' clearInput></IonInput>
+                        <IonInput type='password' placeholder='Password' clearInput></IonInput>
+                        <IonInput type='password' placeholder='Confirm Password' clearInput></IonInput>
+                        <IonItemDivider id='signup-photo-upload'>
+                            <input type='file' id='imginput' accept='image/*'/>
+                        </IonItemDivider>    
+                        <IonItemDivider id='signup-btn-div'>                            
+                            <IonButton id='signup-btn' fill='solid'>Create Account</IonButton>         
+                        </IonItemDivider>                      
+                    </IonCol>
+                </IonRow>
+                <IonRow></IonRow>
+            </IonGrid>
+        </IonContent>
+    </IonPage>
+  );
 };
 
 export default Signup;

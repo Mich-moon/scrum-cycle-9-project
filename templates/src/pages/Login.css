@@ -47,6 +47,15 @@
     background-color: white;
 }
 
+#login-col2 ion-input:hover {
+    border: #cc922f solid 1.5px;
+    color: #030d22;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: medium;
+    background-color: white;
+}
+
 #login-btn:hover {
     --background: #cc922f;
     font-weight: bolder;

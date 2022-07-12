@@ -1,4 +1,4 @@
-#profile-grid {
+#ViewUser-grid {
     padding-top: 5%;
     width:40%; 
     display: block;
@@ -7,24 +7,24 @@
 
 }
 
-#profile-row2 {    
+#ViewUser-row2 {    
     margin-left: 10%;
     margin-right: 10%;   
 }
 
-#profile-col2 {
+#ViewUser-col2 {
     background-color: #0f4e9e;
     border-radius: 10px;
     padding: 20px;
 }
 
-#profile-btn:hover {
+#ViewUser-btn:hover {
     --background: #cc922f;
     font-weight: bolder;
     color: white;
 }
 
-#profile-btn {
+#ViewUser-btn {
     --background: white;
     --border-radius: 25px;
     color: #0f4e9e;
@@ -32,7 +32,7 @@
     margin: auto; 
 }
 
-#edit-btn-div {
+#ViewUser-btn-div {
     padding-top: 10%;
     --background: #0f4e9e;
     border: none;     
@@ -54,7 +54,7 @@
     font-size: medium;    
 }
 
-#profile-col2 ion-text {
+#ViewUser-col2 ion-text {
     color: #f4f5f8;
     padding-left: 3%;
     margin-top:1%;    

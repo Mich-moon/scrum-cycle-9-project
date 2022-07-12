@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "@capacitor/storage": "^1.2.5"
-  }
-}
