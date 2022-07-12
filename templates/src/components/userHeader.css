@@ -1,13 +1,25 @@
-ion-button {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
-}
-
-#user-btn1, #user-btn2, #user-btn3, #user-btn4 {
-    padding-left: 30px;
-    padding-right: 30px;
+#user-btn1, #user-btn2, #user-btn3 {
+    --border-radius: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
     font-size: medium;
 }
 
-#user-btn1:hover, #user-btn2:hover, #user-btn3:hover, #user-btn4:hover {
+#user-btn4 {
+    --border-radius: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: medium;
+}
+
+#user-btn1:hover, #user-btn2:hover, #user-btn3:hover {
+    --background-color: #cc922f;
+    color: #cc922f;
+    font-weight: bolder;
+}
+
+ #user-btn4:hover {
+    --background: #cc922f;
+    color: white;
     font-weight: bolder;
 }

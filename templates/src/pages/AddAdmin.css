@@ -1,0 +1,98 @@
+ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title, 
+    ion-card-content, ion-searchbar, ion-select, ion-item, ion-label, ion-img {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+}
+
+#add-admin-grid {
+    padding-top: 40px;
+}
+
+#add-admin-row1 ion-card {
+    --background: #70a5eb;
+    border: #4a8fea solid 2px;
+    color: white;
+    border-radius: 15px;
+    box-shadow: inset;
+    max-width: 20%;
+}
+
+#add-admin-title {
+    color: #0f4e9e;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+#add-admin-title-div {
+    text-align: center;
+    border: none;
+    padding-bottom: 30px;
+}
+
+#searchBar {
+    --border-radius: 10px;
+    --icon-color: #4a8fea;
+    --color: #030d22;
+    width: 50%;
+    margin: auto;
+    border: #0f4e9e 2px solid;
+    border-radius: 10px;
+    padding: 0%;
+    font-size: medium; 
+}
+
+#searchBar:hover {
+    --border-radius: 10px;
+    --icon-color: #CBA45E;
+    --color: #030d22;
+    width: 50%;
+    margin: auto;
+    border: #cc922f 2px solid;
+    border-radius: 10px;
+    padding: 0%;
+    font-size: medium; 
+}
+
+#search-div {
+    border: none;
+}
+
+#add-admin-row2 {
+    margin-top: 4%;
+}
+
+#add-admin-row2 ion-item-divider {
+    border: none;
+    margin-top: 1%;
+}
+
+#add-admin-row2-div2 ion-text{
+    color: #030d22;
+}
+
+#add-admin-row2-div2 {
+    padding-right: 15%;
+    padding-left: 15%;
+}
+
+#add-admin-row3 {
+    margin-top: 5%;
+}
+
+#add-admin-row3 ion-item {
+    color: #030d22;
+    border: 2px solid #0f4e9e;
+    border-radius: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 2%;
+    background-color: white;
+}
+
+#add-admin-row3 ion-item:hover {
+    border: 2px solid #cc922f;
+    border-radius: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 2%;
+    cursor: pointer;
+}

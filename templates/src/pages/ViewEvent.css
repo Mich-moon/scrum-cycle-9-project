@@ -1,0 +1,86 @@
+#view-grid {
+    padding-top: 30px;
+}
+
+#view-row2 {    
+    border-radius: 15px;
+    border: #0f4e9e 2px solid;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#view-col1 {
+    padding: 20px;
+    max-width: 40%;
+}
+
+#view-col2 {
+    border: #0f4e9e solid 2px;
+    background-color: #0f4e9e;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+}
+
+#view-col2 ion-item-divider {
+    border: none;
+    background: #0f4e9e;
+}
+
+#view-col2 ion-item-divider ion-label {
+    color: white;
+    padding-right: 3%;
+}
+
+#view-col2 ion-item-divider ion-text {
+    color: white;
+    margin-top: 1%;
+}
+
+#view-title-left {
+    color: #0f4e9e;
+    font-weight: bold;
+    font-size: x-large;
+    margin-left: -20px;
+}
+
+#view-btn1 {
+    --color:white;
+    --border-radius: 25px;
+    font-size: medium;
+    margin: auto;
+}
+
+#view-btn1:hover {
+    --color: #cc922f;
+    font-weight: bolder;
+}
+
+#view-btn2 {
+    --color: #0f4e9e;
+    --background: white;
+    --border-radius: 25px;
+    font-size: medium; 
+    margin: auto;
+}
+
+#view-btn2:hover  {
+    --color: white;
+    --background: #cc922f;
+    font-weight: bolder;
+}
+
+#view-img {
+    max-width: 100%;
+    padding-top: 25px;
+    border: white 3px solid;
+    border-radius: 25px;
+    margin-top: 5%;
+    max-height: 70%;
+}
+
+#view-btn-div {
+    --background: #0f4e9e;
+    border: 0px;
+    margin-top: 10%;
+}

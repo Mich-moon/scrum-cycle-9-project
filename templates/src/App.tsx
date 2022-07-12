@@ -6,7 +6,10 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import CreateEvent from './pages/CreateEvent';
 import UpdateEvent from './pages/UpdateEvent';
+import ViewEvent from './pages/ViewEvent';
 import Main from './pages/Main';
+import Profile from './pages/Profile';
+import AddAdmin from './pages/AddAdmin';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -51,8 +54,17 @@ const App: React.FC = () => (
         <Route exact path='/updateEvent'>
             <UpdateEvent />
         </Route>
+        <Route exact path='/viewEvent'>
+            <ViewEvent />
+        </Route>
         <Route exact path='/main'>
             <Main />
+        </Route>
+        <Route exact path='/profile'>
+            <Profile />
+        </Route>
+        <Route exact path='/addAdmin'>
+            <AddAdmin />
         </Route>
         <Route exact path='/'>
           <Redirect to='/home' />
