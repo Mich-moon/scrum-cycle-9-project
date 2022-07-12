@@ -24,7 +24,7 @@ def home():
 def signup():
     """Route for signup."""
 
-    form = SignupForm(obj=request.form)
+    form = SignupForm(obj=request.form, meta={'csrf': False})
 
     if form.validate_on_submit():
         photo = form.photo.data
@@ -65,7 +65,7 @@ def signup():
 def login():
     """Route for login."""
 
-    form = LoginForm(obj=request.form)
+    form = LoginForm(obj=request.form, meta={'csrf': False})
 
     if form.validate_on_submit():
         email = form.email.data
@@ -364,10 +364,11 @@ def events_search():
 
         if request.args.get('date'):
             today = datetime.datetime.utcnow()
+            today.replace(hour=0,minute=0,second=0,microsecond=0)
 
             if date == "today":
-                #query = query.filter(Event.start_date.date == today)
-                query = query.filter(str(Event.start_date).split(' ')[0] == str(today).split(' ')[0])
+                query = query.filter(Event.start_date == today)
+                #query = query.filter(str(Event.start_date).split(' ')[0] == str(today).split(' ')[0])
 
             elif date == "upcoming":
                 query = query.filter(Event.start_date > today)
@@ -562,3 +563,11 @@ def form_errors(form):
             error_messages.append(message)
 
     return error_messages
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8100')
+    response.headers.add('Access-Control-Allow-Headers', '*')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
