@@ -1,5 +1,5 @@
 ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title, 
-    ion-card-content, ion-searchbar, ion-select, ion-item, ion-label, ion-img {
+    ion-card-content, ion-searchbar, ion-select, ion-item, ion-label, ion-img, input {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
 }
 
@@ -66,7 +66,7 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     margin: auto;
 }
 
-#date-filter-options ::-webkit-calendar-picker-indicator {    
+.date-filter-options ::-webkit-calendar-picker-indicator {    
   cursor: pointer;
   border: #84b6f3 2px solid;
   background-color: #84b6f3;
@@ -76,7 +76,7 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
   /* filter: invert(0.8); */
 }
 
-#date-filter-options ::-webkit-calendar-picker-indicator:hover {    
+.date-filter-options ::-webkit-calendar-picker-indicator:hover {    
   cursor: pointer;
   border: #cc922f 2px solid;
   background-color: #cc922f;
@@ -91,7 +91,7 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     margin-top: 5%;
 }
 
-#date-filter-options ion-input {
+.date-filter-options ion-input {
     --background: white;
     border-radius: 10px;
     border: #0f4e9e 2px solid;
@@ -103,19 +103,12 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     right: 10px;
 }
 
-#date-filter-options ion-input:hover {
+.date-filter-options ion-input:hover {
     --background: white;
-    border-radius: 10px;
     border: #cc922f 2px solid;
-    color: #030d22;
-    max-width: min-content;
-    font-size: medium;
-    margin: auto;
-    height: 41px;
-    right: 10px;
 }
 
-#date-filter-options ion-select {
+.date-filter-options ion-select {
     --background: white;
     border-radius: 10px;
     border: #0f4e9e 2px solid;
@@ -126,7 +119,7 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     padding-left: 10px;
 }
 
-#date-filter-options ion-select:hover {
+.date-filter-options ion-select:hover {
     --background: white;
     border-radius: 10px;
     border: #cc922f 2px solid;

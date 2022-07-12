@@ -78,7 +78,7 @@ const Main: React.FC = () => {
                             {console.log(searchText)}
                         </IonItemDivider>
                         <IonItemDivider id='main-row2-div2'>
-                            <IonItemDivider id='date-filter-options'>                                
+                            <IonItemDivider className='date-filter-options'>                                
                                 <IonText>Start Date:</IonText>
                                 <IonInput type='datetime-local' id='start-date-time'></IonInput>                            
                                 <IonText>End Date:</IonText>
