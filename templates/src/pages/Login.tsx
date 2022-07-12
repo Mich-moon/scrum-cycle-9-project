@@ -61,7 +61,31 @@ const Login: React.FC = () => {
         setMessage(result.message);
 
         if (result.access_token) {
-            Storage.set({ key: 'jwt', value: result.access_token });
+            var jwt_token = result.access_token;
+            var base64Url = jwt_token.split(".")[1];
+            var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+            var jsonPayload = decodeURIComponent(
+                atob(base64)
+                .split("")
+                .map(function (c) {
+                    return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+                })
+                .join("")
+            );
+            console.log(jsonPayload);
+
+            let jwt_payload = JSON.parse(jsonPayload);
+
+            let user_id = jwt_payload["sub"];
+            let first_name = jwt_payload["first_name"];
+            let last_name = jwt_payload["last_name"];
+            let user_is_admin = jwt_payload["admin"];
+
+            Storage.set({ key: 'jwt', value: jwt_token });
+            Storage.set({ key: 'user_id', value: user_id });
+            Storage.set({ key: 'first_name', value: first_name });
+            Storage.set({ key: 'last_name', value: last_name });
+            Storage.set({ key: 'user_is_admin', value: user_is_admin });
             router.push("/main", "forward", "push");
         }
     }
