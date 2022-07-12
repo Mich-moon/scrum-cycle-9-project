@@ -23,7 +23,7 @@ const Main: React.FC = () => {
                 <IonRow id='main-row1'>
                         <IonCol>
                             <IonItemDivider id='main-title-div'>
-                                <IonTitle id='main-title'>YOUR UPCOMING EVENTS</IonTitle>
+                                <IonTitle id='main-title'>UPCOMING EVENTS</IonTitle>
                             </IonItemDivider>                        
                             <IonSlides pager={true}>
                                 <IonSlide>
