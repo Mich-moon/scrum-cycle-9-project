@@ -1,34 +1,77 @@
-#update-grid {
+#updateEvent-grid {
     padding-top: 40px;
 }
 
-#update-col2 {
+#updateEvent-col2 {
     background-color: white;
     border-radius: 15px;
     border: #0f4e9e 2px solid;
     padding: 20px;
 }
 
-#update-title {
+#updateEvent-title {
     color: #0f4e9e;
     font-weight: bold;
     font-size: x-large;
     margin-left: -20px;
 }
 
-#update-col2 ion-input {
+#updateEvent-col2 ion-input {
     border: #D3D3D3 solid 2px;
-    color: black;
-    border-radius: 5px;
+    color: #030d22;
+    border-radius: 10px;
     margin-bottom: 15px;
-    font-size: small;
+    font-size: medium;
 }
 
-#update-btn:hover {
-    color: red;
+#updateEvent-col2 ion-input:hover {
+    border: #cc922f solid 2px;
+    color: #030d22;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: medium;
 }
 
-#flyer-photo-upload, #start, #end {
-    border-bottom: white 2px solid;
+#updateEvent-col2 ion-item-divider {
+    border: none;
+}
+
+#updateEvent-btn {
+    --border-radius: 25px;
+    font-size: medium;
+    margin: auto;
+}
+
+#updateEvent-btn:hover {
+    --background: #cc922f;
+    font-weight: bolder;
+    color: white;
+}
+
+#flyer-photo-upload {
+    border: none;
     padding-bottom: 10px;
+}
+
+#flyer-photo-upload input {
+    color: black;
+    font-size: medium;
+    border: #D3D3D3 solid 2px;
+    color: #030d22;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 95%;
+}
+
+::-webkit-file-upload-button {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    border: #D3D3D3;
+    background-color: #D3D3D3;
+    color: #0f4e9e;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    font-size: medium;
+    height: 40px;
 }
