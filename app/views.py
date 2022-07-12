@@ -364,10 +364,11 @@ def events_search():
 
         if request.args.get('date'):
             today = datetime.datetime.utcnow()
+            today.replace(hour=0,minute=0,second=0,microsecond=0)
 
             if date == "today":
-                #query = query.filter(Event.start_date.date == today)
-                query = query.filter(str(Event.start_date).split(' ')[0] == str(today).split(' ')[0])
+                query = query.filter(Event.start_date == today)
+                #query = query.filter(str(Event.start_date).split(' ')[0] == str(today).split(' ')[0])
 
             elif date == "upcoming":
                 query = query.filter(Event.start_date > today)
