@@ -22,7 +22,7 @@ const UpdateEvent: React.FC = () => {
                 <IonRow>
                     <IonCol></IonCol>
                     <IonCol id='update-col2'>
-                        <IonTitle className='ion-padding-bottom' id='update-title'>UPDATE EVENT</IonTitle>
+                        <IonTitle className='ion-padding-bottom' id='update-title'>Update Event</IonTitle>
                         <IonInput value='Title' clearInput></IonInput>
                         <IonInput value='Description' clearInput></IonInput>
                         <IonInput value='Email Address' clearInput></IonInput>
@@ -41,8 +41,8 @@ const UpdateEvent: React.FC = () => {
                             <input type='file' id='imginput' accept='image/*'/>
                         </IonItemDivider> 
                         <IonButtons class='ion-justify-content-center'>
-                            <IonButton id='update-btn' fill='solid' color='primary'>Update</IonButton>    
-                            <IonButton id='update-btn' fill='solid' color='primary'>Delete</IonButton>     
+                            <IonButton id='update-btn' fill='solid' color='primary'>Update Event</IonButton>    
+                            <IonButton id='update-btn' fill='solid' color='primary' href='/viewEvent'>Back</IonButton>     
                         </IonButtons>       
                     </IonCol>
                     <IonCol></IonCol>
