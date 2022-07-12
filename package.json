@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@capacitor/storage": "^1.2.5"
+    "@capacitor/storage": "^1.2.5",
+    "react-hook-form": "^7.33.1"
   }
 }
