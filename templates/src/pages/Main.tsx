@@ -35,6 +35,7 @@ const Main: React.FC = () => {
             // get token from capacitor storage
             const jwt_value  = await Storage.get({ key: 'jwt' });
             const token = jwt_value;
+            console.log(token);
 
             const result = await fetch("http://localhost:8080/api/v2/events", {
                 method: "get",
@@ -57,6 +58,8 @@ const Main: React.FC = () => {
         async function getRole() {
             const user_is_admin_value = await Storage.get({ key: 'user_is_admin' });
             const user_is_admin = user_is_admin_value;
+            console.log(user_is_admin);
+            user_is_admin !== null ? JSON.parse(user_is_admin) : ""; 
             //setRole(user_is_admin);
         }
 
