@@ -22,26 +22,25 @@ const CreateEvent: React.FC = () => {
                 <IonRow>
                     <IonCol></IonCol>
                     <IonCol id='createEvent-col2'>
-                        <IonTitle className='ion-padding-bottom' id='createEvent-title'>CREATE EVENT</IonTitle>
+                        <IonTitle className='ion-padding-bottom' id='createEvent-title'>Create Event</IonTitle>
                         <IonInput placeholder='Title' clearInput></IonInput>
                         <IonInput placeholder='Description' clearInput></IonInput>
-                        <IonInput placeholder='Email Address' clearInput></IonInput>
                         <IonInput placeholder='Venue' clearInput></IonInput>
                         <IonInput  placeholder='Website Url' clearInput></IonInput>
-                        <IonItemDivider>
-                            <IonLabel color='primary'>Start Date</IonLabel>
-                            <input type="datetime-local" id="startdate" name="startdate"/>
+                        <IonItemDivider className='date-filter-options'>
+                            <IonLabel color='primary'>Start Date:</IonLabel>
+                            <IonInput type="datetime-local" id="start-date-time" name="startdate"/>
                         </IonItemDivider>
-                        <IonItemDivider>
-                            <IonLabel color='primary'>End Date</IonLabel>
-                            <input type="datetime-local" id="enddate" name="enddate"/>
+                        <IonItemDivider className='date-filter-options'>
+                            <IonLabel color='primary'>End Date:</IonLabel>
+                            <IonInput type="datetime-local" id="end-date-time" name="enddate"/>
                         </IonItemDivider>
                         <IonItemDivider id='flyer-photo-upload'>
-                            <IonLabel color='primary'>Add a Flyer</IonLabel>
                             <input type='file' id='imginput' accept='image/*'/>
-                        </IonItemDivider>                     
-                        <IonButton id='createEvent-btn' fill='solid' color='primary'>Create Event</IonButton>             
-                                      
+                        </IonItemDivider>
+                        <IonItemDivider id='createEvent-btn-div'>
+                            <IonButton id='createEvent-btn' fill='solid'>Create Event</IonButton>
+                        </IonItemDivider>
                     </IonCol>
                     <IonCol></IonCol>
                 </IonRow>
