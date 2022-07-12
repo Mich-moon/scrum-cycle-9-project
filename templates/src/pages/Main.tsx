@@ -92,10 +92,10 @@ const Main: React.FC = () => {
                 <IonRow id='main-row3'>
                     <IonCol>
                         <IonList>
-                            <IonItem>
+                            <IonItem href='/viewEvent'>
                                 1
                             </IonItem>
-                            <IonItem>
+                            <IonItem href='/viewEvent'>
                                 2
                             </IonItem>
                         </IonList>
