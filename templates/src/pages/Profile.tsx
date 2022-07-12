@@ -1,6 +1,6 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonImg, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
-import Header from '../components/header';
-import './Signup.css';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonText, IonItemDivider, IonPage, IonRow, IonAvatar, IonToolbar } from '@ionic/react';
+import Header from '../components/userHeader';
+import './Profile.css';
 
 const Signup: React.FC = () => {
   return (
@@ -17,30 +17,36 @@ const Signup: React.FC = () => {
                 </IonToolbar>
             </IonHeader> */}
 
-            <IonGrid className='ion-margin' id='signup-grid'>
+            <IonGrid className='ion-margin' id='profile-grid'>
                 <IonRow></IonRow>
-                <IonRow id='signup-row2'>
-                    <IonCol id='signup-col1'>
-                        <IonTitle id='signup-title-left'>Create an Account Today!</IonTitle>
-                        <IonImg id='signup-img' src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='signup image'/>
-                    </IonCol>
-                    <IonCol id='signup-col2'>
-                        <IonTitle className='ion-padding-bottom' id='signup-title-right'>Signup</IonTitle>
-                        <IonInput placeholder='Firstname' clearInput></IonInput>
-                        <IonInput placeholder='Lastname' clearInput></IonInput>
-                        <IonInput type='email' placeholder='Email Address' clearInput></IonInput>
-                        <IonInput type='password' placeholder='Password' clearInput></IonInput>
-                        <IonInput type='password' placeholder='Confirm Password' clearInput></IonInput>
-                        <IonItemDivider id='signup-photo-upload'>
-                            <IonLabel color='light'>Upload Your Profile Photo:</IonLabel>
-                            <input type='file' id='imginput' accept='image/*'/>
-                        </IonItemDivider>    
-                        <IonItemDivider id='signup-btn-div'>                            
-                            <IonButton id='signup-btn' fill='solid'>Create Account</IonButton>         
-                        </IonItemDivider>                      
-                    </IonCol>
-                </IonRow>
-                <IonRow></IonRow>
+                <IonRow id='profile-row2'>
+                    
+                    <IonCol id='profile-col2'>
+                       {/* <IonTitle className='ion-padding-bottom' id='profile-title-right'>Signup</IonTitle>*/}
+                       <IonAvatar class= "center">
+                            <img id='profile-img'   src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='profile photo'/>
+                       </IonAvatar>
+                       <IonItemDivider id='field'>
+                            <IonLabel color="light">Firstname:</IonLabel>
+                            <IonText> Firstname</IonText>
+                        </IonItemDivider>
+                        <IonItemDivider id='field'>
+                            <IonLabel color="light">Lastname:</IonLabel>
+                            <IonText> Lastname</IonText>
+                        </IonItemDivider>
+                        <IonItemDivider id='field'>
+                            <IonLabel color="light">Email:</IonLabel>
+                            <IonText>Email </IonText>
+                        </IonItemDivider>
+                        <IonItemDivider id='field'>
+                            <IonLabel color="light">Password:</IonLabel>
+                            <IonText>Password</IonText>
+                        </IonItemDivider> 
+                        <IonItemDivider id="edit-div">                 
+                             <IonButton id='profile-btn' fill='solid'> Edit </IonButton>   
+                        </IonItemDivider>        
+                    </IonCol> 
+                </IonRow> 
             </IonGrid>
         </IonContent>
     </IonPage>
