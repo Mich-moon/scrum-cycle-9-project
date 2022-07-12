@@ -1,5 +1,6 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonImg, IonHeader, IonLabel, IonText, IonItemDivider, IonPage, IonRow, IonButtons, IonTitle, IonToolbar } from '@ionic/react';
 import Header from '../components/userHeader';
+import AdminHeader from '../components/adminHeader';
 import './ViewEvent.css';
 
 const ViewEvent: React.FC = () => {
@@ -8,6 +9,7 @@ const ViewEvent: React.FC = () => {
         <IonHeader className='ion-no-border'>
             <IonToolbar>
                 <Header />
+                <AdminHeader />
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
