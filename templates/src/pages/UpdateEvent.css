@@ -9,6 +9,13 @@
     padding: 20px;
 }
 
+#updateEvent-col2 ion-label {
+    padding-right: 3%;
+    font-size: medium;
+    color: #030d22;
+    margin-bottom: 9%;
+}
+
 #updateEvent-title {
     color: #0f4e9e;
     font-weight: bold;

@@ -1,16 +1,13 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonText, IonItemDivider, IonPage, IonRow, IonAvatar, IonToolbar } from '@ionic/react';
-import Header from '../components/userHeader';
 import AdminHeader from '../components/adminHeader';
-import './Profile.css';
+import './ViewUser.css';
 
-const Profile: React.FC = () => {
+const ViewUser: React.FC = () => {
   return (
     <IonPage>
         <IonHeader className='ion-no-border'>
             <IonToolbar>
-                <Header />
                 <AdminHeader />
-                {/* only show admin header if the user role is admin */}
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
@@ -20,14 +17,14 @@ const Profile: React.FC = () => {
                 </IonToolbar>
             </IonHeader> */}
 
-            <IonGrid className='ion-margin' id='profile-grid'>
+            <IonGrid className='ion-margin' id='ViewUser-grid'>
                 <IonRow></IonRow>
-                <IonRow id='profile-row2'>
+                <IonRow id='ViewUser-row2'>
                     
-                    <IonCol id='profile-col2'>
-                       {/* <IonTitle className='ion-padding-bottom' id='profile-title-right'>Signup</IonTitle>*/}
+                    <IonCol id='ViewUser-col2'>
+                       {/* <IonTitle className='ion-padding-bottom' id='ViewUser-title-right'>Signup</IonTitle>*/}
                        <IonAvatar class= "center">
-                            <img id='profile-img'   src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='profile photo'/>
+                            <img id='ViewUser-img'   src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='user photo'/>
                        </IonAvatar>
                        <IonItemDivider id='field'>
                             <IonLabel color="light">Firstname:</IonLabel>
@@ -45,9 +42,15 @@ const Profile: React.FC = () => {
                             <IonLabel color="light">Password:</IonLabel>
                             <IonText>Password</IonText>
                         </IonItemDivider> 
-                        <IonItemDivider id="edit-btn-div">
-                             <IonButton id='profile-btn' fill='solid'>Edit</IonButton>
-                        </IonItemDivider>
+                        <IonItemDivider id='field'>
+                            <IonLabel color="light">Role:</IonLabel>
+                            <IonText>Role</IonText>
+                        </IonItemDivider> 
+                        <IonItemDivider id="ViewUser-btn-div"> 
+                        {/* for admins */}
+                             <IonButton id='ViewUser-btn' fill='solid'>Make Admin</IonButton>   
+                             <IonButton id='ViewUser-btn' fill='solid'>Make User</IonButton>   
+                        </IonItemDivider>        
                     </IonCol> 
                 </IonRow> 
             </IonGrid>
@@ -56,4 +59,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ViewUser;

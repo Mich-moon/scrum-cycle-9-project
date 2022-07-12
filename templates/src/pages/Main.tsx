@@ -12,6 +12,7 @@ const Main: React.FC = () => {
             <IonToolbar>
                 <UserHeader />
                 <AdminHeader />
+                {/* only show admin header if the user role is admin */}
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
@@ -29,7 +30,8 @@ const Main: React.FC = () => {
                             </IonItemDivider>                        
                             <IonSlides pager={true}>
                                 <IonSlide>
-                                    <IonCard>
+                                    {/* cards should be clickable and go to the view events page */}
+                                    <IonCard href='#'>
                                         <IonCardHeader>
                                             <IonCardTitle>Card Title1</IonCardTitle>
                                         </IonCardHeader>

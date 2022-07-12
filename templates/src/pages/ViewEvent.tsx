@@ -10,6 +10,7 @@ const ViewEvent: React.FC = () => {
             <IonToolbar>
                 <Header />
                 <AdminHeader />
+                {/* only show admin header if the user role is admin */}
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>

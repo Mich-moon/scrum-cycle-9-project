@@ -72,7 +72,6 @@
 }
 
 #flyer-photo-upload input:hover {
-    color: black;
     font-size: medium;
     border: #cc922f solid 2px;
     color: #030d22;
@@ -80,6 +79,7 @@
     margin-bottom: 15px;
     margin-top: 15px;
     width: 95%;
+    cursor: pointer;
 }
 
 ::-webkit-file-upload-button {
