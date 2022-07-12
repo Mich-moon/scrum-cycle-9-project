@@ -24,7 +24,7 @@ def home():
 def signup():
     """Route for signup."""
 
-    form = SignupForm(obj=request.form)
+    form = SignupForm(obj=request.form, meta={'csrf': False})
 
     if form.validate_on_submit():
         photo = form.photo.data
@@ -65,7 +65,7 @@ def signup():
 def login():
     """Route for login."""
 
-    form = LoginForm(obj=request.form)
+    form = LoginForm(obj=request.form, meta={'csrf': False})
 
     if form.validate_on_submit():
         email = form.email.data
@@ -562,7 +562,6 @@ def form_errors(form):
             error_messages.append(message)
 
     return error_messages
-<<<<<<< HEAD
 
 @app.after_request
 def after_request(response):
@@ -571,5 +570,3 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     response.headers.add('Access-Control-Allow-Credentials', 'true')
     return response
-=======
->>>>>>> ac4fc95db205104af7769098a68d412ab2504e46
