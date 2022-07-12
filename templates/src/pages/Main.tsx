@@ -4,6 +4,7 @@ import { useState } from 'react';
 import UserHeader from '../components/userHeader';
 import AdminHeader from '../components/adminHeader';
 import './Main.css';
+import { getRoles } from '@testing-library/react';
 
 interface Event {
     id: number,
@@ -24,14 +25,16 @@ const Main: React.FC = () => {
 
     const [searchText, setSearchText] = useState('');
     const [events, setEvents] = useState([]);
+    const [user_is_admin, setRole] = useState([false]);
 
     useIonViewWillEnter(() => {
         getEvents();
+        getRole();
 
         async function getEvents() {
             // get token from capacitor storage
-            const value  = await Storage.get({ key: 'jwt' });
-            const token = value;
+            const jwt_value  = await Storage.get({ key: 'jwt' });
+            const token = jwt_value;
 
             const result = await fetch("http://localhost:8080/api/v2/events", {
                 method: "get",
@@ -49,6 +52,12 @@ const Main: React.FC = () => {
             if ("events" in result) {
                 setEvents(result.events);
             }
+        }
+
+        async function getRole() {
+            const user_is_admin_value = await Storage.get({ key: 'user_is_admin' });
+            const user_is_admin = user_is_admin_value;
+            //setRole(user_is_admin);
         }
 
     }, [])
