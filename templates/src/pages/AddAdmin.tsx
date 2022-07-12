@@ -1,6 +1,5 @@
 import { IonButton, IonCol, IonContent, IonSearchbar, IonGrid, IonHeader, IonDatetime, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar, IonSlides, IonSlide, IonSelect, IonSelectOption, IonText, IonList, IonItem } from '@ionic/react';
 import { useState } from 'react';
-import UserHeader from '../components/userHeader';
 import AdminHeader from '../components/adminHeader';
 import './AddAdmin.css';
 
@@ -10,7 +9,6 @@ const AddAdmin: React.FC = () => {
     <IonPage>
         <IonHeader className='ion-no-border'>
             <IonToolbar>
-                <UserHeader />
                 <AdminHeader />
             </IonToolbar>
         </IonHeader>
