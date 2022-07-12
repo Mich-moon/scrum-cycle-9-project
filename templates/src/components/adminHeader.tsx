@@ -10,11 +10,11 @@ const adminHeader: React.FC<ContainerProps> = () => {
                 <IonButton id='admin-btn1' href='./main' target='_self'>
                     Main
                 </IonButton>
-                <IonButton id='admin-btn2' href='./home' target='_self'>
+                <IonButton id='admin-btn2' href='./profile' target='_self'>
                     Profile
                 </IonButton>
                 {/* hover over profile button and it gives the name of the user*/}
-                <IonButton id='admin-btn3' fill='outline' href='./home' target='_self'>
+                <IonButton id='admin-btn3' href='./home' target='_self'>
                     Logout
                 </IonButton>
             </IonButtons>
