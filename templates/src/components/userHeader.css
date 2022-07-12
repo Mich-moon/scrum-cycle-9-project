@@ -3,11 +3,13 @@ ion-button {
 }
 
 #user-btn1, #user-btn2, #user-btn3, #user-btn4 {
-    padding-left: 30px;
-    padding-right: 30px;
+    --color: white;
+    --border-radius: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
     font-size: medium;
 }
 
 #user-btn1:hover, #user-btn2:hover, #user-btn3:hover, #user-btn4:hover {
-    font-weight: bolder;
+    --color: #cc922f;
 }
