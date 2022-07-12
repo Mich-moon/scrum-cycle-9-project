@@ -19,7 +19,7 @@ ion-button {
     padding-right: 40px;
 }
 
-#home-btn1:hover, #home-btn2:hover {    
+#home-btn1:hover, #home-btn2:hover { 
     --color: #cc922f;
     font-weight: bolder;
 }
