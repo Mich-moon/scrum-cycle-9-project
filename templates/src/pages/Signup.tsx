@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { close } from 'ionicons/icons';
 import { useForm } from "react-hook-form";
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonImg, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar, IonToast } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonImg, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar, IonToast, useIonRouter  } from '@ionic/react';
 import Header from '../components/header';
 import './Signup.css';
 
 const Signup: React.FC = () => {
+    const router = useIonRouter();
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const [data, setData] = useState();
@@ -25,7 +26,7 @@ const Signup: React.FC = () => {
         formData.append('last_name', data.lastName);
         formData.append('email', data.email);
         formData.append('password', data.password);
-        formData.append('photo', data.photo);
+        formData.append('photo', data.photo[0]);
 
         const csrf_response = await fetch("http://localhost:8080/api/v2/csrf-token")
         .then(function (response) {
@@ -59,6 +60,10 @@ const Signup: React.FC = () => {
 
         setShowToast(true);
         setMessage(result.message);
+
+        if (result.user) {
+            router.push("/login", "forward", "push");
+        }
 
     }
 
