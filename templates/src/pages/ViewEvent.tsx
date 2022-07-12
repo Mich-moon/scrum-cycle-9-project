@@ -52,6 +52,11 @@ const ViewEvent: React.FC = () => {
                         <IonItemDivider id='view-btn-div'>                            
                             <IonButton id='view-btn1' fill='outline' color={'white'} href='/updateEvent'>Update Event</IonButton>   
                             <IonButton id='view-btn2' fill='solid'>Delete Event</IonButton>         
+                        </IonItemDivider> 
+                        {/* if the user is an admin then this div below should be shown */}
+                        <IonItemDivider id='view-btn-div'>                            
+                            <IonButton id='view-btn1' fill='outline' color={'white'} href='/main'>Publish Event</IonButton>   
+                            <IonButton id='view-btn2' fill='solid'>Delete Event</IonButton>         
                         </IonItemDivider>                      
                     </IonCol>
                 </IonRow>
