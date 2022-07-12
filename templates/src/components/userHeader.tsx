@@ -17,7 +17,7 @@ const userHeader: React.FC<ContainerProps> = () => {
                     Profile
                 </IonButton>
                 {/* hover over profile button and it gives the name of the user*/}
-                <IonButton id='user-btn4' href='./home' target='_self'>
+                <IonButton id='user-btn4' fill='solid' href='./home' target='_self'>
                     Logout
                 </IonButton>
             </IonButtons>
