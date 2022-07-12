@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import CreateEvent from './pages/CreateEvent';
 import UpdateEvent from './pages/UpdateEvent';
+import ViewEvent from './pages/ViewEvent';
 import Main from './pages/Main';
 import Profile from './pages/Profile';
 
@@ -51,6 +52,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path='/updateEvent'>
             <UpdateEvent />
+        </Route>
+        <Route exact path='/viewEvent'>
+            <ViewEvent />
         </Route>
         <Route exact path='/main'>
             <Main />
