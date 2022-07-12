@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { close } from 'ionicons/icons';
 import { useForm } from "react-hook-form";
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonImg, IonInput, IonItemDivider, IonPage, IonRow, IonText, IonTitle, IonToolbar, IonToast } from '@ionic/react';
@@ -36,7 +36,7 @@ const Signup: React.FC = () => {
         });
 
         console.log(csrf_response);
-        formData.append( 'csrf_token', String(csrf_response.csrf_token) );
+        formData.append( 'csrf_token', csrf_response.csrf_token );
 
         let form_data_json = JSON.stringify( Object.fromEntries(formData.entries()) );
         console.log(form_data_json);
@@ -45,7 +45,7 @@ const Signup: React.FC = () => {
             method: "post",
             body: formData,
             headers: {
-                'X-CSRFToken': String(csrf_response.csrf_token),
+                'X-CSRFToken': csrf_response.csrf_token
             }
         })
         .then(function (response) {
@@ -87,24 +87,24 @@ const Signup: React.FC = () => {
                                 <IonTitle className='ion-padding-bottom' id='signup-title-right'>Signup</IonTitle>
 
                                 <IonInput {...register("firstName", { required: true })} placeholder='Firstname' clearInput></IonInput>
-                                {errors.firstName && <span>This field is required</span>}
+                                {errors.firstName && <span>Firstname is required</span>}
 
                                 <IonInput {...register("lastName", { required: true })} placeholder='Lastname' clearInput></IonInput>
-                                {errors.lastName && <span>This field is required</span>}
+                                {errors.lastName && <span>Lastname is required</span>}
 
                                 <IonInput {...register("email", { required: true })} type='email' placeholder='Email Address' clearInput></IonInput>
-                                {errors.email && <span>This field is required</span>}
+                                {errors.email && <span>email is required</span>}
 
                                 <IonInput {...register("password", { required: true })} type='password' placeholder='Password' clearInput></IonInput>
-                                {errors.password && <span>This field is required</span>}
+                                {errors.password && <span>password is required</span>}
 
                                 <IonInput {...register("passwordConfirm", { required: true })} type='password' placeholder='Confirm Password' clearInput></IonInput>
-                                {errors.passwordConfirm && <span>This field is required</span>}
+                                {errors.passwordConfirm && <span>confirmation is required</span>}
 
                                 <IonItemDivider id='signup-photo-upload'>
                                     <IonLabel color='light'>Upload Your Profile Photo:</IonLabel>
                                     <input {...register("photo")} type='file' id='imginput' accept='image/*'/>
-                                    {errors.photo && <span>This field is required</span>}
+                                    {errors.photo && <span>Photo is required</span>}
                                 </IonItemDivider>    
                                 <IonItemDivider id='signup-btn-div'>                            
                                     <IonButton type="submit" id='signup-btn' fill='solid'>Create Account</IonButton>         
