@@ -108,6 +108,7 @@ const Main: React.FC = () => {
                                         <IonSelectOption>Your Events</IonSelectOption> 
                                         <IonSelectOption>All Events</IonSelectOption> 
                                     </IonSelect>  
+                                </IonItemDivider>
                                 <IonItemDivider id='search-div'>
                                     <IonSearchbar placeholder='Search for Event' value={searchText} id='searchBar' onIonChange={e => setSearchText(e.detail.value!)} animated={true}></IonSearchbar>
                                     {console.log(searchText)}
@@ -123,7 +124,8 @@ const Main: React.FC = () => {
                                             <IonSelectOption>All Events</IonSelectOption> 
                                         </IonSelect>  
                                     </IonItemDivider>
-                                </IonItemDivider>                        
+                                </IonItemDivider>  
+                            </IonItemDivider>                        
                         </IonCol>
                     </IonRow>
                     <IonRow id='main-row3'>
