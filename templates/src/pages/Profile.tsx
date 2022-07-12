@@ -1,5 +1,6 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonLabel, IonText, IonItemDivider, IonPage, IonRow, IonAvatar, IonToolbar } from '@ionic/react';
 import Header from '../components/userHeader';
+import AdminHeader from '../components/adminHeader';
 import './Profile.css';
 
 const Signup: React.FC = () => {
@@ -8,6 +9,7 @@ const Signup: React.FC = () => {
         <IonHeader className='ion-no-border'>
             <IonToolbar>
                 <Header />
+                <AdminHeader />
             </IonToolbar>
         </IonHeader>
         <IonContent fullscreen>
@@ -42,8 +44,17 @@ const Signup: React.FC = () => {
                             <IonLabel color="light">Password:</IonLabel>
                             <IonText>Password</IonText>
                         </IonItemDivider> 
-                        <IonItemDivider id="edit-div">                 
-                             <IonButton id='profile-btn' fill='solid'> Edit </IonButton>   
+                        <IonItemDivider id='field'>
+                            <IonLabel color="light">Role:</IonLabel>
+                            <IonText>Role</IonText>
+                        </IonItemDivider> 
+                        <IonItemDivider id="edit-btn-div">
+                             <IonButton id='profile-btn' fill='solid'>Edit</IonButton>
+                        </IonItemDivider>
+                        <IonItemDivider id="edit-btn-div"> 
+                        {/* for admins */}
+                             <IonButton id='profile-btn' fill='solid'>Make Admin</IonButton>   
+                             <IonButton id='profile-btn' fill='solid'>Make User</IonButton>   
                         </IonItemDivider>        
                     </IonCol> 
                 </IonRow> 

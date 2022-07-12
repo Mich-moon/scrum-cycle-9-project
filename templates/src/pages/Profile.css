@@ -1,7 +1,3 @@
-ion-text, ion-input, ion-title, ion-button, ion-label{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
-}
-
 #profile-grid {
     padding-top: 5%;
     width:40%; 
@@ -13,33 +9,13 @@ ion-text, ion-input, ion-title, ion-button, ion-label{
 
 #profile-row2 {    
     margin-left: 10%;
-    margin-right: 10%;
-   
+    margin-right: 10%;   
 }
-
-
 
 #profile-col2 {
     background-color: #0f4e9e;
     border-radius: 10px;
     padding: 20px;
-}
-
-#profile-title-left {
-    color: #0f4e9e;
-    font-weight: bold;
-    font-size: x-large;
-    margin-left: -20px;
-}
-
-
-
-#profile-col2 ion-input {
-    color: #030d22;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: small;
-    background-color: white;
 }
 
 #profile-btn:hover {
@@ -53,47 +29,34 @@ ion-text, ion-input, ion-title, ion-button, ion-label{
     --border-radius: 25px;
     color: #0f4e9e;
     font-size: medium;
-    margin: auto;  
-    
+    margin: auto; 
 }
-#edit-div {
+
+#edit-btn-div {
+    padding-top: 10%;
     --background: #0f4e9e;
-    border: none;
-     
+    border: none;     
 }
-
-#profile-photo-upload {
-    background-color: #0f4e9e;
-    padding-bottom: 20px;
-}
-
-#profile-photo-upload ion-label {
-    background-color: #0f4e9e;
-    padding-right: 20px ;
-}
-
 
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
     --border-radius: 20px;
-    padding-bottom: 5%;
+    margin-bottom: 5%;
     width:120px;
     height: 120px;
 }
 
-#field{
-    padding: 10px;
-    border:none;
+#field {
+    border: none;
     background-color: #0f4e9e;
-    font-size: medium;
-    
+    font-size: medium;    
 }
-ion-text{
+
+#profile-col2 ion-text {
     color: #f4f5f8;
     padding-left: 3%;
-    margin-top:1%;
-    
+    margin-top:1%;    
 }
 
