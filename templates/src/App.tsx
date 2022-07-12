@@ -11,7 +11,7 @@ import Main from './pages/Main';
 import Profile from './pages/Profile';
 import AddAdmin from './pages/AddAdmin';
 import ViewUser from './pages/ViewUser';
-
+import UpdateProfile from './pages/UpdateProfile';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -63,6 +63,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path='/profile'>
             <Profile />
+        </Route>
+         <Route exact path='/updateProfile'>
+            <UpdateProfile />
         </Route>
         <Route exact path='/addAdmin'>
             <AddAdmin />
