@@ -46,7 +46,7 @@ const Profile: React.FC = () => {
                             <IonText>Password</IonText>
                         </IonItemDivider> 
                         <IonItemDivider id="edit-btn-div">
-                             <IonButton id='profile-btn' fill='solid'>Edit</IonButton>
+                             <IonButton id='profile-btn' fill='solid' href="./updateProfile">Edit</IonButton>
                         </IonItemDivider>
                     </IonCol> 
                 </IonRow> 

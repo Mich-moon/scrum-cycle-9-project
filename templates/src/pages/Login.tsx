@@ -92,18 +92,17 @@ const Login: React.FC = () => {
 
     return (
         <IonPage>
-        <IonHeader className='ion-no-border'>
-            <IonToolbar>
-                <Header />
-            </IonToolbar>
-        </IonHeader>
-        <IonContent fullscreen>
-        {/*   <IonHeader collapse='condense'>
+            <IonHeader className='ion-no-border'>
                 <IonToolbar>
-                    <IonTitle size='large'>Blank2</IonTitle>
+                    <Header />
                 </IonToolbar>
-            </IonHeader> */}
-
+            </IonHeader>
+            <IonContent fullscreen>
+            {/*   <IonHeader collapse='condense'>
+                    <IonToolbar>
+                        <IonTitle size='large'>Blank2</IonTitle>
+                    </IonToolbar>
+                </IonHeader> */}
                 <form id="loginForm" onSubmit={handleSubmit(onSubmit)} >
                     <IonGrid className='ion-margin' id='login-grid'>
                         <IonRow></IonRow>

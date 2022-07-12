@@ -76,11 +76,10 @@ const Signup: React.FC = () => {
             </IonHeader>
             <IonContent fullscreen>
             {/*   <IonHeader collapse='condense'>
-                <IonToolbar>
-                    <IonTitle size='large'>Blank2</IonTitle>
-                </IonToolbar>
-            </IonHeader> */}
-
+                    <IonToolbar>
+                        <IonTitle size='large'>Blank2</IonTitle>
+                    </IonToolbar>
+                </IonHeader> */}
                 <form id="signUpForm" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                     <IonGrid className='ion-margin' id='signup-grid'>
                         <IonRow></IonRow>
