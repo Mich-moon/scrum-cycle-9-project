@@ -360,26 +360,44 @@ def events_search():
         date = request.args.get('date')
         status = request.args.get('status')
 
+        event_start = request.args.get('event_start')
+        event_end = request.args.get('event_end')
+        date_range = request.args.get('date_range')
+
         query = db.session.query(Event)
 
         if request.args.get('date'):
-            today = datetime.datetime.utcnow()
+            today = datetime.datetime.now()
+            today = today.replace(hour=0, minute=0, second =0,microsecond=0,)
 
             if date == "today":
-                #query = query.filter(Event.start_date.date == today)
-                query = query.filter(str(Event.start_date).split(' ')[0] == str(today).split(' ')[0])
+                today_date = datetime.datetime.now().date()
+                today = "{}".format(today)
+                events = Event.query.filter(Event.start_date.like(today_date)).all()
 
             elif date == "upcoming":
                 query = query.filter(Event.start_date > today)
 
             elif date == "past":
                 query = query.filter(Event.start_date < today)
-            
+        
         if request.args.get('title'):
             query = query.filter(Event.title.like("%" + title + "%"))
         
         if request.args.get('status'):
             query = query.filter(Event.status == status)
+
+        if request.args.get('date_range'):
+            if date_range == "false":
+                if request.args.get('event_start'):
+                    query = query.filter(Event.start_date == event_start)
+
+                elif request.args.get('event_end'):
+                    query = query.filter(Event.end_date == event_end)
+
+            if date_range == "true":
+                query = query.filter(Event.start_date >= event_start, Event.end_date <= event_end)
+            
 
         events = query.all()
 

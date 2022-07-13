@@ -6,6 +6,7 @@ import AdminHeader from '../components/adminHeader';
 import './Main.css';
 import { getRoles } from '@testing-library/react';
 import { contractOutline, filter } from 'ionicons/icons';
+import { PassThrough } from 'stream';
 
 interface Event {
     id: number;
@@ -112,7 +113,19 @@ const Main: React.FC = () => {
 
     async function search_date() {
         let token = await localStorage.getItem("jwt");
-        const result = await fetch("http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end"+event_end, {
+
+        let url = '';
+
+        if (event_start == "" || event_end == "") {
+            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=false";
+
+        } else if ( (!(event_start == "")) && (!(event_end == "")) ) {
+            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=true";
+        }
+
+        console.log(url);
+
+        const result = await fetch(url, {
             method: "get",
             headers: {
                 "Authorization" : "Bearer " + token
