@@ -89,6 +89,7 @@ const Login: React.FC = () => {
 
             localStorage.setItem("jwt", jwt_token);
             localStorage.setItem("user_is_admin", user_is_admin);
+            localStorage.setItem("user_id", user_id);
 
             router.push("/main", "forward", "push");
         }

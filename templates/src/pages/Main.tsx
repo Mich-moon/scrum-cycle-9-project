@@ -1,11 +1,11 @@
 import { Storage } from '@capacitor/storage';
 import { IonButton, IonCol, IonContent, IonSearchbar, IonGrid, IonHeader, IonDatetime, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar, IonSlides, IonSlide, IonSelect, IonSelectOption, IonText, IonList, IonItem, useIonViewWillEnter, IonImg } from '@ionic/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import UserHeader from '../components/userHeader';
 import AdminHeader from '../components/adminHeader';
 import './Main.css';
 import { getRoles } from '@testing-library/react';
-import { contractOutline } from 'ionicons/icons';
+import { contractOutline, filter } from 'ionicons/icons';
 
 interface Event {
     id: number,
@@ -24,25 +24,31 @@ interface Event {
 
 const Main: React.FC = () => {
 
+    const [csrf, setCSRF] = useState<String | null>('');
     const [searchText, setSearchText] = useState('');
     const [events, setEvents] = useState([]);
-    const [isAdmin, setRole] = useState<String | null>('False');
+    const [searchEvents, setSearchEvents] = useState([]);
+    const [isAdmin, setRole] = useState<String | null>('false');
+    const [user_id, setID] = useState<String | null>('false');
 
-    let user_is_admin = "False";
+    //let user_is_admin = "false";
 
     useIonViewWillEnter(() => {
-        getEvents();
-        getRole();
+        //search();
+        getUpcomingEvents();
+        getClaims();
 
-        async function getEvents() {
+        async function getUpcomingEvents() {
             // get token from capacitor storage
             //const jwt_value  = await Storage.get({ key: 'jwt' });
             //const token = jwt_value;
             //console.log(jwt_value);
 
             let token = localStorage.getItem("jwt");
+            setCSRF(token);
             console.log(token);
 
+            // TO CHANGE - /api/v2/events/search?date=upcoming
             const result = await fetch("http://localhost:8080/api/v2/events", {
                 method: "get",
                 headers: {
@@ -61,26 +67,74 @@ const Main: React.FC = () => {
             }
         }
 
-        async function getRole() {
+        async function getClaims() {
             // get role from capacitor storage
             //const user_is_admin_value = await Storage.get({ key: 'user_is_admin' });
             //const user_is_admin = user_is_admin_value;
             //console.log( user_is_admin );
 
-            //let user_is_admin = localStorage.getItem("user_is_admin");
+            let user_is_admin = localStorage.getItem("user_is_admin");
             setRole(user_is_admin);
             console.log(user_is_admin);
+
+            let user_id = localStorage.getItem("user_id");
+            setID(user_id);
+            console.log(user_id);
         }
 
     }, [])
 
 
+    // for searchbar
+    useEffect(() => {
+
+        const result = fetch("http://localhost:8080/api/v2/events", {
+            method: "get",
+            headers: {
+                "Authorization" : "Bearer " + {csrf}
+            }
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        if ("events" in result) {
+            //setSearchEvents(result.events);
+        }
+    }, [searchText])
+
+    async function filter( filter:string ) {
+
+        if (filter == "Your Events") {
+            const result = await fetch("http://localhost:8080/api/v2/events/users/" + {user_id}, {
+                method: "get",
+                headers: {
+                    "Authorization" : "Bearer " + {csrf}
+                }
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+            if ("events" in result) {
+                setSearchEvents(result.events);
+            }
+        } 
+
+    }
+
     return (
         <IonPage>
             <IonHeader className='ion-no-border'>
                 <IonToolbar>
-                    <UserHeader />
-                    <AdminHeader />
+                    {isAdmin == "false" && <UserHeader />}
+                    {isAdmin == "true" && <AdminHeader />}
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -109,33 +163,6 @@ const Main: React.FC = () => {
                                             </IonCard> 
                                         ))}
                 
-                                        <IonCard>
-                                            <IonCardHeader>
-                                                <IonCardTitle>Card Title1</IonCardTitle>
-                                            </IonCardHeader>
-                                            <IonCardContent>
-                                                Keep close to Nature's heart... and break clear away, once in awhile,
-                                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
-                                            </IonCardContent>
-                                        </IonCard>
-                                        <IonCard>
-                                            <IonCardHeader>
-                                                <IonCardTitle>Card Title2</IonCardTitle>
-                                            </IonCardHeader>
-                                            <IonCardContent>
-                                                Keep close to Nature's heart... and break clear away, once in awhile,
-                                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
-                                            </IonCardContent>
-                                        </IonCard>                                    
-                                        <IonCard>
-                                            <IonCardHeader>
-                                                <IonCardTitle>Card Title3</IonCardTitle>
-                                            </IonCardHeader>
-                                            <IonCardContent>
-                                                Keep close to Nature's heart... and break clear away, once in awhile,
-                                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
-                                            </IonCardContent>
-                                        </IonCard>
                                     </IonSlide>
                                     <IonSlide>
                                         <IonCard>
@@ -163,7 +190,16 @@ const Main: React.FC = () => {
                                     <IonInput type='datetime-local' id='start-date-time'></IonInput>                            
                                     <IonText>End Date:</IonText>
                                     <IonInput type='datetime-local' id='end-date-time'></IonInput>
-                                    <IonSelect placeholder='Select Events' ok-text='Ok' cancel-text='Cancel' id='search-filter'>
+                                    <IonSelect 
+                                        placeholder='Select Events' 
+                                        ok-text='Ok' 
+                                        cancel-text='Cancel' 
+                                        id='search-filter' 
+                                        onIonChange={(e) => {
+                                          console.log(e.detail.value);
+                                          filter(e.detail.value);
+                                        }}
+                                    >
                                         <IonSelectOption>Your Events</IonSelectOption> 
                                         <IonSelectOption>All Events</IonSelectOption> 
                                     </IonSelect>  
@@ -174,12 +210,12 @@ const Main: React.FC = () => {
                     <IonRow id='main-row3'>
                         <IonCol>
                             <IonList>
-                                <IonItem href='/viewEvent'>
-                                    1
-                                </IonItem>
-                                <IonItem href='/viewEvent'>
-                                    2
-                                </IonItem>
+                                {events.map((event: Event, index:number) => (
+                                    <IonItem href='/viewEvent' key={event.id}>
+                                        {event.title}
+                                        {event.description} 
+                                    </IonItem>
+                                ))}
                             </IonList>
                         </IonCol>                    
                     </IonRow>
