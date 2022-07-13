@@ -8,7 +8,7 @@ import { getRoles } from '@testing-library/react';
 import { contractOutline, filter } from 'ionicons/icons';
 
 interface Event {
-    id: number,
+    id: number;
     title: string;
     start_date: string;
     end_date: string;
@@ -24,11 +24,13 @@ interface Event {
 
 const Main: React.FC = () => {
 
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState<string>('');
+    const [event_start, setEvent_start] = useState<string>('');
+    const [event_end, setEvent_end] = useState<string>('');
+
     const [events, setEvents] = useState([]);
     const [searchEvents, setSearchEvents] = useState([]);
-    const [isAdmin, setRole] = useState<String | null>('false');
-    const [user_id, setID] = useState<String | null>('');
+    const [isAdmin, setRole] = useState<string | null>('false');
 
     //let user_is_admin = "false";
 
@@ -46,8 +48,7 @@ const Main: React.FC = () => {
             let token = localStorage.getItem("jwt");
             console.log(token);
 
-            // TO CHANGE - /api/v2/events/search?date=upcoming
-            const result = await fetch("http://localhost:8080/api/v2/events", {
+            const result = await fetch("http://localhost:8080/api/v2/events/search?date=upcoming", {
                 method: "get",
                 headers: {
                     "Authorization" : "Bearer " + token
@@ -63,6 +64,8 @@ const Main: React.FC = () => {
             if ("events" in result) {
                 setEvents(result.events);
             }
+
+            setSearchEvents([]);
         }
 
         async function getClaims() {
@@ -74,20 +77,13 @@ const Main: React.FC = () => {
             let user_is_admin = localStorage.getItem("user_is_admin");
             setRole(user_is_admin);
             console.log(user_is_admin);
-
-            let user_id = localStorage.getItem("user_id");
-            setID(user_id);
-            console.log(user_id);
         }
 
     }, [])
 
-
-    // for searchbar
-    useEffect(() => {
-
-        let token = localStorage.getItem("jwt");
-        const result = fetch("http://localhost:8080/api/v2/events", {
+    async function search() {
+        let token = await localStorage.getItem("jwt");
+        const result = await fetch("http://localhost:8080/api/v2/events/search?title="+searchText, {
             method: "get",
             headers: {
                 "Authorization" : "Bearer " + token
@@ -101,15 +97,68 @@ const Main: React.FC = () => {
         });
 
         if ("events" in result) {
-            //setSearchEvents(result.events);
+            setSearchEvents(result.events);
+        } else {
+            setSearchEvents([]);
         }
+    }
+
+    // for searchbar
+    useEffect(() => {
+        search();
+        console.log("searc text "+searchText);
     }, [searchText])
+
+
+    async function search_date() {
+        let token = await localStorage.getItem("jwt");
+        const result = await fetch("http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end"+event_end, {
+            method: "get",
+            headers: {
+                "Authorization" : "Bearer " + token
+            }
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        if ("events" in result) {
+            setSearchEvents(result.events);
+        } else {
+            setSearchEvents([]);
+        }
+    }
+    
+    // for date
+    useEffect(() => {
+        search_date();
+        console.log("event start " + event_start );
+        console.log("event end " + event_end );
+    }, [event_start, event_end])
 
     async function filter( filter:string ) {
 
+        let start_search = false;
         let token = localStorage.getItem("jwt");
+        let user_id = localStorage.getItem("user_id");
+
+        let url = '';
+
         if (filter == "Your Events") {
-            const result = await fetch("http://localhost:8080/api/v2/events/users/" + {user_id}, {
+            start_search = true;
+            url = "http://localhost:8080/api/v2/events/users/" + user_id;
+        } else if (filter == "All Events") {
+            start_search = true;
+            url = "http://localhost:8080/api/v2/events";
+        } else {
+            start_search = false;
+        }
+
+        if (start_search == true) {
+            const result = await fetch(url, {
                 method: "get",
                 headers: {
                     "Authorization" : "Bearer " + token
@@ -121,11 +170,14 @@ const Main: React.FC = () => {
             .catch(function (error) {
                 console.log(error);
             });
-
+    
             if ("events" in result) {
                 setSearchEvents(result.events);
             }
-        } 
+
+        } else {
+            setSearchEvents([]);
+        }
 
     }
 
@@ -181,36 +233,60 @@ const Main: React.FC = () => {
                     <IonRow id='main-row2'>
                         <IonCol>
                             <IonItemDivider id='search-div'>
-                                <IonSearchbar placeholder='Search for Event' value={searchText} id='searchBar' onIonChange={e => setSearchText(e.detail.value!)} animated={true}></IonSearchbar>
+                                <IonSearchbar 
+                                    placeholder='Search for Event' 
+                                    value={searchText} 
+                                    id='searchBar' 
+                                    onIonChange={e => {
+                                        //console.log(e.detail.value);
+                                        setSearchText(e.detail.value!);
+                                    }} 
+                                    animated={true}></IonSearchbar
+                                >
                                 {console.log(searchText)}
                             </IonItemDivider>
                             <IonItemDivider id='main-row2-div2'>
                                 <IonItemDivider id='date-filter-options'>                                
                                     <IonText>Start Date:</IonText>
-                                    <IonInput type='datetime-local' id='start-date-time'></IonInput>                            
+                                    <IonInput 
+                                        type='datetime-local' 
+                                        id='start-date-time'
+                                        onIonChange={(e) => {
+                                            //console.log(e.detail.value);
+                                            setEvent_start(e.detail.value!) ;
+                                        }}
+                                    ></IonInput>                            
                                     <IonText>End Date:</IonText>
-                                    <IonInput type='datetime-local' id='end-date-time'></IonInput>
+                                    <IonInput 
+                                        type='datetime-local' 
+                                        id='end-date-time'
+                                        onIonChange={(e) => {
+                                            //console.log(e.detail.value);
+                                            setEvent_end(e.detail.value!) ;
+                                        }}
+                                    ></IonInput>
                                     <IonSelect 
                                         placeholder='Select Events' 
                                         ok-text='Ok' 
                                         cancel-text='Cancel' 
                                         id='search-filter' 
                                         onIonChange={(e) => {
-                                          console.log(e.detail.value);
+                                          //console.log(e.detail.value);
                                           filter(e.detail.value);
                                         }}
                                     >
+                                        <IonSelectOption>None</IonSelectOption>
                                         <IonSelectOption>Your Events</IonSelectOption> 
                                         <IonSelectOption>All Events</IonSelectOption> 
                                     </IonSelect>  
                                 </IonItemDivider>
-                            </IonItemDivider>                        
+                            </IonItemDivider>
                         </IonCol>
                     </IonRow>
                     <IonRow id='main-row3'>
                         <IonCol>
                             <IonList>
-                                {events.map((event: Event, index:number) => (
+                                {searchEvents.map((event: Event, index:number) => (
                                     <IonItem href='/viewEvent' key={event.id}>
                                         {event.title}
                                         {event.description} 
