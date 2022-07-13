@@ -119,10 +119,10 @@ const Login: React.FC = () => {
                             <IonCol id='login-col2'>
                                 <IonTitle className='ion-padding-bottom' id='login-title-right'>Login</IonTitle>
                                 
-                                <IonInput {...register("email")} type='email' placeholder='Email Address' clearInput></IonInput>
+                                <IonInput {...register("email", { required: true })} type='email' placeholder='Email Address' clearInput></IonInput>
                                 {errors.email && <span>Email is required</span>}
 
-                                <IonInput {...register("password")} type='password' placeholder='Password' clearInput></IonInput>
+                                <IonInput {...register("password", { required: true })} type='password' placeholder='Password' clearInput></IonInput>
                                 {errors.password && <span>Password is required</span>}
 
                                 <IonItemDivider id='login-btn-div'>
