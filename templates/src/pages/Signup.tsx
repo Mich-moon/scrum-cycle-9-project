@@ -107,7 +107,6 @@ const Signup: React.FC = () => {
                                 {errors.passwordConfirm && <span>confirmation is required</span>}
 
                                 <IonItemDivider id='signup-photo-upload'>
-                                    <IonLabel color='light'>Upload Your Profile Photo:</IonLabel>
                                     <input {...register("photo")} type='file' id='imginput' accept='image/*'/>
                                     {errors.photo && <span>Photo is required</span>}
                                 </IonItemDivider>    
