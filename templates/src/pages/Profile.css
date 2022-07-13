@@ -32,6 +32,18 @@
     margin: auto; 
 }
 
+#profile-btn2 {
+    --color:white;
+    --border-radius: 25px;
+    font-size: medium;
+    margin: auto;
+}
+
+#profile-btn2:hover {
+    --color: #cc922f;
+    font-weight: bolder;
+}
+
 #edit-btn-div {
     padding-top: 10%;
     --background: #0f4e9e;
