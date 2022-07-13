@@ -57,8 +57,8 @@ const Login: React.FC = () => {
 
         console.log(result);
 
-        setShowToast(true);
         setMessage(result.message);
+        setShowToast(true);
 
         if (result.access_token) {
             var jwt_token = result.access_token;

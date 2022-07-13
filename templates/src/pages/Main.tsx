@@ -24,12 +24,11 @@ interface Event {
 
 const Main: React.FC = () => {
 
-    const [csrf, setCSRF] = useState<String | null>('');
     const [searchText, setSearchText] = useState('');
     const [events, setEvents] = useState([]);
     const [searchEvents, setSearchEvents] = useState([]);
     const [isAdmin, setRole] = useState<String | null>('false');
-    const [user_id, setID] = useState<String | null>('false');
+    const [user_id, setID] = useState<String | null>('');
 
     //let user_is_admin = "false";
 
@@ -45,7 +44,6 @@ const Main: React.FC = () => {
             //console.log(jwt_value);
 
             let token = localStorage.getItem("jwt");
-            setCSRF(token);
             console.log(token);
 
             // TO CHANGE - /api/v2/events/search?date=upcoming
@@ -88,10 +86,11 @@ const Main: React.FC = () => {
     // for searchbar
     useEffect(() => {
 
+        let token = localStorage.getItem("jwt");
         const result = fetch("http://localhost:8080/api/v2/events", {
             method: "get",
             headers: {
-                "Authorization" : "Bearer " + {csrf}
+                "Authorization" : "Bearer " + token
             }
         })
         .then(function (response) {
@@ -108,11 +107,12 @@ const Main: React.FC = () => {
 
     async function filter( filter:string ) {
 
+        let token = localStorage.getItem("jwt");
         if (filter == "Your Events") {
             const result = await fetch("http://localhost:8080/api/v2/events/users/" + {user_id}, {
                 method: "get",
                 headers: {
-                    "Authorization" : "Bearer " + {csrf}
+                    "Authorization" : "Bearer " + token
                 }
             })
             .then(function (response) {

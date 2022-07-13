@@ -58,8 +58,8 @@ const Signup: React.FC = () => {
 
         console.log(result);
 
-        setShowToast(true);
         setMessage(result.message);
+        setShowToast(true);
 
         if (result.user) {
             router.push("/login", "forward", "push");
