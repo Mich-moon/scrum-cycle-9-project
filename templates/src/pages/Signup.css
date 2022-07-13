@@ -164,6 +164,7 @@
         margin-top: 15px;
         font-size: medium;
         background-color: white;
+        height: 35px;
     }
     
     #signup-col2 ion-input:hover {
@@ -206,6 +207,18 @@
     #signup-btn-div {
         --background: #0f4e9e;
         border: 0px;
+    } 
+    
+    #signup-photo-upload ::-webkit-file-upload-button {
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+        border: white 1.5px solid;
+        background-color: white;
+        color: #0f4e9e;
+        font-weight: bold;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+        font-size: medium;
+        height: 35px;
     }
     
     #signup-photo-upload input {
@@ -216,6 +229,7 @@
         margin-bottom: 15px;
         margin-top: 15px;
         width: 95%;
+        height: 35px;
     }
     
     #signup-photo-upload input:hover {
