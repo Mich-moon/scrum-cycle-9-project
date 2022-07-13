@@ -127,7 +127,7 @@ def users(user_id):
     elif request.method == 'PUT':
 
         if request.form:
-            form = SignupForm(obj=request.form)
+            form = SignupForm(obj=request.form, meta={'csrf': False})
             if user is not None:
 
                 # check for user's id
