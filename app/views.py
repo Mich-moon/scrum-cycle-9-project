@@ -297,7 +297,7 @@ def events_all():
 
     elif request.method == 'POST':
 
-        form = EventsForm(obj=request.form)
+        form = EventsForm(obj=request.form, meta={'csrf': False})
 
         if form.validate_on_submit():
             title = form.title.data
@@ -441,7 +441,7 @@ def events(event_id):
     elif request.method == 'PUT':
 
         if request.form:
-            form = EventsForm(obj=request.form)
+            form = EventsForm(obj=request.form, meta={'csrf': False})
             if event is not None:
 
                 # check for user's id
@@ -565,7 +565,7 @@ def form_errors(form):
 
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:8100')
+    response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', '*')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
