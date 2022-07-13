@@ -1,109 +1,231 @@
-#signup-grid {
-    padding-top: 30px;
+/* DESKTOP VIEW */
+@media screen and (min-width: 1024px) {
+    #signup-grid {
+        padding-top: 30px;
+    }
+    
+    #signup-row2 {    
+        border-radius: 15px;
+        border: #0f4e9e 2px solid;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    
+    #signup-col1 {
+        padding: 20px;
+    }
+    
+    #signup-col2 {
+        border: #0f4e9e solid 2px;
+        background-color: #0f4e9e;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding: 20px;
+    }
+    
+    #signup-title-left {
+        color: #0f4e9e;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #signup-title-right {
+        color: white;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #signup-col2 ion-input {
+        border: white solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+    }
+    
+    #signup-col2 ion-input:hover {
+        border: #cc922f solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+    }
+    
+    #signup-btn:hover {
+        --background: #cc922f;
+        font-weight: bolder;
+        color: white;
+    }
+    
+    #signup-btn {
+        --background: white;
+        --border-radius: 25px;
+        color: #0f4e9e;
+        font-size: medium;
+        margin: auto;
+    }
+    
+    #signup-photo-upload {
+        background-color: #0f4e9e;
+        border-bottom: 0px;
+        padding-bottom: 20px;
+    }
+    
+    #imginput {
+        color: white;
+    }
+    
+    #signup-img {
+        max-width: 100%;
+        padding-top: 25px;
+    }
+    
+    #signup-btn-div {
+        --background: #0f4e9e;
+        border: 0px;
+    }
+    
+    #signup-photo-upload input {
+        font-size: medium;
+        border: white solid 2px;
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        width: 95%;
+    }
+    
+    #signup-photo-upload input:hover {
+        font-size: medium;
+        border: #cc922f solid 2px;
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        width: 95%;
+        cursor: pointer;
+    }
 }
 
-#signup-row2 {    
-    border-radius: 15px;
-    border: #0f4e9e 2px solid;
-    margin-left: 10%;
-    margin-right: 10%;
+
+/* TABLET VIEW */
+@media screen and (min-width: 425px) and (max-width: 768px) {
+    #signup-grid {
+        padding-top: 30px;
+    }
+    
+    #signup-row2 {    
+        border-radius: 15px;
+        border: #0f4e9e 2px solid;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    
+    #signup-col1 {
+        padding: 20px;
+    }
+    
+    #signup-col2 {
+        border: #0f4e9e solid 2px;
+        background-color: #0f4e9e;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    
+    #signup-title-left {
+        color: #0f4e9e;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #signup-title-right {
+        color: white;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #signup-col2 ion-input {
+        border: white solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+    }
+    
+    #signup-col2 ion-input:hover {
+        border: #cc922f solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+    }
+    
+    #signup-btn:hover {
+        --background: #cc922f;
+        font-weight: bolder;
+        color: white;
+    }
+    
+    #signup-btn {
+        --background: white;
+        --border-radius: 25px;
+        color: #0f4e9e;
+        font-size: medium;
+        margin: auto;
+    }
+    
+    #signup-photo-upload {
+        background-color: #0f4e9e;
+        border-bottom: 0px;
+        padding-bottom: 20px;
+    }
+    
+    #imginput {
+        color: white;
+    }
+    
+    #signup-img {
+        max-width: 100%;
+        padding-top: 25px;
+    }
+    
+    #signup-btn-div {
+        --background: #0f4e9e;
+        border: 0px;
+    }
+    
+    #signup-photo-upload input {
+        font-size: medium;
+        border: white solid 2px;
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        width: 95%;
+    }
+    
+    #signup-photo-upload input:hover {
+        font-size: medium;
+        border: #cc922f solid 2px;
+        color: white;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        width: 95%;
+        cursor: pointer;
+    }
 }
 
-#signup-col1 {
-    padding: 20px;
-}
 
-#signup-col2 {
-    border: #0f4e9e solid 2px;
-    background-color: #0f4e9e;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 20px;
-}
-
-#signup-title-left {
-    color: #0f4e9e;
-    font-weight: bold;
-    font-size: x-large;
-    margin-left: -20px;
-}
-
-#signup-title-right {
-    color: white;
-    font-weight: bold;
-    font-size: x-large;
-    margin-left: -20px;
-}
-
-#signup-col2 ion-input {
-    border: white solid 1.5px;
-    color: #030d22;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: medium;
-    background-color: white;
-}
-
-#signup-col2 ion-input:hover {
-    border: #cc922f solid 1.5px;
-    color: #030d22;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: medium;
-    background-color: white;
-}
-
-#signup-btn:hover {
-    --background: #cc922f;
-    font-weight: bolder;
-    color: white;
-}
-
-#signup-btn {
-    --background: white;
-    --border-radius: 25px;
-    color: #0f4e9e;
-    font-size: medium;
-    margin: auto;
-}
-
-#signup-photo-upload {
-    background-color: #0f4e9e;
-    border-bottom: 0px;
-    padding-bottom: 20px;
-}
-
-#imginput {
-    color: white;
-}
-
-#signup-img {
-    max-width: 100%;
-    padding-top: 25px;
-}
-
-#signup-btn-div {
-    --background: #0f4e9e;
-    border: 0px;
-}
-
-#signup-photo-upload input {
-    font-size: medium;
-    border: white solid 2px;
-    color: white;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    width: 95%;
-}
-
-#signup-photo-upload input:hover {
-    font-size: medium;
-    border: #cc922f solid 2px;
-    color: white;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    width: 95%;
-    cursor: pointer;
+/* MOBILE VIEW */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    
 }
