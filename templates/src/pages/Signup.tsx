@@ -98,13 +98,13 @@ const Signup: React.FC = () => {
                                 {errors.lastName && <span>Lastname is required</span>}
 
                                 <IonInput {...register("email", { required: true })} type='email' placeholder='Email Address' clearInput></IonInput>
-                                {errors.email && <span>email is required</span>}
+                                {errors.email && <span>Email Address is required</span>}
 
                                 <IonInput {...register("password", { required: true })} type='password' placeholder='Password' clearInput></IonInput>
-                                {errors.password && <span>password is required</span>}
+                                {errors.password && <span>Password is required</span>}
 
                                 <IonInput {...register("passwordConfirm", { required: true })} type='password' placeholder='Confirm Password' clearInput></IonInput>
-                                {errors.passwordConfirm && <span>confirmation is required</span>}
+                                {errors.passwordConfirm && <span>Password Confirmation is required</span>}
 
                                 <IonItemDivider id='signup-photo-upload'>
                                     <input {...register("photo")} type='file' id='imginput' accept='image/*'/>

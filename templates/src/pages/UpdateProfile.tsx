@@ -87,7 +87,10 @@ const UpdateProfile: React.FC = () => {
 
         setMessage(result.message);
         setShowToast(true);
-
+        
+        if (result.user) {
+            router.push("/profile", "forward", "push");
+        }
     }
 
   return (
