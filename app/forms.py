@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, PasswordField, SelectField,DateField
 from wtforms.validators import InputRequired, Email, Length
 from flask_wtf.file import FileField, FileAllowed
+from wtforms.fields import DateTimeLocalField
 
 class ContactForm(FlaskForm):
     first_name = StringField('First Name', validators=[InputRequired()])
@@ -23,8 +24,8 @@ class EventsForm(FlaskForm):
     title = StringField('Title', validators=[InputRequired()])
     description = TextAreaField('Description', validators=[InputRequired()])
     venue = StringField('Venue', validators=[InputRequired()])
-    start_date = DateField('Start Date', validators=[InputRequired()])
-    end_date = DateField('End Date',validators=[InputRequired()]) 
+    start_date = DateTimeLocalField('Start Date', validators=[InputRequired()],format='%Y-%m-%dT%H:%M')
+    end_date = DateTimeLocalField('End Date',validators=[InputRequired()],format='%Y-%m-%dT%H:%M') 
     flyer = FileField('Flyer',validators=[
         FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')
         ])
