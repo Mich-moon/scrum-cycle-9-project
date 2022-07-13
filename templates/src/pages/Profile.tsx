@@ -30,19 +30,19 @@ const Profile: React.FC = () => {
                             <img id='profile-img'   src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='profile photo'/>
                        </IonAvatar>
                        <IonItemDivider id='field'>
-                            <IonLabel color="light">Firstname:</IonLabel>
+                            <IonLabel color="light" id="label">Firstname:</IonLabel>
                             <IonText> Firstname</IonText>
                         </IonItemDivider>
                         <IonItemDivider id='field'>
-                            <IonLabel color="light">Lastname:</IonLabel>
+                            <IonLabel color="light" id="label">Lastname:</IonLabel>
                             <IonText> Lastname</IonText>
                         </IonItemDivider>
                         <IonItemDivider id='field'>
-                            <IonLabel color="light">Email:</IonLabel>
+                            <IonLabel color="light" id="label">Email:</IonLabel>
                             <IonText>Email </IonText>
                         </IonItemDivider>
                         <IonItemDivider id='field'>
-                            <IonLabel color="light">Password:</IonLabel>
+                            <IonLabel color="light" id="label">Password:</IonLabel>
                             <IonText>Password</IonText>
                         </IonItemDivider> 
                         <IonItemDivider id="edit-btn-div">

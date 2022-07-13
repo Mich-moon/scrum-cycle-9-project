@@ -25,31 +25,31 @@ const ViewEvent: React.FC = () => {
                 <IonRow id='view-row2'>
                     <IonCol id='view-col1'>
                         <IonTitle id='view-title-left'>Event Information</IonTitle>
-                        <IonImg id='view-img' src={process.env.PUBLIC_URL + '/assets/images/view_image.png'} alt='view image'/>
+                        <IonImg id='view-img' src={process.env.PUBLIC_URL + '/assets/images/login_image.png'} alt='view image'/>
                     </IonCol>
                     <IonCol id='view-col2'> 
                         <IonItemDivider>
-                            <IonLabel>Title:</IonLabel>
+                            <IonLabel id="label">Title:</IonLabel>
                         <IonText>Title</IonText>
                         </IonItemDivider>
                         <IonItemDivider>
-                            <IonLabel>Description:</IonLabel>
+                            <IonLabel id="label">Description:</IonLabel>
                         <IonText >Description</IonText>
                         </IonItemDivider>
                         <IonItemDivider>
-                            <IonLabel>Venue:</IonLabel>
+                            <IonLabel id="label">Venue:</IonLabel>
                         <IonText>Venue</IonText>
                         </IonItemDivider>
                         <IonItemDivider>
-                            <IonLabel>Website Url:</IonLabel>
+                            <IonLabel id="label">Website Url:</IonLabel>
                         <IonText >Url</IonText>
                         </IonItemDivider>
                         <IonItemDivider>
-                            <IonLabel>Start Date:</IonLabel>
+                            <IonLabel id="label">Start Date:</IonLabel>
                         <IonText >DD-MM-YYYY</IonText>
                         </IonItemDivider>
                         <IonItemDivider>
-                            <IonLabel>End Date:</IonLabel>
+                            <IonLabel id="label">End Date:</IonLabel>
                         <IonText >DD-MM-YYYY</IonText>
                         </IonItemDivider>
                         <IonItemDivider id='view-btn-div'>                            
