@@ -1,10 +1,5 @@
 #profile-grid {
-    padding-top: 5%;
-    width:40%; 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
+    padding-top: 40px;
 }
 
 #profile-row2 {    
@@ -71,4 +66,48 @@
     padding-left: 3%;
     margin-top:1%;    
 }
+/* SMALL MOBILE VIEW*/
+@media screen and (min-width: 320px) and (max-width: 375px) {
+    ion-text, #label{
+        font-size: small;
+    }
+    #profile-btn,#profile-btn2{
+        font-size: small;
+    }
+   
 
+  
+}
+/* MEDIUM MOBILE VIEW*/
+@media screen and (min-width: 375px) and (max-width: 425px) {
+  
+
+}
+/* LARGE MOBILE VIEW*/
+@media screen and (min-width: 425px) and (max-width: 768px) {
+   
+
+}
+/* TABLET VIEW*/
+@media screen and (min-width: 768px) and (max-width: 769px){  
+    #profile-btn,#profile-btn2{
+        font-size: large;
+    }
+    #profile-row2 {    
+        margin-left:20%;
+        margin-right: 20%;   
+    }
+   
+}
+/* LAPTOP VIEW*/
+@media screen and (min-width: 1024px) and (max-width: 1030px){  
+    ion-text, #label{
+        font-size: x-large;
+    }
+    #profile-btn,#profile-btn2{
+        font-size: x-large;
+    }
+    
+   
+
+}
