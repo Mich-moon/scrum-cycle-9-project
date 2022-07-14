@@ -87,7 +87,16 @@ const Main: React.FC = () => {
 
     async function search() {
         let token = await localStorage.getItem("jwt");
-        const result = await fetch("http://localhost:8080/api/v2/events/search?title="+searchText+"&status=Published", {
+
+        let url = "";
+
+        if (isAdmin == "false") {
+            url = "http://localhost:8080/api/v2/events/search?title="+searchText+"&status=Published";
+        } else {
+            url = "http://localhost:8080/api/v2/events/search?title="+searchText;
+        }
+
+        const result = await fetch(url, {
             method: "get",
             headers: {
                 "Authorization" : "Bearer " + token
@@ -120,10 +129,18 @@ const Main: React.FC = () => {
         let url = '';
 
         if (event_start == "" || event_end == "") {
-            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=false+&status=Published";
+            if (isAdmin == "false") {
+                url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=false+&status=Published";
+            } else {
+                url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=false";
+            }
 
         } else if ( (!(event_start == "")) && (!(event_end == "")) ) {
-            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=true+&status=Published";
+            if (isAdmin == "false") {
+                url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=true+&status=Published";
+            } else {
+                url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=true";
+            }
         }
 
         console.log(url);
@@ -165,10 +182,20 @@ const Main: React.FC = () => {
 
         if (filter == "Your Events") {
             start_search = true;
-            url = "http://localhost:8080/api/v2/events/users/" + user_id;
+            if (isAdmin == "false") {
+                url = "http://localhost:8080/api/v2/events/users/" + user_id;
+            } else {
+                url = "http://localhost:8080/api/v2/events/users/" + user_id;
+            }
+    
         } else if (filter == "All Events") {
             start_search = true;
-            url = "http://localhost:8080/api/v2/events/search?status=Published";
+            if (isAdmin == "false") {
+                url = "http://localhost:8080/api/v2/events/search?status=Published";
+            } else {
+                url = "http://localhost:8080/api/v2/events/search";
+            }
+
         } else {
             start_search = false;
         }
