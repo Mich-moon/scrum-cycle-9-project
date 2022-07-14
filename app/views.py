@@ -9,6 +9,8 @@ from .forms import EventsForm, SignupForm, LoginForm
 from .models import User, Event
 from werkzeug.security import check_password_hash
 
+from sqlalchemy import desc
+
 import jwt
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
@@ -33,12 +35,15 @@ def signup():
             os.environ.get('UPLOAD_FOLDER'), photo_filename
         ))
 
+        # get next id for storing photo name
+        next_id = db.session.query(User).order_by(User.id.desc()).first().id
+
         user = User(
             firstname=form.first_name.data,
             lastname=form.last_name.data,
             email=form.email.data,
             password=form.password.data,
-            photo=photo_filename
+            photo= str( next_id ) + "_" + photo_filename
         )
         db.session.add(user)
         db.session.commit()
@@ -312,13 +317,16 @@ def events_all():
                 os.environ.get('UPLOAD_FOLDER'), flyer_filename
             ))
 
+            # get next event id for adding to flyer file name
+            next_id = db.session.query(Event).order_by(Event.id.desc()).first().id
+
             event = Event(
                 title=title,
                 start_date=start_date,
                 end_date=end_date,
                 description=description,
                 venue=venue,
-                flyer=flyer_filename,
+                flyer= str( next_id ) + "_" + flyer_filename,
                 website=website,
                 uid=int(payload["sub"]),
                 updated_at=datetime.datetime.utcnow()
@@ -345,7 +353,7 @@ def events_all():
                 "updated_at": event.updated_at
             }
 
-            return jsonify(event=event_json), 201
+            return jsonify(message="Event Created Successfully", event=event_json), 201
 
         return jsonify(message="Event creation Failed", errors=form_errors(form)), 400
 
@@ -360,26 +368,44 @@ def events_search():
         date = request.args.get('date')
         status = request.args.get('status')
 
+        event_start = request.args.get('event_start')
+        event_end = request.args.get('event_end')
+        date_range = request.args.get('date_range')
+
         query = db.session.query(Event)
 
         if request.args.get('date'):
-            today = datetime.datetime.utcnow()
+            today = datetime.datetime.now()
+            today = today.replace(hour=0, minute=0, second =0,microsecond=0,)
 
             if date == "today":
-                #query = query.filter(Event.start_date.date == today)
-                query = query.filter(str(Event.start_date).split(' ')[0] == str(today).split(' ')[0])
+                today_date = datetime.datetime.now().date()
+                today = "{}".format(today)
+                query = query.filter(Event.start_date.like(today_date))
 
             elif date == "upcoming":
-                query = query.filter(Event.start_date > today)
+                query = query.filter(Event.start_date > today).order_by(desc(Event.start_date))
 
             elif date == "past":
                 query = query.filter(Event.start_date < today)
-            
+        
         if request.args.get('title'):
             query = query.filter(Event.title.like("%" + title + "%"))
         
         if request.args.get('status'):
             query = query.filter(Event.status == status)
+
+        if request.args.get('date_range'):
+            if date_range == "false":
+                if request.args.get('event_start'):
+                    query = query.filter(Event.start_date == event_start)
+
+                elif request.args.get('event_end'):
+                    query = query.filter(Event.end_date == event_end)
+
+            if date_range == "true":
+                query = query.filter(Event.start_date >= event_start, Event.end_date <= event_end)
+            
 
         events = query.all()
 

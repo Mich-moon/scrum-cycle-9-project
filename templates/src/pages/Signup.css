@@ -119,7 +119,7 @@
 
 
 /* TABLET VIEW */
-@media screen and (min-width: 425px) and (max-width: 768px) {
+@media screen and (min-width: 426px) and (max-width: 768px) {
     #signup-grid {
         padding-top: 30px;
     }
@@ -345,7 +345,7 @@
         font-weight: bold;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
         font-size: small;
-        height: 30px;
+        height: 27px;
     }
     
     #signup-photo-upload input {

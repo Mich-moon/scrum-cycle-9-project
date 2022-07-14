@@ -1,82 +1,259 @@
-#login-grid {
-    padding-top: 40px;
+/* DESKTOP VIEW */
+@media screen and (min-width: 1024px) {
+    #login-grid {
+        padding-top: 40px;
+    }
+    
+    #login-row2 {    
+        border-radius: 15px;
+        border: #0f4e9e 2px solid;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+    
+    #login-col1 {
+        padding: 20px;
+    }
+    
+    #login-col2 {
+        border: #0f4e9e solid 2px;
+        background-color: #0f4e9e;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding-top:15%;
+        padding-bottom:15%;
+        padding-left:5%;
+        padding-right:5%;
+    }
+    
+    #login-title-left {
+        color: #0f4e9e;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #login-title-right {
+        color: white;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #login-col2 ion-input {
+        border: white solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+    }
+    
+    #login-col2 ion-input:hover {
+        border: #cc922f solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+    }
+    
+    #login-btn:hover {
+        --background: #cc922f;
+        font-weight: bolder;
+        color: white;
+    }
+    
+    #login-btn {
+        --background: white;
+        --border-radius: 25px;
+        color: #0f4e9e;
+        font-size: medium;
+        margin: auto;
+    }
+    
+    #login-img {
+        max-width: 100%;
+        padding-top: 20px;
+    }
+    
+    #login-btn-div {
+        --background: #0f4e9e;
+        border: 0px;
+        padding-top: 20px;
+    }
 }
 
-#login-row2 {    
-    border-radius: 15px;
-    border: #0f4e9e 2px solid;
-    margin-left: 20%;
-    margin-right: 20%;
+
+/* TABLET VIEW */
+@media screen and (min-width: 426px) and (max-width: 768px) {
+    #login-grid {
+        padding-top: 40px;
+    }
+    
+    #login-row2 {    
+        border-radius: 15px;
+        border: #0f4e9e 2px solid;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    
+    #login-col1 {
+        padding: 20px;
+    }
+    
+    #login-col2 {
+        border: #0f4e9e solid 2px;
+        background-color: #0f4e9e;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        padding-top:15%;
+        padding-bottom:15%;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+    
+    #login-title-left {
+        color: #0f4e9e;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #login-title-right {
+        color: white;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #login-col2 ion-input {
+        border: white solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+        height: 35px;
+    }
+    
+    #login-col2 ion-input:hover {
+        border: #cc922f solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: medium;
+        background-color: white;
+    }
+    
+    #login-btn:hover {
+        --background: #cc922f;
+        font-weight: bolder;
+        color: white;
+    }
+    
+    #login-btn {
+        --background: white;
+        --border-radius: 25px;
+        color: #0f4e9e;
+        font-size: medium;
+        margin: auto;
+    }
+    
+    #login-img {
+        max-width: 100%;
+        padding-top: 20px;
+    }
+    
+    #login-btn-div {
+        --background: #0f4e9e;
+        border: 0px;
+        padding-top: 20px;
+    }
 }
 
-#login-col1 {
-    padding: 20px;
-}
 
-#login-col2 {
-    border: #0f4e9e solid 2px;
-    background-color: #0f4e9e;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding-top:15%;
-    padding-bottom:15%;
-    padding-left:5%;
-    padding-right:5%;
-}
-
-#login-title-left {
-    color: #0f4e9e;
-    font-weight: bold;
-    font-size: x-large;
-    margin-left: -20px;
-}
-
-#login-title-right {
-    color: white;
-    font-weight: bold;
-    font-size: x-large;
-    margin-left: -20px;
-}
-
-#login-col2 ion-input {
-    border: white solid 1.5px;
-    color: #030d22;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: medium;
-    background-color: white;
-}
-
-#login-col2 ion-input:hover {
-    border: #cc922f solid 1.5px;
-    color: #030d22;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: medium;
-    background-color: white;
-}
-
-#login-btn:hover {
-    --background: #cc922f;
-    font-weight: bolder;
-    color: white;
-}
-
-#login-btn {
-    --background: white;
-    --border-radius: 25px;
-    color: #0f4e9e;
-    font-size: medium;
-    margin: auto;
-}
-
-#login-img {
-    max-width: 100%;
-    padding-top: 20px;
-}
-
-#login-btn-div {
-    --background: #0f4e9e;
-    border: 0px;
-    padding-top: 20px;
+/* MOBILE VIEW */
+@media screen and (min-width: 0px) and (max-width: 425px) {
+    #login-grid {
+        padding-top: 40px;
+    }
+    
+    #login-row2 {    
+        border-radius: 15px;
+        border: #0f4e9e 2px solid;
+    }
+    
+    #login-col1 {
+        padding: 20px;
+        display: none;
+    }
+    
+    #login-col2 {
+        border: #0f4e9e solid 2px;
+        background-color: #0f4e9e;
+        border-radius: 10px;
+        padding-top:15%;
+        padding-bottom:15%;
+        padding-left:5%;
+        padding-right:5%;
+    }
+    
+    #login-title-left {
+        color: #0f4e9e;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #login-title-right {
+        color: white;
+        font-weight: bold;
+        font-size: x-large;
+        margin-left: -20px;
+    }
+    
+    #login-col2 ion-input {
+        border: white solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-top: 15px;
+        font-size: small;
+        background-color: white;
+        height: 30px;
+    }
+    
+    #login-col2 ion-input:hover {
+        border: #cc922f solid 1.5px;
+        color: #030d22;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        font-size: small;
+        background-color: white;
+    }
+    
+    #login-btn:hover {
+        --background: #cc922f;
+        font-weight: bolder;
+        color: white;
+    }
+    
+    #login-btn {
+        --background: white;
+        --border-radius: 25px;
+        color: #0f4e9e;
+        font-size: small;
+        margin: auto;
+    }
+    
+    #login-img {
+        max-width: 100%;
+        padding-top: 20px;
+    }
+    
+    #login-btn-div {
+        --background: #0f4e9e;
+        border: 0px;
+        padding-top: 20px;
+    }
 }

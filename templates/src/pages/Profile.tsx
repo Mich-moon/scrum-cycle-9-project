@@ -36,7 +36,7 @@ const Profile: React.FC = () => {
     useIonViewWillEnter(() => {
         getClaims();
         getprofile();
-        deltprofile();
+        //deltprofile();
 
         async function getClaims() {
             // get role from capacitor storage
@@ -142,7 +142,7 @@ const Profile: React.FC = () => {
                             <IonText>{role}</IonText>
                         </IonItemDivider>
                         <IonItemDivider id="edit-btn-div">
-                             <IonButton onClick={deltprofile} id='profile-btn2' fill='outline' color={'white'} href="./home">Delete</IonButton>
+                             <IonButton type= "submit" onClick={deltprofile} id='profile-btn2' fill='outline' color={'white'} href="./profile" >Delete</IonButton>
                              <IonButton id='profile-btn' fill='solid' href="./updateProfile" >Edit</IonButton>
                         </IonItemDivider>
                     </IonCol> 
