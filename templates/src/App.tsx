@@ -32,6 +32,10 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+/* context api */
+import { SigninContext } from './contexts/SigninContext'
+
+
 setupIonicReact();
 
 
@@ -47,6 +51,7 @@ interface User {
 
 const App: React.FC = () => {
 
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
     const [user, setUser] = useState<User>();
 
     useIonViewWillEnter(() => {
@@ -82,6 +87,10 @@ const App: React.FC = () => {
 
     return (
       <IonApp>
+        <SigninContext.Provider
+        value={{ loggedIn, setLoggedIn }}
+        >
+
         <IonReactRouter>
           <IonRouterOutlet>
             <Route exact path='/home'>
@@ -109,16 +118,7 @@ const App: React.FC = () => {
                 <Main />
             </Route>
             <Route exact path='/profile'>
-                <Profile 
-                    id= "{user.id}"
-                    first_name= "{user.first_name}"
-                    last_name= "{user.last_name}"
-                    email= "{user.email}"
-                    photo= "{user.photo}"
-                    role= "{user.role}"
-                    created_at= "{user.created_at}"
-                  />
-                {/*<Profile/>*/}
+                <Profile/>
             </Route> 
             <Route exact path='/updateProfile'>
                 <UpdateProfile />
@@ -134,7 +134,9 @@ const App: React.FC = () => {
             </Route>
           </IonRouterOutlet>
         </IonReactRouter>
+        </SigninContext.Provider>
       </IonApp>
+      
     );
 };
 
