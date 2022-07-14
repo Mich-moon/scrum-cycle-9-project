@@ -1,5 +1,5 @@
 ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title, 
-    ion-card-content, ion-searchbar, ion-select, ion-item, ion-label, ion-img, input, span {
+    ion-card-content, ion-main-searchbar, ion-select, ion-item, ion-label, ion-img, input, span {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
 }
 
@@ -38,19 +38,23 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     padding-bottom: 30px;
 }
 
-#searchBar {
+#desc {
+    font-size: medium;
+}
+
+#main-searchBar {
     --border-radius: 10px;
     --icon-color: #4a8fea;
     --color: #030d22;
     width: 50%;
     margin: auto;
-    border: #0f4e9e 2px solid;
+    border: #D3D3D3 2px solid;
     border-radius: 10px;
     padding: 0%;
     font-size: medium; 
 }
 
-#searchBar:hover {
+#main-searchBar:hover {
     --border-radius: 10px;
     --icon-color: #CBA45E;
     --color: #030d22;
@@ -62,11 +66,7 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     font-size: medium; 
 }
 
-#search-filter {
-    margin: auto;
-}
-
-.date-filter-options ::-webkit-calendar-picker-indicator {    
+.main-date-filter-options ::-webkit-calendar-picker-indicator {    
   cursor: pointer;
   border: #84b6f3 2px solid;
   background-color: #84b6f3;
@@ -76,7 +76,7 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
   /* filter: invert(0.8); */
 }
 
-.date-filter-options ::-webkit-calendar-picker-indicator:hover {    
+.main-date-filter-options ::-webkit-calendar-picker-indicator:hover {    
   cursor: pointer;
   border: #cc922f 2px solid;
   background-color: #cc922f;
@@ -86,15 +86,15 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
   /* filter: invert(0.8); */
 }
 
-#search-div {
+#main-search-div {
     border: none;
     margin-top: 5%;
 }
 
-.date-filter-options ion-input {
+.main-date-filter-options ion-input {
     --background: white;
     border-radius: 10px;
-    border: #0f4e9e 2px solid;
+    border: #D3D3D3 2px solid;
     color: #030d22;
     max-width: min-content;
     font-size: medium;
@@ -103,15 +103,15 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     right: 10px;
 }
 
-.date-filter-options ion-input:hover {
+.main-date-filter-options ion-input:hover {
     --background: white;
     border: #cc922f 2px solid;
 }
 
-.date-filter-options ion-select {
+.main-date-filter-options ion-select {
     --background: white;
     border-radius: 10px;
-    border: #0f4e9e 2px solid;
+    border: #D3D3D3 2px solid;
     color: #030d22;
     width: 20%;
     font-size: medium;
@@ -119,7 +119,7 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     padding-left: 10px;
 }
 
-.date-filter-options ion-select:hover {
+.main-date-filter-options ion-select:hover {
     --background: white;
     border-radius: 10px;
     border: #cc922f 2px solid;
@@ -139,8 +139,10 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     margin-top: 1%;
 }
 
-#main-row2-div2 ion-text{
+.main-date-filter-options ion-text{
     color: #030d22;
+    font-size: medium;
+    padding-right: 20px;
 }
 
 #main-row2-div2 {
@@ -168,4 +170,89 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     margin-right: 10%;
     margin-bottom: 2%;
     cursor: pointer;
+}
+
+#eventsList ion-text {
+    font-size: medium;
+    padding-right: 30px;
+}
+
+/* MOBILE VIEW */
+@media screen and (min-width: 0px) and (max-width: 425px) { 
+    #main-title {
+        color: #0f4e9e;
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .main-date-filter-options ion-row ion-col {
+        margin: auto;
+    }
+
+    .main-date-filter-options ion-row {
+        margin-top: 10px;
+    }
+    
+    .main-date-filter-options ion-input {
+        font-size: small;
+        height: 35px;
+        width: 120px;
+    }
+
+    .main-date-filter-options ion-select {        
+        font-size: small;
+        margin: auto;
+        width: 180px;
+        height: 35px;
+        color: #030d22;
+    }
+    
+    .main-date-filter-options ion-select:hover {
+        --background: white;
+        border-radius: 10px;
+        border: #cc922f 2px solid;
+        margin: auto;
+    }
+    
+    .main-date-filter-options ::-webkit-calendar-picker-indicator {    
+        cursor: pointer;
+        border: #84b6f3 2px solid;
+        background-color: #84b6f3;
+        border-radius: 4px;
+        margin-right: 7px;
+        opacity: 1;
+        /* filter: invert(0.8); */
+    }
+  
+    .main-date-filter-options ::-webkit-calendar-picker-indicator:hover {    
+        cursor: pointer;
+        border: #cc922f 2px solid;
+        background-color: #cc922f;
+        border-radius: 4px;
+        margin-right: 7px;
+        opacity: 1;
+        /* filter: invert(0.8); */
+    }
+
+    #main-searchBar {
+        margin: auto;
+        width: 100%;
+        height: fit-content;
+    }
+    
+    .main-date-filter-options ion-text{
+        color: #030d22;
+        font-size: small;
+        padding-right: 10px;
+    }
+
+    #main-row1 ion-item {
+        --background: #70a5eb;
+        border: #4a8fea solid 2px;
+        color: white;
+        border-radius: 15px;
+        box-shadow: inset;
+    }
+    
+
 }

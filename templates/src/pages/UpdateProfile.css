@@ -1,6 +1,9 @@
 #updateProfile-grid {
     padding-top: 40px;
 }
+#profile-img{
+    border: #0f4e9e 2px solid;
+}
 
 #updateProfile-col2 {
     background-color: white;
@@ -23,18 +26,12 @@
     margin-bottom: 15px;
     font-size: medium;
 }
-.center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    --border-radius: 20px;
-    margin-bottom: 5%;
-    width:120px;
-    height: 120px;
 
-}
-#profile-img{
-    border: #0f4e9e 2px solid;
+#updateProfile-col2 ion-label {
+    padding-right: 3%;
+    font-size: medium;
+    color: #030d22;
+    margin-bottom: 9%;
 }
 
 #updateProfile-col2 ion-input:hover {
@@ -67,14 +64,24 @@
 }
 
 #profile-photo-upload input {
-    color: black;
     font-size: medium;
     border: #D3D3D3 solid 2px;
     color: #030d22;
     border-radius: 10px;
     margin-bottom: 15px;
     margin-top: 15px;
-    width: 500%;
+    width: 95%;
+}
+
+#profile-photo-upload input:hover {
+    font-size: medium;
+    border: #cc922f solid 2px;
+    color: #030d22;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 95%;
+    cursor: pointer;
 }
 
 ::-webkit-file-upload-button {
@@ -87,4 +94,122 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
     font-size: medium;
     height: 40px;
+}
+/* SMALL MOBILE VIEW*/
+@media screen and (min-width: 320px) and (max-width: 374px) {
+    #updateProfile-grid {
+        padding-top: 5px;
+    }
+   #updateProfile-col2 ion-title{
+        font-size:medium;
+   }
+   
+   #updateProfile-col2 ion-input{
+    width:90%;
+    
+}
+   #updateProfile-col2 ion-label{
+    font-weight: bold;
+
+   } 
+   #updateProfile-col2{
+    margin-left: -90%;
+    margin-right: -90%;
+    
+   }
+
+  
+}
+/* MEDIUM MOBILE VIEW*/
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    #updateProfile-grid {
+        padding-top: 5px;
+    }
+   #updateProfile-col2 ion-title{
+        font-size:medium;
+   }
+   
+   #updateProfile-col2 ion-input{
+    width:90%;
+    
+}
+   #updateProfile-col2 ion-label{
+    font-weight: bold;
+
+   } 
+   #updateProfile-col2{
+    margin-left: -70%;
+    margin-right: -70%;
+    
+   }
+}
+/* LARGE MOBILE VIEW*/
+@media screen and (min-width: 425px) and (max-width: 767px) {
+    #updateProfile-grid {
+        padding-top: 5px;
+    }
+   #updateProfile-col2 ion-title{
+        font-size:medium;
+   }
+   
+   #updateProfile-col2 ion-input{
+    width:90%;
+    
+}
+   #updateProfile-col2 ion-label{
+    font-weight: bold;
+
+   } 
+   #updateProfile-col2{
+    margin-left: -60%;
+    margin-right: -60%;
+    
+   }
+
+}
+
+
+
+
+/* TABLET VIEW*/
+@media screen and (min-width: 768px) and (max-width: 1023px){ 
+    #updateProfile-grid {
+        padding-top: 10px;
+    }
+   #updateProfile-col2 ion-title{
+        font-size:large;
+   }
+   #updateProfile-col2 ion-label{
+    font-weight: bold;
+
+   }
+   #updateProfile-col2{
+    margin-left:-30%;
+    margin-right: -30%; 
+} 
+#updateProfile-btn-div{
+     padding:5%;
+}
+
+
+ 
+}
+/* LAPTOP VIEW*/
+@media screen and (min-width: 1024px) and (max-width: 1440px){  
+   
+   #updateProfile-col2 ion-title{
+        font-size: x-large;
+   }
+   #updateProfile-btn-div{
+    padding:5%;
+}
+
+   #updateProfile-col2 ion-label{
+    font-weight: bold;
+   }
+   #updateProfile-row2{
+    margin-left:-10%;
+    margin-right: -10%; 
+} 
+
 }

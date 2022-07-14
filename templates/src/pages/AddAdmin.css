@@ -96,3 +96,8 @@ ion-text, ion-input, ion-title, ion-button, ion-card-header, ion-card-title,
     margin-bottom: 2%;
     cursor: pointer;
 }
+
+#user-result-div-two {
+    display: flex;
+    align-self: end;
+}

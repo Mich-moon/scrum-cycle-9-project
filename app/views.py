@@ -31,13 +31,12 @@ def signup():
     if form.validate_on_submit():
         photo = form.photo.data
         photo_filename = secure_filename(photo.filename)
-        photo.save(os.path.join(
-            os.environ.get('UPLOAD_FOLDER'), photo_filename
-        ))
 
         # get next id for storing photo name
         next_id = db.session.query(User).order_by(User.id.desc()).first().id
-
+        photo.save(os.path.join(
+            os.environ.get('UPLOAD_FOLDER'), str( next_id ) + "_" +photo_filename
+        ))
         user = User(
             firstname=form.first_name.data,
             lastname=form.last_name.data,
@@ -142,7 +141,7 @@ def users(user_id):
                         photo = form.photo.data
                         photo_filename = secure_filename(photo.filename)
                         photo.save(os.path.join(
-                            os.environ.get('UPLOAD_FOLDER'), photo_filename
+                            os.environ.get('UPLOAD_FOLDER'),str(user.id)+"_"+ photo_filename
                         ))
 
                         user.first_name = form.first_name.data
@@ -150,7 +149,7 @@ def users(user_id):
                         user.email = form.email.data
                         user.password = generate_password_hash(
                             form.password.data, method='pbkdf2:sha256')
-                        user.profile_photo = photo_filename
+                        user.profile_photo = str(user.id)+"_"+photo_filename
 
                         db.session.commit()
 
@@ -179,6 +178,7 @@ def users(user_id):
 
                 # check for admin
                 if payload["admin"] == True:
+                    user=db.session.query(User).get(int(user_id))
                     user.role = request.args.get("role")
                     db.session.commit()
                     u = db.session.query(User).get(int(user_id))
@@ -234,6 +234,35 @@ def users_all():
         return jsonify(users=users_json), 200
 
     return jsonify(message="Item not found"), 404
+
+@app.route('/api/v2/users/search', methods=["GET"])
+@jwt_required()
+def users_search():
+    """Route for users search"""
+
+    email = request.args.get('email')
+    query = db.session.query(User)
+
+    if request.args.get('email'):
+        query = query.filter(User.email.like("%" + email + "%"))
+
+    users = query.all()
+
+    if users is not None:
+
+        users_json = [{
+            "id": u.id,
+            "first_name": u.first_name,
+            "last_name": u.last_name,
+            "email": u.email,
+            "photo": u.profile_photo,
+            "role": u.role,
+            "created_at": u.created_at
+        } for u in users]
+
+        return jsonify(users=users_json), 200
+
+    return jsonify(message="Item not found"), 40
 
 
 @app.route('/api/v2/events/users/<user_id>', methods=["GET"])
@@ -313,9 +342,6 @@ def events_all():
             flyer = form.flyer.data
             website = form.website.data
             flyer_filename = secure_filename(flyer.filename)
-            flyer.save(os.path.join(
-                os.environ.get('UPLOAD_FOLDER'), flyer_filename
-            ))
 
             # get next event id for adding to flyer file name
             next_id = db.session.query(Event).order_by(Event.id.desc()).first().id
@@ -331,6 +357,9 @@ def events_all():
                 uid=int(payload["sub"]),
                 updated_at=datetime.datetime.utcnow()
             )
+            flyer.save(os.path.join(
+                os.environ.get('UPLOAD_FOLDER'), str( next_id ) + "_" +flyer_filename
+            ))
 
             db.session.add(event)
             db.session.commit()
@@ -398,10 +427,10 @@ def events_search():
         if request.args.get('date_range'):
             if date_range == "false":
                 if request.args.get('event_start'):
-                    query = query.filter(Event.start_date == event_start)
+                    query = query.filter(Event.start_date.like("%"+ event_start+"%"))
 
                 elif request.args.get('event_end'):
-                    query = query.filter(Event.end_date == event_end)
+                    query = query.filter(Event.end_date .like("%"+ event_end+"%"))
 
             if date_range == "true":
                 query = query.filter(Event.start_date >= event_start, Event.end_date <= event_end)
@@ -484,9 +513,9 @@ def events(event_id):
                         flyer_filename = secure_filename(
                             form.flyer.data.filename)
                         form.flyer.data.save(os.path.join(
-                            os.environ.get('UPLOAD_FOLDER'), flyer_filename
+                            os.environ.get('UPLOAD_FOLDER'), str( event.id ) + "_" +flyer_filename
                         ))
-                        event.flyer = flyer_filename
+                        event.flyer = str( event.id ) + "_" +flyer_filename
 
                         db.session.commit()
 
@@ -549,7 +578,6 @@ def events(event_id):
             return jsonify(message="Item not found"), 404
 
     elif request.method == 'DELETE':
-
         if event is not None:
             if event.uid == int(payload["sub"]) or payload["admin"] == True:
                 db.session.delete(event)

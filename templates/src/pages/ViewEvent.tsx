@@ -1,7 +1,8 @@
 import { Storage } from '@capacitor/storage';
-import { IonButton, IonCol, IonContent, IonSearchbar, IonGrid, IonHeader, IonDatetime, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar, IonSlides, IonSlide, IonSelect, IonSelectOption, IonText, IonList, IonItem, useIonViewWillEnter, IonImg } from '@ionic/react';
+import { IonButton, IonCol, IonContent,IonToast, IonSearchbar, useIonRouter, IonGrid, IonHeader, IonDatetime, IonLabel, IonInput, IonItemDivider, IonPage, IonRow, IonCard, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonTitle, IonToolbar, IonSlides, IonSlide, IonSelect, IonSelectOption, IonText, IonList, IonItem, useIonViewWillEnter, IonImg } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { RouteComponentProps } from "react-router-dom";
+import { close } from 'ionicons/icons';
 import UserHeader from '../components/userHeader';
 import AdminHeader from '../components/adminHeader';
 import './ViewEvent.css';
@@ -24,7 +25,7 @@ interface Event {
 }
 
 const ViewEvent: React.FC = () => {
-
+    const router = useIonRouter();
     const [searchText, setSearchText] = useState('');
     const [event, setEvents] = useState([]);
     const [id, setId] = useState();
@@ -38,6 +39,9 @@ const ViewEvent: React.FC = () => {
     const [searchEvents, setSearchEvents] = useState([]);
     const [isAdmin, setRole] = useState<String | null>('false');
     const [user_id, setID] = useState<String | null>('');
+
+    const [message, setMessage] = useState('');
+    const [showToast, setShowToast] = useState(false);
 
     //let user_is_admin = "false";
     useIonViewWillEnter(() => {
@@ -99,13 +103,67 @@ const ViewEvent: React.FC = () => {
         }
 
     }, [])
+
+    async function deltevent() {
+        let url = window.location.href;
+        const id = url.split("/").pop();
+        let jwt = localStorage.getItem("jwt");
+        let user_id = localStorage.getItem("user_id");
+        const result = await fetch("http://localhost:8080/api/v2/events/" + id, {
+            method: "delete",
+            headers: {
+                "Authorization" : "Bearer " + jwt
+            }
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        console.log(result)
+
+        if (result.message=="Item deleted") {
+            router.push("/main", "forward", "push");
+        }
+    }
+
+    async function changeStatus(status:string) {
+
+        console.log("role change");
+        let url = window.location.href;
+        const id = url.split("/").pop();
+        let token = await localStorage.getItem("jwt");
+        let user_id = localStorage.getItem("user_id");
+        const result = await fetch("http://localhost:8080/api/v2/events/" + id + "?status=" + status, {
+            method: "put",
+            headers: {
+                "Authorization" : "Bearer " + token
+            }
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+        setMessage(result.message);
+        setShowToast(true);
+        console.log(result.message);
+        if ("event" in result){
+            console.log(result.event);
+        }
+
+    }
     //console.log(event);
   return (
     <IonPage>
         <IonHeader className='ion-no-border'>
             <IonToolbar>
-                <UserHeader />
-                <AdminHeader />
+                    {isAdmin == "false" && <UserHeader />}
+                    {isAdmin == "true" && <AdminHeader />}
                 {/* only show admin header if the user role is admin */}
             </IonToolbar>
         </IonHeader>
@@ -148,19 +206,34 @@ const ViewEvent: React.FC = () => {
                             <IonLabel>End Date:</IonLabel>
                         <IonText >{end_date}</IonText>
                         </IonItemDivider>
-                        <IonItemDivider id='view-btn-div'>                            
-                            <IonButton id='view-btn1' fill='outline' color={'white'} href={'/updateEvent/'+id}>Update Event</IonButton>   
-                            <IonButton id='view-btn2' fill='solid'>Delete Event</IonButton>         
-                        </IonItemDivider> 
+                        {isAdmin == "false" && <IonItemDivider id='view-btn-div'>                            
+                        <IonButton id='view-btn1' fill='outline' color={'white'} href={'/updateEvent/'+id}>Update Event</IonButton>  
+                            <IonButton id='view-btn2'  onClick={deltevent} fill='solid'>Delete Event</IonButton>         
+                        </IonItemDivider> }
                         {/* if the user is an admin then this div below should be shown */}
-                        <IonItemDivider id='view-btn-div'>                            
-                            <IonButton id='view-btn1' fill='outline' color={'white'} href='/main'>Publish Event</IonButton>   
-                            <IonButton id='view-btn2' fill='solid'>Delete Event</IonButton>         
-                        </IonItemDivider>                      
+                    {isAdmin == "true" && <IonItemDivider id='view-btn-div'>                            
+                            <IonButton onClick={ () => changeStatus("Published")} id='view-btn1' fill='outline' color={'white'}>Publish Event</IonButton>   
+                            <IonButton id='view-btn2' onClick={deltevent} fill='solid'>Delete Event</IonButton>         
+                        </IonItemDivider> }                     
                     </IonCol>
                 </IonRow>
                 <IonRow></IonRow>
             </IonGrid>
+            <IonToast
+                        isOpen={showToast}
+                        onDidDismiss={() => setShowToast(false)}
+                        message= {message}
+                        duration={5000}
+                        buttons={[
+                            {
+                            side: 'start',
+                            icon: close,
+                            handler: () => {
+                                setShowToast(false);
+                            }
+                            }
+                        ]}
+                    />
         </IonContent>
     </IonPage>
   );

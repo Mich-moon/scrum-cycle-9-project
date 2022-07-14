@@ -31,6 +31,7 @@ const Profile: React.FC = () => {
     const [last_name, setlname] = useState();
     const [email, setemail] = useState();
     const [role, setrole] = useState();
+    const [photo, setphoto] = useState();
 
 
     useIonViewWillEnter(() => {
@@ -76,6 +77,7 @@ const Profile: React.FC = () => {
             setlname(result.user.last_name);
             setemail(result.user.email);
             setrole(result.user.role);
+            setphoto(result.user.photo);
         }
     }
 
@@ -123,7 +125,7 @@ const Profile: React.FC = () => {
                     <IonCol id='profile-col2'>
                        {/* <IonTitle className='ion-padding-bottom' id='profile-title-right'>Signup</IonTitle>*/}
                        <IonAvatar class= "center">
-                            <img id='profile-img'   src={process.env.PUBLIC_URL + '/assets/images/signup_image.png'} alt='profile photo'/>
+                            <img id='profile-img'   src={'http://localhost:8080/api/v2/uploads/'+photo} alt='profile photo'/>
                        </IonAvatar>
                        <IonItemDivider id='field'>
                             <IonLabel color="light">Firstname:</IonLabel>
@@ -142,13 +144,28 @@ const Profile: React.FC = () => {
                             <IonText>{role}</IonText>
                         </IonItemDivider>
                         <IonItemDivider id="edit-btn-div">
-                             <IonButton type= "submit" onClick={deltprofile} id='profile-btn2' fill='outline' color={'white'} href="./profile" >Delete</IonButton>
+                             <IonButton onClick={deltprofile}  id='profile-btn2' fill='outline' color={'white'}>Delete</IonButton>
                              <IonButton id='profile-btn' fill='solid' href="./updateProfile" >Edit</IonButton>
-                        </IonItemDivider>
+                        </IonItemDivider>   
                     </IonCol> 
                 </IonRow> 
                 
             </IonGrid>
+            <IonToast
+                        isOpen={showToast}
+                        onDidDismiss={() => setShowToast(false)}
+                        message= {message}
+                        duration={5000}
+                        buttons={[
+                            {
+                            side: 'start',
+                            icon: close,
+                            handler: () => {
+                                setShowToast(false);
+                            }
+                            }
+                        ]}
+                    />
         </IonContent>
     </IonPage>
   );

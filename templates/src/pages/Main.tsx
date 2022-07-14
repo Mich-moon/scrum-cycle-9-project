@@ -240,90 +240,101 @@ const Main: React.FC = () => {
                 </IonHeader> */}
 
                 <IonGrid className='ion-margin' id='signup-grid'>
-                    <IonRow id='main-row1'>
+                    <IonRow id='main-row1' className='ion-hide-md-down'>
                             <IonCol>
                                 <IonItemDivider id='main-title-div'>
                                     <IonTitle id='main-title'>UPCOMING EVENTS</IonTitle>
                                 </IonItemDivider>                        
                                 <IonSlides pager={true}>
-
                                     <IonSlide>
                                         {events.map((event: Event, index:number) => (
                                             <IonCard key={event.id}>
                                                 <IonCardHeader>
                                                     <IonCardTitle>{event.title}</IonCardTitle>
+                                                    <IonCardSubtitle color='light'>{event.start_date}</IonCardSubtitle>
                                                 </IonCardHeader>
                                                 <IonCardContent>
-                                                    {event.description}
+                                                    <IonText id='desc'>{event.description}</IonText>
                                                 </IonCardContent>
                                             </IonCard> 
-                                        ))}
-                
+                                        ))}                
                                     </IonSlide>
                                 </IonSlides>
                             </IonCol>                     
                     </IonRow>
+                    <IonRow id='main-row1' className='ion-hide-md-up'>
+                            <IonCol>
+                                <IonItemDivider id='main-title-div'>
+                                    <IonTitle id='main-title'>UPCOMING EVENTS</IonTitle>
+                                </IonItemDivider>   
+                                            <IonList>               
+                                        {events.map((event: Event, index:number) => (
+                                            <IonItem key={event.id}>
+                                                <IonLabel>{event.title}</IonLabel>
+                                                <IonText>{event.start_date}</IonText>
+                                            </IonItem>              
+                                        ))}        
+                                        </IonList>       
+                            </IonCol>                     
+                    </IonRow>
                     <IonRow id='main-row2'>
                         <IonCol>
-                            <IonItemDivider id='search-div'>
-                                <IonSearchbar 
-                                    placeholder='Search for Event' 
-                                    value={searchText} 
-                                    id='searchBar' 
-                                    onIonChange={e => {
-                                        //console.log(e.detail.value);
-                                        setSearchText(e.detail.value!);
-                                    }} 
-                                    animated={true}></IonSearchbar
-                                >
+                            <IonItemDivider id='main-search-div'>
+                                <IonSearchbar placeholder='Search for Event' id='main-searchBar' onIonChange={e => { setSearchText(e.detail.value!); }}  animated={true}></IonSearchbar>
                                 {console.log(searchText)}
                             </IonItemDivider>
+
                             <IonItemDivider id='main-row2-div2'>
-                                <IonItemDivider id='date-filter-options'>                                
+                                <IonItemDivider class='main-date-filter-options' className='ion-hide-md-down'>
                                     <IonText>Start Date:</IonText>
-                                    <IonInput 
-                                        type='date' 
-                                        id='start-date-time'
-                                        onIonChange={(e) => {
-                                            //console.log(e.detail.value);
-                                            setEvent_start(e.detail.value!) ;
-                                        }}
-                                    ></IonInput>                            
+                                    <IonInput type='date' id='main-start-date-time'onIonChange={(e) => {setEvent_start(e.detail.value!) ;}}></IonInput>
                                     <IonText>End Date:</IonText>
-                                    <IonInput 
-                                        type='date' 
-                                        id='end-date-time'
-                                        onIonChange={(e) => {
-                                            //console.log(e.detail.value);
-                                            setEvent_end(e.detail.value!) ;
-                                        }}
-                                    ></IonInput>
-                                    <IonSelect 
-                                        placeholder='Select Events' 
-                                        ok-text='Ok' 
-                                        cancel-text='Cancel' 
-                                        id='search-filter' 
-                                        onIonChange={(e) => {
-                                          //console.log(e.detail.value);
-                                          filter(e.detail.value);
-                                        }}
-                                    >
+                                    <IonInput type='date' id='main-end-date-time' onIonChange={(e) => { setEvent_end(e.detail.value!) ; }}></IonInput>
+                                    <IonSelect placeholder='Select Events' ok-text='Ok' cancel-text='Cancel' id='search-filter' onIonChange={(e) => {filter(e.detail.value);}}>
                                         <IonSelectOption>None</IonSelectOption>
                                         <IonSelectOption>Your Events</IonSelectOption> 
                                         <IonSelectOption>All Events</IonSelectOption> 
                                     </IonSelect>  
                                 </IonItemDivider>
+                                
+                                <IonRow class='main-date-filter-options' className='ion-hide-md-up'> 
+                                    <IonRow>                                        
+                                        <IonCol>
+                                            <IonText>Start Date:</IonText>
+                                        </IonCol>
+                                        <IonCol>
+                                            <IonInput type='date' id='main-start-date-time'onIonChange={(e) => {setEvent_start(e.detail.value!) ;}}></IonInput>
+                                        </IonCol>      
+                                    </IonRow>  
+                                    <IonRow>
+                                        <IonCol>
+                                            <IonText>End Date:</IonText>
+                                        </IonCol>
+                                        <IonCol>
+                                            <IonInput type='date' id='main-end-date-time'onIonChange={(e) => {setEvent_end(e.detail.value!) ;}}></IonInput>
+                                        </IonCol>                                        
+                                    </IonRow>
+                                    <IonRow>
+                                        <IonSelect placeholder='Select Events' ok-text='Ok' cancel-text='Cancel' id='search-filter' onIonChange={(e) => { filter(e.detail.value); }}>
+                                            <IonSelectOption>None</IonSelectOption>
+                                            <IonSelectOption>Your Events</IonSelectOption> 
+                                            <IonSelectOption>All Events</IonSelectOption> 
+                                        </IonSelect>  
+                                    </IonRow>                                    
+                                </IonRow>
+                                
                             </IonItemDivider>
                         </IonCol>
                     </IonRow>
                     <IonRow id='main-row3'>
                         <IonCol>
-                            <IonList>
+                            <IonList id='eventsList'>
                                 {searchEvents.map((event: Event, index:number) => (
-                                    <IonItem href={'/viewEvent/'+event.id.toString} key={event.id}>
-                                        <IonLabel><b>{event.title}</b></IonLabel>
-                                        <IonText>{event.start_date}</IonText>                                        
+                                    <IonItem href={'/viewEvent/'+event.id} key={event.id}>
+                                        <IonLabel><b>{event.title}</b></IonLabel>                                  
                                         <IonText>{event.description}</IonText>
+                                        <IonText>{event.start_date}</IonText> 
+                                        <IonText>{event.status}</IonText>                                              
                                     </IonItem>
                                 ))}
                             </IonList>

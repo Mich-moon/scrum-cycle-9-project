@@ -132,9 +132,9 @@ const UpdateProfile: React.FC = () => {
                                 <IonInput {...register("passwordConfirm", { required: true })} type='password' placeholder='Confirm Password' clearInput></IonInput>
                                 {errors.passwordConfirm && <span>confirmation is required</span>}
 
-                                <IonItemDivider id='signup-photo-upload'>
+                                <IonItemDivider id='profile-photo-upload'>
                                     <IonLabel color='light'>Upload Your Profile Photo:</IonLabel>
-                                    <input {...register("photo")} type='file' id='imginput' accept='image/*'/>
+                                    <input {...register("photo", { required: true })} type='file' id='imginput' accept='image/*'/>
                                     {errors.photo && <span>Photo is required</span>}
                             </IonItemDivider>
                             <IonItemDivider id='updateProfile-btn-div'>

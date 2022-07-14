@@ -9,6 +9,12 @@
     margin-right: 10%;
 }
 
+
+#view-col2 ion-text {
+    font-size: medium;
+}
+
+
 #view-col1 {
     padding: 20px;
     max-width: 40%;
@@ -126,13 +132,11 @@
         border-top-right-radius: 0px;
        
     }
-
-
   
 }
 /* MEDIUM MOBILE VIEW*/
 @media screen and (min-width: 375px) and (max-width: 425px) {
-    ion-text, #label{
+    ion-text, #label {
         font-size: small;
 
     }
