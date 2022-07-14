@@ -9,6 +9,8 @@ from .forms import EventsForm, SignupForm, LoginForm
 from .models import User, Event
 from werkzeug.security import check_password_hash
 
+from sqlalchemy import desc
+
 import jwt
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
@@ -33,12 +35,15 @@ def signup():
             os.environ.get('UPLOAD_FOLDER'), photo_filename
         ))
 
+        # get next id for storing photo name
+        next_id = db.session.query(User).order_by(User.id.desc()).first().id
+
         user = User(
             firstname=form.first_name.data,
             lastname=form.last_name.data,
             email=form.email.data,
             password=form.password.data,
-            photo=photo_filename
+            photo= str( next_id ) + "_" + photo_filename
         )
         db.session.add(user)
         db.session.commit()
@@ -312,13 +317,16 @@ def events_all():
                 os.environ.get('UPLOAD_FOLDER'), flyer_filename
             ))
 
+            # get next event id for adding to flyer file name
+            next_id = db.session.query(Event).order_by(Event.id.desc()).first().id
+
             event = Event(
                 title=title,
                 start_date=start_date,
                 end_date=end_date,
                 description=description,
                 venue=venue,
-                flyer=flyer_filename,
+                flyer= str( next_id ) + "_" + flyer_filename,
                 website=website,
                 uid=int(payload["sub"]),
                 updated_at=datetime.datetime.utcnow()
@@ -373,10 +381,10 @@ def events_search():
             if date == "today":
                 today_date = datetime.datetime.now().date()
                 today = "{}".format(today)
-                events = Event.query.filter(Event.start_date.like(today_date)).all()
+                query = query.filter(Event.start_date.like(today_date))
 
             elif date == "upcoming":
-                query = query.filter(Event.start_date > today)
+                query = query.filter(Event.start_date > today).order_by(desc(Event.start_date))
 
             elif date == "past":
                 query = query.filter(Event.start_date < today)
