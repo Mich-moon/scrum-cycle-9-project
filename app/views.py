@@ -353,7 +353,7 @@ def events_all():
                 "updated_at": event.updated_at
             }
 
-            return jsonify(event=event_json), 201
+            return jsonify(message="Event Created Successfully", event=event_json), 201
 
         return jsonify(message="Event creation Failed", errors=form_errors(form)), 400
 

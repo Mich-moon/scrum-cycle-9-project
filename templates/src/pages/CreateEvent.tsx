@@ -142,6 +142,22 @@ const CreateEvent: React.FC = () => {
                     <IonRow></IonRow>
                 </IonGrid>
             </form>
+
+            <IonToast
+                isOpen={showToast}
+                onDidDismiss={() => setShowToast(false)}
+                message= {message}
+                duration={5000}
+                buttons={[
+                    {
+                        side: 'start',
+                        icon: close,
+                        handler: () => {
+                        setShowToast(false);
+                        }
+                    }
+                    ]}
+            />
         </IonContent>
     </IonPage>
   );
