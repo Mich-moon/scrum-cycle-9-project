@@ -282,7 +282,7 @@ const Main: React.FC = () => {
                                 <IonItemDivider id='date-filter-options'>                                
                                     <IonText>Start Date:</IonText>
                                     <IonInput 
-                                        type='datetime-local' 
+                                        type='date' 
                                         id='start-date-time'
                                         onIonChange={(e) => {
                                             //console.log(e.detail.value);
@@ -291,7 +291,7 @@ const Main: React.FC = () => {
                                     ></IonInput>                            
                                     <IonText>End Date:</IonText>
                                     <IonInput 
-                                        type='datetime-local' 
+                                        type='date' 
                                         id='end-date-time'
                                         onIonChange={(e) => {
                                             //console.log(e.detail.value);
@@ -320,10 +320,10 @@ const Main: React.FC = () => {
                         <IonCol>
                             <IonList>
                                 {searchEvents.map((event: Event, index:number) => (
-                                    <IonItem href='/viewEvent' key={event.id}>
-                                        {/* add ion-input tags for this section */}
-                                        {event.title}
-                                        {event.description} 
+                                    <IonItem href={'/viewEvent/'+event.id.toString} key={event.id}>
+                                        <IonLabel><b>{event.title}</b></IonLabel>
+                                        <IonText>{event.start_date}</IonText>                                        
+                                        <IonText>{event.description}</IonText>
                                     </IonItem>
                                 ))}
                             </IonList>
