@@ -1,28 +1,111 @@
-#home-grid {
-    padding-top: 40px;
+/* DESKTOP VIEW */
+@media screen and (min-width: 1024px) {
+    #home-grid {
+        padding-top: 40px;
+    }
+
+    #home-txt1 {
+        font-size: xxx-large;
+        font-weight: bold;
+        color: #0f4e9e;
+    }
+
+    #home-txt2 {
+        font-size: small;
+        color: #2671d1;
+        font-style: italic;
+    }
+    
+    #home-txt3 {
+        font-size: medium;
+        color: #030d22;
+    }
+
+    #home-col1 {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #home-col2 {
+        padding-left: 30px;
+    }
+
+    #home-col2 ion-img {
+        max-height: fit-content;
+    }
 }
 
-#home-txt1 {
-    font-size: xxx-large;
-    font-weight: bold;
-    color: #0f4e9e;
+
+/* TABLET VIEW */
+@media screen and (min-width: 426px) and (max-width: 768px) {
+    #home-grid {
+        padding-top: 40px;
+    }
+
+    #home-txt1 {
+        font-size: xxx-large;
+        font-weight: bold;
+        color: #0f4e9e;
+    }
+
+    #home-txt2 {
+        font-size: small;
+        color: #2671d1;
+        font-style: italic;
+    }
+    
+    #home-txt3 {
+        font-size: medium;
+        color: #030d22;
+    }
+
+    #home-col1 {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #home-col2 {
+        padding-left: 30px;
+        display: none;
+    }
+
+    #home-col2 ion-img {
+        max-height: fit-content;
+    }
 }
 
-#home-txt2 {
-    font-size: small;
-    color: #2671d1;
-    font-style: italic;
-}
 
-#home-col1 {
-    padding-left: 30px;
-    padding-right: 30px;
-}
+/* MOBILE VIEW */
+@media screen and (min-width: 0px) and (max-width: 426px) {
+    #home-grid {
+        padding-top: 40px;
+    }
 
-#home-col2 {
-    padding-left: 30px;
-}
+    #home-txt1 {
+        font-size: x-large;
+        font-weight: bold;
+        color: #0f4e9e;
+    }
 
-#home-col2 ion-img {
-    max-height: fit-content;
+    #home-txt2 {
+        font-size: small;
+        color: #2671d1;
+        font-style: italic;
+    }
+
+    #home-txt3 {
+        font-size: small;
+        color: #030d22;
+    }
+
+    #home-col1 {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #home-col2 {
+        display: none;
+        padding-left: 30px;
+    }
+
 }
