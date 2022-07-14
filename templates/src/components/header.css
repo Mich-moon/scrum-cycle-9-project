@@ -25,3 +25,30 @@
     --background: #cc922f;
     font-weight: bolder;
 }
+
+#mobile-menu {
+    margin-left: 6%;
+    margin-top: 2%;
+}
+
+#menu-btn {
+    --color: white;
+}
+
+#menu-btn:hover {
+    --color: #cc922f;
+}
+
+/* TABLET VIEW */
+@media screen and (min-width: 426px) and (max-width: 768px) {
+    #menu-items ion-item {
+        font-size: medium;
+    }
+}
+
+/* MOBILE VIEW */
+@media screen and (min-width: 0px) and (max-width: 425px) {    
+    #menu-items ion-item {
+        font-size: small;
+    }
+}

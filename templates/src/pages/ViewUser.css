@@ -1,10 +1,5 @@
 #ViewUser-grid {
-    padding-top: 5%;
-    width:40%; 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
+    padding-top: 40px;
 }
 
 #ViewUser-row2 {    
@@ -32,7 +27,7 @@
     margin: auto; 
 }
 
-#ViewUser-btn-div {
+#ViewUser-btn-div { 
     padding-top: 10%;
     --background: #0f4e9e;
     border: none;     
@@ -60,3 +55,81 @@
     margin-top:1%;    
 }
 
+/* SMALL MOBILE VIEW*/
+@media screen and (min-width: 320px) and (max-width: 374px) {
+    ion-text, #ViewUser-col2 ion-label{
+        font-size: small;
+    }
+    #ViewUser-btn{
+        font-size: 67%;
+        padding-left:2%;
+    }
+
+    
+   
+
+  
+}
+/* MEDIUM MOBILE VIEW*/
+@media screen and (min-width: 375px) and (max-width: 424px) {
+    ion-text, #ViewUser-col2 ion-label{
+        font-size: medium;
+    }
+    #ViewUser-btn{
+        font-size: 80%;
+        padding-left:2%;
+    }
+
+    
+   
+
+  
+}
+/* LARGE MOBILE VIEW*/
+@media screen and (min-width: 425px) and (max-width: 767px) {
+    ion-text, #ViewUser-col2 ion-label{
+        font-size: medium;
+    }
+    #ViewUser-btn{
+        font-size: 100%;
+        padding-left:2%;
+    }
+
+    
+   
+
+  
+}
+
+
+
+
+/* TABLET VIEW*/
+@media screen and (min-width: 768px) and (max-width: 1023px){  
+    #ViewUser-btn{
+        font-size: large;
+        
+    }
+    #ViewUser-row2 {    
+        margin-left:20%;
+        margin-right: 20%;   
+    }
+   
+}
+/* LAPTOP VIEW*/
+@media screen and (min-width: 1024px) and (max-width: 1440px){  
+    ion-text, #ViewUser-col2 ion-label{
+        font-size: x-large;
+    }
+    #ViewUser-btn{
+        font-size: x-large;
+        padding-bottom: 5%;
+    }
+    #ViewUser-row2 {    
+        margin-left: 25%;
+        margin-right: 25%;   
+    }
+    
+   
+
+}
