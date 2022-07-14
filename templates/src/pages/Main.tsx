@@ -49,7 +49,7 @@ const Main: React.FC = () => {
             let token = localStorage.getItem("jwt");
             console.log(token);
 
-            const result = await fetch("http://localhost:8080/api/v2/events/search?date=upcoming", {
+            const result = await fetch("http://localhost:8080/api/v2/events/search?date=upcoming&status=Published", {
                 method: "get",
                 headers: {
                     "Authorization" : "Bearer " + token
@@ -64,9 +64,12 @@ const Main: React.FC = () => {
 
             if ("events" in result) {
                 setEvents(result.events);
+                console.log(result.events);
+                console.log(result.events.slice(1,3));
             }
 
             setSearchEvents([]);
+            
         }
 
         async function getClaims() {
@@ -84,7 +87,7 @@ const Main: React.FC = () => {
 
     async function search() {
         let token = await localStorage.getItem("jwt");
-        const result = await fetch("http://localhost:8080/api/v2/events/search?title="+searchText, {
+        const result = await fetch("http://localhost:8080/api/v2/events/search?title="+searchText+"&status=Published", {
             method: "get",
             headers: {
                 "Authorization" : "Bearer " + token
@@ -117,10 +120,10 @@ const Main: React.FC = () => {
         let url = '';
 
         if (event_start == "" || event_end == "") {
-            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=false";
+            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=false+&status=Published";
 
         } else if ( (!(event_start == "")) && (!(event_end == "")) ) {
-            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=true";
+            url = "http://localhost:8080/api/v2/events/search?event_start="+event_start+"&event_end="+event_end+"&date_range=true+&status=Published";
         }
 
         console.log(url);
@@ -165,7 +168,7 @@ const Main: React.FC = () => {
             url = "http://localhost:8080/api/v2/events/users/" + user_id;
         } else if (filter == "All Events") {
             start_search = true;
-            url = "http://localhost:8080/api/v2/events";
+            url = "http://localhost:8080/api/v2/events/search?status=Published";
         } else {
             start_search = false;
         }
@@ -216,6 +219,7 @@ const Main: React.FC = () => {
                                     <IonTitle id='main-title'>UPCOMING EVENTS</IonTitle>
                                 </IonItemDivider>                        
                                 <IonSlides pager={true}>
+
                                     <IonSlide>
                                         {events.map((event: Event, index:number) => (
                                             <IonCard key={event.id}>
@@ -228,17 +232,6 @@ const Main: React.FC = () => {
                                             </IonCard> 
                                         ))}
                 
-                                    </IonSlide>
-                                    <IonSlide>
-                                        <IonCard>
-                                            <IonCardHeader>
-                                                <IonCardTitle>Card Title</IonCardTitle>
-                                            </IonCardHeader>
-                                            <IonCardContent>
-                                                Keep close to Nature's heart... and break clear away, once in awhile,
-                                                and climb a mountain or spend a week in the woods. Wash your spirit clean.
-                                            </IonCardContent>
-                                        </IonCard>
                                     </IonSlide>
                                 </IonSlides>
                             </IonCol>                     
@@ -301,6 +294,7 @@ const Main: React.FC = () => {
                             <IonList>
                                 {searchEvents.map((event: Event, index:number) => (
                                     <IonItem href='/viewEvent' key={event.id}>
+                                        {/* add ion-input tags for this section */}
                                         {event.title}
                                         {event.description} 
                                     </IonItem>
